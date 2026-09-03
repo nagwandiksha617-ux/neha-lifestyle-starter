@@ -21,6 +21,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ReturnsRouteImport } from './routes/returns'
 import { Route as ShippingRouteImport } from './routes/shipping'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as BagsIndexRouteImport } from './routes/bags.index'
 import { Route as BagsGymBagsRouteImport } from './routes/bags.gym-bags'
@@ -96,6 +97,11 @@ const ShippingRoute = ShippingRouteImport.update({
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermsRoute = TermsRouteImport.update({
@@ -192,6 +198,7 @@ export interface FileRoutesByFullPath {
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/bags/gym-bags': typeof BagsGymBagsRoute
   '/bags/handbags': typeof BagsHandbagsRoute
@@ -222,6 +229,7 @@ export interface FileRoutesByTo {
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/bags/gym-bags': typeof BagsGymBagsRoute
   '/bags/handbags': typeof BagsHandbagsRoute
@@ -253,6 +261,7 @@ export interface FileRoutesById {
   '/returns': typeof ReturnsRoute
   '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/bags/gym-bags': typeof BagsGymBagsRoute
   '/bags/handbags': typeof BagsHandbagsRoute
@@ -285,6 +294,7 @@ export interface FileRouteTypes {
     | '/returns'
     | '/shipping'
     | '/shop'
+    | '/sitemap.xml'
     | '/terms'
     | '/bags/gym-bags'
     | '/bags/handbags'
@@ -315,6 +325,7 @@ export interface FileRouteTypes {
     | '/returns'
     | '/shipping'
     | '/shop'
+    | '/sitemap.xml'
     | '/terms'
     | '/bags/gym-bags'
     | '/bags/handbags'
@@ -345,6 +356,7 @@ export interface FileRouteTypes {
     | '/returns'
     | '/shipping'
     | '/shop'
+    | '/sitemap.xml'
     | '/terms'
     | '/bags/gym-bags'
     | '/bags/handbags'
@@ -376,6 +388,7 @@ export interface RootRouteChildren {
   ReturnsRoute: typeof ReturnsRoute
   ShippingRoute: typeof ShippingRoute
   ShopRoute: typeof ShopRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   BagsGymBagsRoute: typeof BagsGymBagsRoute
   BagsHandbagsRoute: typeof BagsHandbagsRoute
@@ -478,6 +491,13 @@ declare module '@tanstack/react-router' {
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms': {
@@ -608,6 +628,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReturnsRoute: ReturnsRoute,
   ShippingRoute: ShippingRoute,
   ShopRoute: ShopRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   BagsGymBagsRoute: BagsGymBagsRoute,
   BagsHandbagsRoute: BagsHandbagsRoute,
