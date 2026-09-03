@@ -1,11 +1,11 @@
-import { ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type Ratio = "hero" | "portrait" | "square" | "landscape";
+type Ratio = "hero" | "portrait" | "tall" | "square" | "landscape";
 
 const ratioClass: Record<Ratio, string> = {
-  hero: "aspect-[4/5] sm:aspect-[16/9] lg:aspect-[21/9]",
-  portrait: "aspect-[3/4]",
+  hero: "aspect-[4/5] sm:aspect-[3/2] lg:aspect-[4/5]",
+  portrait: "aspect-[4/5]",
+  tall: "aspect-[3/4]",
   square: "aspect-square",
   landscape: "aspect-[4/3]",
 };
@@ -17,6 +17,8 @@ interface ImagePlaceholderProps {
   ratio?: Ratio;
   className?: string;
   zoomOnHover?: boolean;
+  /** Larger, quieter treatment for hero/editorial use. */
+  editorial?: boolean;
 }
 
 /**
@@ -29,13 +31,14 @@ export function ImagePlaceholder({
   ratio = "portrait",
   className,
   zoomOnHover = true,
+  editorial = false,
 }: ImagePlaceholderProps) {
   return (
     <div
       role="img"
       aria-label={`Image placeholder: ${label}`}
       className={cn(
-        "group/ph relative w-full overflow-hidden rounded-sm border border-gold/25 bg-muted",
+        "group/ph relative w-full overflow-hidden bg-onyx",
         ratioClass[ratio],
         className,
       )}
@@ -43,21 +46,40 @@ export function ImagePlaceholder({
       <div
         aria-hidden="true"
         className={cn(
-          "absolute inset-0 surface-luxe transition-transform duration-700 ease-out",
-          zoomOnHover && "group-hover:scale-105 group-hover/ph:scale-105",
+          "absolute inset-0 surface-luxe transition-transform duration-[900ms] ease-out",
+          zoomOnHover && "group-hover:scale-[1.04] group-hover/ph:scale-[1.04]",
         )}
       />
+      {/* discreet champagne-gold linework */}
+      <div aria-hidden="true" className="absolute inset-0 border border-gold/15" />
       <div
         aria-hidden="true"
-        className="absolute inset-3 rounded-sm border border-gold/20"
+        className={cn(
+          "pointer-events-none absolute border-t border-b border-gold/10",
+          editorial ? "inset-x-6 inset-y-8 sm:inset-x-10 sm:inset-y-12" : "inset-x-4 inset-y-5",
+        )}
       />
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-4 text-center">
-        <ImageIcon className="h-6 w-6 text-gold/70" aria-hidden="true" />
-        <span className="font-display text-base tracking-[0.18em] text-gold uppercase sm:text-lg">
+
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center">
+        <span
+          aria-hidden="true"
+          className={cn("h-px bg-gold/40", editorial ? "w-14" : "w-8")}
+        />
+        <span
+          className={cn(
+            "font-display font-light tracking-[0.3em] text-gold/90 uppercase",
+            editorial ? "text-lg sm:text-2xl" : "text-sm sm:text-base",
+          )}
+        >
           {label}
         </span>
-        <span className="max-w-[22ch] text-[0.65rem] leading-relaxed tracking-[0.14em] text-muted-foreground uppercase">
-          {hint ?? "Real photography to be added"}
+        <span
+          className={cn(
+            "max-w-[24ch] leading-[1.9] font-light tracking-[0.24em] text-muted-foreground/80 uppercase",
+            editorial ? "text-[0.6rem] sm:text-[0.65rem]" : "text-[0.55rem]",
+          )}
+        >
+          {hint ?? "Photography to be added"}
         </span>
       </div>
     </div>
