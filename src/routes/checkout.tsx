@@ -115,6 +115,8 @@ function CheckoutPage() {
       return;
     }
 
+    const requiresGateway =
+      paymentMethods.find((m) => m.id === method)?.requiresGateway ?? true;
     const orderId = generateOrderReference();
     const order: Order = {
       orderId,
@@ -143,8 +145,8 @@ function CheckoutPage() {
       total: totals.total,
       currency: CURRENCY,
       paymentMethod: method as PaymentMethodId,
-      paymentStatus: "unpaid-cod",
-      orderStatus: "placed-locally",
+      paymentStatus: requiresGateway ? "pending" : "unpaid-cod",
+      orderStatus: requiresGateway ? "awaiting-payment" : "placed-locally",
       ...(coupon ? { couponCode: coupon.code } : {}),
     };
 
