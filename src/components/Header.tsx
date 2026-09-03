@@ -33,8 +33,8 @@ export function Header() {
             alt="NEHA LIFESTYLE monogram"
             className="h-11 w-auto shrink-0 sm:h-14"
           />
-          <span className="flex min-w-0 flex-col">
-            <span className="truncate font-display text-base font-semibold tracking-[0.28em] text-gold uppercase sm:text-xl">
+          <span className="hidden min-w-0 flex-col sm:flex">
+            <span className="font-display text-lg font-semibold tracking-[0.22em] whitespace-nowrap text-gold uppercase lg:text-xl lg:tracking-[0.28em]">
               Neha Lifestyle
             </span>
             <span className="hidden text-[0.6rem] tracking-[0.3em] text-muted-foreground uppercase sm:block">
