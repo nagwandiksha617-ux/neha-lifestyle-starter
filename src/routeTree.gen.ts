@@ -31,6 +31,7 @@ import { Route as BagsIndexRouteImport } from './routes/bags.index'
 import { Route as ClutchesIndexRouteImport } from './routes/clutches.index'
 import { Route as JewelleryIndexRouteImport } from './routes/jewellery.index'
 import { Route as OrderReferenceRouteImport } from './routes/order.$reference'
+import { Route as AdminProductsNewRouteImport } from './routes/admin.products.new'
 import { Route as BagsGymBagsIndexRouteImport } from './routes/bags.gym-bags.index'
 import { Route as BagsGymBagsSlugRouteImport } from './routes/bags.gym-bags.$slug'
 import { Route as BagsHandbagsIndexRouteImport } from './routes/bags.handbags.index'
@@ -174,6 +175,11 @@ const JewelleryIndexRoute = JewelleryIndexRouteImport.update({
 const OrderReferenceRoute = OrderReferenceRouteImport.update({
   id: '/order/$reference',
   path: '/order/$reference',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProductsNewRoute = AdminProductsNewRouteImport.update({
+  id: '/admin/products/new',
+  path: '/admin/products/new',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BagsGymBagsIndexRoute = BagsGymBagsIndexRouteImport.update({
@@ -372,6 +378,7 @@ export interface FileRoutesByFullPath {
   '/bags/': typeof BagsIndexRoute
   '/clutches/': typeof ClutchesIndexRoute
   '/jewellery/': typeof JewelleryIndexRoute
+  '/admin/products/new': typeof AdminProductsNewRoute
   '/bags/gym-bags/$slug': typeof BagsGymBagsSlugRoute
   '/bags/handbags/$slug': typeof BagsHandbagsSlugRoute
   '/bags/party-bags/$slug': typeof BagsPartyBagsSlugRoute
@@ -430,6 +437,7 @@ export interface FileRoutesByTo {
   '/bags': typeof BagsIndexRoute
   '/clutches': typeof ClutchesIndexRoute
   '/jewellery': typeof JewelleryIndexRoute
+  '/admin/products/new': typeof AdminProductsNewRoute
   '/bags/gym-bags/$slug': typeof BagsGymBagsSlugRoute
   '/bags/handbags/$slug': typeof BagsHandbagsSlugRoute
   '/bags/party-bags/$slug': typeof BagsPartyBagsSlugRoute
@@ -489,6 +497,7 @@ export interface FileRoutesById {
   '/bags/': typeof BagsIndexRoute
   '/clutches/': typeof ClutchesIndexRoute
   '/jewellery/': typeof JewelleryIndexRoute
+  '/admin/products/new': typeof AdminProductsNewRoute
   '/bags/gym-bags/$slug': typeof BagsGymBagsSlugRoute
   '/bags/handbags/$slug': typeof BagsHandbagsSlugRoute
   '/bags/party-bags/$slug': typeof BagsPartyBagsSlugRoute
@@ -549,6 +558,7 @@ export interface FileRouteTypes {
     | '/bags/'
     | '/clutches/'
     | '/jewellery/'
+    | '/admin/products/new'
     | '/bags/gym-bags/$slug'
     | '/bags/handbags/$slug'
     | '/bags/party-bags/$slug'
@@ -607,6 +617,7 @@ export interface FileRouteTypes {
     | '/bags'
     | '/clutches'
     | '/jewellery'
+    | '/admin/products/new'
     | '/bags/gym-bags/$slug'
     | '/bags/handbags/$slug'
     | '/bags/party-bags/$slug'
@@ -665,6 +676,7 @@ export interface FileRouteTypes {
     | '/bags/'
     | '/clutches/'
     | '/jewellery/'
+    | '/admin/products/new'
     | '/bags/gym-bags/$slug'
     | '/bags/handbags/$slug'
     | '/bags/party-bags/$slug'
@@ -724,6 +736,7 @@ export interface RootRouteChildren {
   BagsIndexRoute: typeof BagsIndexRoute
   ClutchesIndexRoute: typeof ClutchesIndexRoute
   JewelleryIndexRoute: typeof JewelleryIndexRoute
+  AdminProductsNewRoute: typeof AdminProductsNewRoute
   BagsGymBagsSlugRoute: typeof BagsGymBagsSlugRoute
   BagsHandbagsSlugRoute: typeof BagsHandbagsSlugRoute
   BagsPartyBagsSlugRoute: typeof BagsPartyBagsSlugRoute
@@ -914,6 +927,13 @@ declare module '@tanstack/react-router' {
       path: '/order/$reference'
       fullPath: '/order/$reference'
       preLoaderRoute: typeof OrderReferenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/products/new': {
+      id: '/admin/products/new'
+      path: '/admin/products/new'
+      fullPath: '/admin/products/new'
+      preLoaderRoute: typeof AdminProductsNewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bags/gym-bags/': {
@@ -1180,6 +1200,7 @@ const rootRouteChildren: RootRouteChildren = {
   BagsIndexRoute: BagsIndexRoute,
   ClutchesIndexRoute: ClutchesIndexRoute,
   JewelleryIndexRoute: JewelleryIndexRoute,
+  AdminProductsNewRoute: AdminProductsNewRoute,
   BagsGymBagsSlugRoute: BagsGymBagsSlugRoute,
   BagsHandbagsSlugRoute: BagsHandbagsSlugRoute,
   BagsPartyBagsSlugRoute: BagsPartyBagsSlugRoute,
