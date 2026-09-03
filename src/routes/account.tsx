@@ -10,7 +10,7 @@ export const Route = createFileRoute("/account")({
       title: "Account | Neha Lifestyle",
       description: "Your Neha Lifestyle account area.",
       path: "/account",
-      robots: "noindex, follow",
+      robots: "noindex, nofollow",
       breadcrumbs: [{ name: "Account", path: "/account" }],
     }),
   component: AccountPage,

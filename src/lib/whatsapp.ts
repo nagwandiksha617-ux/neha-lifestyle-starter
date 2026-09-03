@@ -43,3 +43,57 @@ export function openWhatsAppOrder(input: WhatsAppOrderInput): boolean {
   window.open(url, "_blank", "noopener,noreferrer");
   return true;
 }
+
+export interface WhatsAppCartLine {
+  name: string;
+  quantity: number;
+  lineTotal: number;
+}
+
+export interface WhatsAppCartInput {
+  lines: WhatsAppCartLine[];
+  total: number;
+  formatAmount: (value: number) => string;
+  customerName?: string;
+  reference?: string;
+  url?: string;
+}
+
+/** Builds the plain-text cart/checkout enquiry sent to the business. */
+export function buildWhatsAppCartMessage({
+  lines,
+  total,
+  formatAmount,
+  customerName,
+  reference,
+  url,
+}: WhatsAppCartInput): string {
+  const link =
+    url ?? (typeof window !== "undefined" ? window.location.href : "/cart");
+
+  const parts = ["Hello Neha Lifestyle, I would like to order:", ""];
+  if (customerName) parts.push(`Name: ${customerName}`);
+  if (reference) parts.push(`Reference: ${reference}`);
+  if (customerName || reference) parts.push("");
+  for (const line of lines) {
+    parts.push(`• ${line.name} × ${line.quantity} — ${formatAmount(line.lineTotal)}`);
+  }
+  parts.push("", `Total: ${formatAmount(total)}`, `Link: ${link}`);
+  return parts.join("\n");
+}
+
+/** Full wa.me URL for a cart, or null while no business number is configured. */
+export function buildWhatsAppCartUrl(input: WhatsAppCartInput): string | null {
+  if (!isWhatsAppConfigured()) return null;
+  return `https://wa.me/${WHATSAPP_BUSINESS_NUMBER}?text=${encodeURIComponent(
+    buildWhatsAppCartMessage(input),
+  )}`;
+}
+
+/** Opens WhatsApp with a prefilled cart message. False while unconfigured. */
+export function openWhatsAppCartOrder(input: WhatsAppCartInput): boolean {
+  const url = buildWhatsAppCartUrl(input);
+  if (!url) return false;
+  window.open(url, "_blank", "noopener,noreferrer");
+  return true;
+}

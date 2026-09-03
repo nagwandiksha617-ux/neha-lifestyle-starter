@@ -30,6 +30,7 @@ import { Route as BagsIndexRouteImport } from './routes/bags.index'
 import { Route as ClutchesIndexRouteImport } from './routes/clutches.index'
 import { Route as ClutchesSlugRouteImport } from './routes/clutches.$slug'
 import { Route as JewelleryIndexRouteImport } from './routes/jewellery.index'
+import { Route as OrderReferenceRouteImport } from './routes/order.$reference'
 import { Route as BagsGymBagsIndexRouteImport } from './routes/bags.gym-bags.index'
 import { Route as BagsGymBagsSlugRouteImport } from './routes/bags.gym-bags.$slug'
 import { Route as BagsHandbagsIndexRouteImport } from './routes/bags.handbags.index'
@@ -160,6 +161,11 @@ const ClutchesSlugRoute = ClutchesSlugRouteImport.update({
 const JewelleryIndexRoute = JewelleryIndexRouteImport.update({
   id: '/jewellery/',
   path: '/jewellery/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderReferenceRoute = OrderReferenceRouteImport.update({
+  id: '/order/$reference',
+  path: '/order/$reference',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BagsGymBagsIndexRoute = BagsGymBagsIndexRouteImport.update({
@@ -314,6 +320,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/wishlist': typeof WishlistRoute
   '/clutches/$slug': typeof ClutchesSlugRoute
+  '/order/$reference': typeof OrderReferenceRoute
   '/bags/': typeof BagsIndexRoute
   '/clutches/': typeof ClutchesIndexRoute
   '/jewellery/': typeof JewelleryIndexRoute
@@ -363,6 +370,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/wishlist': typeof WishlistRoute
   '/clutches/$slug': typeof ClutchesSlugRoute
+  '/order/$reference': typeof OrderReferenceRoute
   '/bags': typeof BagsIndexRoute
   '/clutches': typeof ClutchesIndexRoute
   '/jewellery': typeof JewelleryIndexRoute
@@ -413,6 +421,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/wishlist': typeof WishlistRoute
   '/clutches/$slug': typeof ClutchesSlugRoute
+  '/order/$reference': typeof OrderReferenceRoute
   '/bags/': typeof BagsIndexRoute
   '/clutches/': typeof ClutchesIndexRoute
   '/jewellery/': typeof JewelleryIndexRoute
@@ -464,6 +473,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wishlist'
     | '/clutches/$slug'
+    | '/order/$reference'
     | '/bags/'
     | '/clutches/'
     | '/jewellery/'
@@ -513,6 +523,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wishlist'
     | '/clutches/$slug'
+    | '/order/$reference'
     | '/bags'
     | '/clutches'
     | '/jewellery'
@@ -562,6 +573,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wishlist'
     | '/clutches/$slug'
+    | '/order/$reference'
     | '/bags/'
     | '/clutches/'
     | '/jewellery/'
@@ -612,6 +624,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   WishlistRoute: typeof WishlistRoute
   ClutchesSlugRoute: typeof ClutchesSlugRoute
+  OrderReferenceRoute: typeof OrderReferenceRoute
   BagsIndexRoute: typeof BagsIndexRoute
   ClutchesIndexRoute: typeof ClutchesIndexRoute
   JewelleryIndexRoute: typeof JewelleryIndexRoute
@@ -790,6 +803,13 @@ declare module '@tanstack/react-router' {
       path: '/jewellery'
       fullPath: '/jewellery/'
       preLoaderRoute: typeof JewelleryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order/$reference': {
+      id: '/order/$reference'
+      path: '/order/$reference'
+      fullPath: '/order/$reference'
+      preLoaderRoute: typeof OrderReferenceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bags/gym-bags/': {
@@ -996,6 +1016,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   WishlistRoute: WishlistRoute,
   ClutchesSlugRoute: ClutchesSlugRoute,
+  OrderReferenceRoute: OrderReferenceRoute,
   BagsIndexRoute: BagsIndexRoute,
   ClutchesIndexRoute: ClutchesIndexRoute,
   JewelleryIndexRoute: JewelleryIndexRoute,
