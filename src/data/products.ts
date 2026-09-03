@@ -54,8 +54,8 @@ export {
   mergeImportedRows,
   patchProductRows,
   publishedProducts,
-  replaceCatalogRows,
-  resetCatalog,
+  refreshCatalog,
+  seedCatalog,
   subscribeCatalog,
   upsertProductRow,
 } from "./catalog/store";

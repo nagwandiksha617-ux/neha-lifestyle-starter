@@ -37,7 +37,8 @@ export function CsvPanel({ products, rows }: CsvPanelProps) {
     }
     // Re-serialise the validated products back to rows so the store keeps a
     // single canonical shape for export.
-    mergeImportedRows(
+    toast.info("Importing…");
+    const outcome = await mergeImportedRows(
       result.products.map((p) => ({
         ...p,
         productName: p.name,
@@ -45,9 +46,26 @@ export function CsvPanel({ products, rows }: CsvPanelProps) {
         colour: p.color,
       })) as ProductInput[],
     );
+    setImported(outcome.saved);
+    if (outcome.failures.length) {
+      setIssues([
+        ...result.issues,
+        ...outcome.failures.map((f, i) => ({
+          index: result.products.length + i,
+          identifier: f.identifier,
+          reason: f.reason,
+        })),
+      ]);
+    }
+    if (outcome.saved === 0) {
+      toast.error("Nothing was imported. Check the issues listed below.");
+      return;
+    }
     toast.success(
-      `${result.products.length} product${result.products.length === 1 ? "" : "s"} imported.` +
-        (result.issues.length ? ` ${result.issues.length} row(s) skipped.` : ""),
+      `${outcome.saved} product${outcome.saved === 1 ? "" : "s"} imported.` +
+        (result.issues.length + outcome.failures.length
+          ? ` ${result.issues.length + outcome.failures.length} row(s) skipped.`
+          : ""),
     );
   };
 

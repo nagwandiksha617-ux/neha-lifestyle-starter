@@ -1,10 +1,11 @@
 /**
  * Reactive catalog store.
  *
- * Holds the working record set (published *and* draft) and notifies React via
- * `useSyncExternalStore`. Server rendering and the first client render both
- * use the build-time source records, so hydration is stable; the locally saved
- * catalog is merged in after mount by `hydrateCatalog()`.
+ * Holds the working record set and notifies React via `useSyncExternalStore`.
+ * Records come from the cloud database: the root route loader seeds the
+ * published catalog so server rendering, SEO and hydration all see the same
+ * data, and the admin area refreshes the store with the full record set
+ * (drafts included) once an administrator is signed in.
  *
  * Reads for public surfaces go through `publishedProducts()`, which never
  * returns a draft — that single filter is what keeps drafts out of listings,
@@ -13,23 +14,32 @@
 
 import { normalizeCatalog, type ImportIssue } from "./normalize";
 import { catalogRepository } from "./repository";
-import { catalogRecords } from "./source";
 import type { Product, ProductInput } from "./types";
 
 interface CatalogState {
   rows: ProductInput[];
   products: Product[];
   issues: ImportIssue[];
-  /** True once the locally saved catalog has been read in the browser. */
+  /** True once records have been read from the backend. */
   hydrated: boolean;
+  loading: boolean;
+  error: string | null;
 }
 
-function build(rows: ProductInput[], hydrated: boolean): CatalogState {
+function build(rows: ProductInput[], patch: Partial<CatalogState> = {}): CatalogState {
   const { products, issues } = normalizeCatalog(rows);
-  return { rows, products, issues, hydrated };
+  return {
+    rows,
+    products,
+    issues,
+    hydrated: true,
+    loading: false,
+    error: null,
+    ...patch,
+  };
 }
 
-const serverState: CatalogState = build(catalogRecords, false);
+let serverState: CatalogState = build([], { hydrated: false });
 let state: CatalogState = serverState;
 
 const listeners = new Set<() => void>();
@@ -38,9 +48,8 @@ function emit() {
   for (const listener of listeners) listener();
 }
 
-function setRows(rows: ProductInput[], persist = true) {
-  state = build(rows, true);
-  if (persist) catalogRepository.write(rows);
+function setState(next: CatalogState) {
+  state = next;
   emit();
 }
 
@@ -57,37 +66,53 @@ export function getServerCatalogState(): CatalogState {
   return serverState;
 }
 
-let hydrationScheduled = false;
-
-function loadStoredCatalog() {
-  if (state.hydrated) return;
-  const stored = catalogRepository.read();
-  state = build(stored ?? catalogRecords, true);
+/**
+ * Seeds the store with rows fetched outside React (the root loader).
+ * Server and first client render therefore agree, so hydration is stable.
+ */
+export function seedCatalog(rows: ProductInput[]): void {
+  serverState = build(rows);
+  state = serverState;
   emit();
 }
 
-/**
- * Reads the saved catalog once, in the browser.
- *
- * The read is deferred until after the document has finished loading so that
- * React has hydrated every route subtree against the server-rendered markup
- * first; swapping the record set mid-hydration would trip a mismatch warning.
- */
+let inflight: Promise<void> | null = null;
+
+/** Re-reads the catalog the current visitor is allowed to see. */
+export function refreshCatalog(): Promise<void> {
+  if (inflight) return inflight;
+  setState({ ...state, loading: true, error: null });
+  inflight = catalogRepository
+    .list()
+    .then((rows) => {
+      setState(build(rows));
+    })
+    .catch((error: unknown) => {
+      setState({
+        ...state,
+        loading: false,
+        hydrated: true,
+        error: error instanceof Error ? error.message : "The catalog could not be loaded.",
+      });
+    })
+    .finally(() => {
+      inflight = null;
+    });
+  return inflight;
+}
+
+/** Reads the catalog once in the browser if the loader did not seed it. */
 export function hydrateCatalog(): void {
-  if (state.hydrated || hydrationScheduled || typeof window === "undefined") return;
-  hydrationScheduled = true;
-  if (document.readyState === "complete") {
-    window.setTimeout(loadStoredCatalog, 0);
-  } else {
-    window.addEventListener("load", () => window.setTimeout(loadStoredCatalog, 0), { once: true });
-  }
+  if (typeof window === "undefined") return;
+  if (state.hydrated || state.loading) return;
+  void refreshCatalog();
 }
 
 /* ------------------------------------------------------------------ */
 /* Reads                                                               */
 /* ------------------------------------------------------------------ */
 
-/** Every record, drafts included. Admin surfaces only. */
+/** Every record the caller can see, drafts included. Admin surfaces only. */
 export function allProducts(): Product[] {
   return state.products;
 }
@@ -106,75 +131,67 @@ export function catalogImportIssues(): ImportIssue[] {
 }
 
 /* ------------------------------------------------------------------ */
-/* Writes                                                              */
+/* Writes — every one goes to the database, then refreshes the store   */
 /* ------------------------------------------------------------------ */
 
-function rowId(row: ProductInput, index: number): string {
-  return row.id ?? `${row.subcategory ?? "product"}-${row.slug ?? index}`;
+export async function upsertProductRow(row: ProductInput): Promise<void> {
+  await catalogRepository.save(row);
+  await refreshCatalog();
 }
 
-export function upsertProductRow(row: ProductInput): void {
-  const rows = [...state.rows];
-  const index = rows.findIndex((r, i) => rowId(r, i) === row.id);
-  const stamped = { ...row, updatedAt: new Date().toISOString() };
-  if (index >= 0) rows[index] = stamped;
-  else rows.push(stamped);
-  setRows(rows);
+export async function deleteProductRows(ids: string[]): Promise<void> {
+  await catalogRepository.remove(ids);
+  await refreshCatalog();
 }
 
-export function deleteProductRows(ids: string[]): void {
-  const remove = new Set(ids);
-  setRows(state.rows.filter((r, i) => !remove.has(rowId(r, i))));
-}
-
-export function duplicateProductRow(id: string): string | undefined {
-  const index = state.rows.findIndex((r, i) => rowId(r, i) === id);
-  if (index < 0) return undefined;
-  const original = state.rows[index]!;
+export async function duplicateProductRow(id: string): Promise<string | undefined> {
+  const original = state.rows.find((r) => r.id === id);
+  if (!original) return undefined;
   const suffix = Date.now().toString(36).slice(-4);
-  const { name: _ignoredName, ...rest } = original;
+  const { id: _ignoredId, name: _ignoredName, updatedAt: _ignoredAt, ...rest } = original;
   const copy: ProductInput = {
     ...rest,
-    id: `${id}-copy-${suffix}`,
     slug: `${original.slug ?? "product"}-copy-${suffix}`,
     productName: `${original.productName ?? original.name ?? "Product"} (copy)`,
+    sku: undefined,
     status: "draft",
-    updatedAt: new Date().toISOString(),
   };
-  const rows = [...state.rows];
-  rows.splice(index + 1, 0, copy);
-  setRows(rows);
-  return copy.id;
+  const saved = await catalogRepository.save(copy);
+  await refreshCatalog();
+  return saved.id;
 }
 
 /** Bulk field patch — powers publish / unpublish / flag actions. */
-export function patchProductRows(ids: string[], patch: Partial<ProductInput>): void {
-  const target = new Set(ids);
-  setRows(
-    state.rows.map((r, i) =>
-      target.has(rowId(r, i)) ? { ...r, ...patch, updatedAt: new Date().toISOString() } : r,
-    ),
-  );
+export async function patchProductRows(
+  ids: string[],
+  patch: Partial<ProductInput>,
+): Promise<void> {
+  await catalogRepository.patch(ids, patch);
+  await refreshCatalog();
 }
 
-/** Adds imported rows, replacing any existing row with the same id. */
-export function mergeImportedRows(incoming: ProductInput[]): void {
-  const rows = [...state.rows];
+/** Adds imported rows one by one so a single bad row cannot lose the rest. */
+export async function mergeImportedRows(
+  incoming: ProductInput[],
+): Promise<{ saved: number; failures: { identifier: string; reason: string }[] }> {
+  const failures: { identifier: string; reason: string }[] = [];
+  let saved = 0;
+
   for (const row of incoming) {
-    const index = rows.findIndex((r, i) => rowId(r, i) === row.id);
-    if (index >= 0) rows[index] = row;
-    else rows.push(row);
+    const existing = state.rows.find(
+      (r) => r.subcategory === row.subcategory && r.slug === row.slug,
+    );
+    try {
+      await catalogRepository.save(existing?.id ? { ...row, id: existing.id } : { ...row, id: undefined });
+      saved += 1;
+    } catch (error) {
+      failures.push({
+        identifier: String(row.productName ?? row.slug ?? "row"),
+        reason: error instanceof Error ? error.message : "Could not be saved.",
+      });
+    }
   }
-  setRows(rows);
-}
 
-export function replaceCatalogRows(rows: ProductInput[]): void {
-  setRows(rows);
-}
-
-/** Clears local edits and returns to the build-time source records. */
-export function resetCatalog(): void {
-  catalogRepository.clear();
-  state = build(catalogRecords, true);
-  emit();
+  await refreshCatalog();
+  return { saved, failures };
 }

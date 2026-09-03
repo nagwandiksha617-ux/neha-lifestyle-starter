@@ -1,6 +1,9 @@
-import { ArrowDown, ArrowUp, ImageOff, Plus, Trash2 } from "lucide-react";
+import { useRef, useState } from "react";
+import { ArrowDown, ArrowUp, ImageOff, Plus, Trash2, Upload } from "lucide-react";
+import { toast } from "sonner";
 
 import { TextField } from "./AdminField";
+import { uploadProductImage } from "@/lib/product-images";
 import type { ImageDraft } from "@/data/catalog/admin-form";
 
 interface ImageFieldsProps {
@@ -13,11 +16,31 @@ const buttonClass =
 
 /**
  * Gallery editor. The first image is the main product image; the rest follow
- * in order. Images are referenced by URL — file uploading needs a storage
- * backend, which is not connected, so nothing is uploaded or stored as a file
- * here.
+ * in order. Photographs can be uploaded to the project's secure image storage,
+ * or referenced by an external URL.
  */
 export function ImageFields({ images, onChange }: ImageFieldsProps) {
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+
+  const handleFiles = async (files: FileList) => {
+    setUploading(true);
+    const added: ImageDraft[] = [];
+    for (const file of Array.from(files)) {
+      try {
+        const url = await uploadProductImage(file);
+        added.push({ url, alt: "" });
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : "That image could not be uploaded.");
+      }
+    }
+    setUploading(false);
+    if (added.length) {
+      onChange([...images, ...added]);
+      toast.success(`${added.length} image${added.length === 1 ? "" : "s"} uploaded.`);
+    }
+  };
+
   const update = (index: number, patch: Partial<ImageDraft>) =>
     onChange(images.map((image, i) => (i === index ? { ...image, ...patch } : image)));
 
@@ -33,9 +56,9 @@ export function ImageFields({ images, onChange }: ImageFieldsProps) {
   return (
     <div className="flex flex-col gap-5">
       <p className="text-[0.7rem] leading-relaxed font-light text-muted-foreground">
-        The first image is the main product image. Paste an image URL for each photograph. File
-        uploads need a storage service, which is not connected yet — until then, images live as
-        links and product pages show a labelled placeholder wherever no image exists.
+        The first image is the main product image. Upload your own photographs, or paste an image
+        URL. Add alt text for each photograph so the shop stays readable with a screen reader.
+        Products with no image show a labelled placeholder — no stock imagery is ever added for you.
       </p>
 
       {images.length === 0 && (
@@ -115,14 +138,36 @@ export function ImageFields({ images, onChange }: ImageFieldsProps) {
         ))}
       </ul>
 
-      <div>
+      <div className="flex flex-wrap gap-2">
+        <button
+          type="button"
+          className={buttonClass}
+          disabled={uploading}
+          onClick={() => fileRef.current?.click()}
+        >
+          <Upload className="h-3.5 w-3.5" strokeWidth={1.25} aria-hidden="true" />
+          {uploading ? "Uploading…" : "Upload images"}
+        </button>
         <button
           type="button"
           className={buttonClass}
           onClick={() => onChange([...images, { url: "", alt: "" }])}
         >
-          <Plus className="h-3.5 w-3.5" strokeWidth={1.25} aria-hidden="true" /> Add image
+          <Plus className="h-3.5 w-3.5" strokeWidth={1.25} aria-hidden="true" /> Add image URL
         </button>
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          multiple
+          className="sr-only"
+          aria-label="Choose product images to upload"
+          onChange={(e) => {
+            const files = e.target.files;
+            if (files && files.length) void handleFiles(files);
+            e.target.value = "";
+          }}
+        />
       </div>
     </div>
   );
