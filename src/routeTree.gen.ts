@@ -11,8 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AccountRouteImport } from './routes/account'
 import { Route as BestSellersRouteImport } from './routes/best-sellers'
 import { Route as BlogRouteImport } from './routes/blog'
+import { Route as CartRouteImport } from './routes/cart'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ClutchesRouteImport } from './routes/clutches'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -23,6 +26,7 @@ import { Route as ShippingRouteImport } from './routes/shipping'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as BagsIndexRouteImport } from './routes/bags.index'
 import { Route as BagsGymBagsRouteImport } from './routes/bags.gym-bags'
 import { Route as BagsHandbagsRouteImport } from './routes/bags.handbags'
@@ -49,6 +53,11 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BestSellersRoute = BestSellersRouteImport.update({
   id: '/best-sellers',
   path: '/best-sellers',
@@ -57,6 +66,16 @@ const BestSellersRoute = BestSellersRouteImport.update({
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
   path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClutchesRoute = ClutchesRouteImport.update({
@@ -107,6 +126,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WishlistRoute = WishlistRouteImport.update({
+  id: '/wishlist',
+  path: '/wishlist',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BagsIndexRoute = BagsIndexRouteImport.update({
@@ -188,8 +212,11 @@ const JewelleryWatchesRoute = JewelleryWatchesRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/account': typeof AccountRoute
   '/best-sellers': typeof BestSellersRoute
   '/blog': typeof BlogRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
   '/clutches': typeof ClutchesRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
@@ -200,6 +227,7 @@ export interface FileRoutesByFullPath {
   '/shop': typeof ShopRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/wishlist': typeof WishlistRoute
   '/bags/gym-bags': typeof BagsGymBagsRoute
   '/bags/handbags': typeof BagsHandbagsRoute
   '/bags/party-bags': typeof BagsPartyBagsRoute
@@ -219,8 +247,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/account': typeof AccountRoute
   '/best-sellers': typeof BestSellersRoute
   '/blog': typeof BlogRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
   '/clutches': typeof ClutchesRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
@@ -231,6 +262,7 @@ export interface FileRoutesByTo {
   '/shop': typeof ShopRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/wishlist': typeof WishlistRoute
   '/bags/gym-bags': typeof BagsGymBagsRoute
   '/bags/handbags': typeof BagsHandbagsRoute
   '/bags/party-bags': typeof BagsPartyBagsRoute
@@ -251,8 +283,11 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/account': typeof AccountRoute
   '/best-sellers': typeof BestSellersRoute
   '/blog': typeof BlogRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
   '/clutches': typeof ClutchesRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
@@ -263,6 +298,7 @@ export interface FileRoutesById {
   '/shop': typeof ShopRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/wishlist': typeof WishlistRoute
   '/bags/gym-bags': typeof BagsGymBagsRoute
   '/bags/handbags': typeof BagsHandbagsRoute
   '/bags/party-bags': typeof BagsPartyBagsRoute
@@ -284,8 +320,11 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/account'
     | '/best-sellers'
     | '/blog'
+    | '/cart'
+    | '/checkout'
     | '/clutches'
     | '/contact'
     | '/faq'
@@ -296,6 +335,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/sitemap.xml'
     | '/terms'
+    | '/wishlist'
     | '/bags/gym-bags'
     | '/bags/handbags'
     | '/bags/party-bags'
@@ -315,8 +355,11 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/account'
     | '/best-sellers'
     | '/blog'
+    | '/cart'
+    | '/checkout'
     | '/clutches'
     | '/contact'
     | '/faq'
@@ -327,6 +370,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/sitemap.xml'
     | '/terms'
+    | '/wishlist'
     | '/bags/gym-bags'
     | '/bags/handbags'
     | '/bags/party-bags'
@@ -346,8 +390,11 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/account'
     | '/best-sellers'
     | '/blog'
+    | '/cart'
+    | '/checkout'
     | '/clutches'
     | '/contact'
     | '/faq'
@@ -358,6 +405,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/sitemap.xml'
     | '/terms'
+    | '/wishlist'
     | '/bags/gym-bags'
     | '/bags/handbags'
     | '/bags/party-bags'
@@ -378,8 +426,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AccountRoute: typeof AccountRoute
   BestSellersRoute: typeof BestSellersRoute
   BlogRoute: typeof BlogRoute
+  CartRoute: typeof CartRoute
+  CheckoutRoute: typeof CheckoutRoute
   ClutchesRoute: typeof ClutchesRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
@@ -390,6 +441,7 @@ export interface RootRouteChildren {
   ShopRoute: typeof ShopRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
+  WishlistRoute: typeof WishlistRoute
   BagsGymBagsRoute: typeof BagsGymBagsRoute
   BagsHandbagsRoute: typeof BagsHandbagsRoute
   BagsPartyBagsRoute: typeof BagsPartyBagsRoute
@@ -423,6 +475,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/best-sellers': {
       id: '/best-sellers'
       path: '/best-sellers'
@@ -435,6 +494,20 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/blog'
       preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/clutches': {
@@ -505,6 +578,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wishlist': {
+      id: '/wishlist'
+      path: '/wishlist'
+      fullPath: '/wishlist'
+      preLoaderRoute: typeof WishlistRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bags/': {
@@ -618,8 +698,11 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AccountRoute: AccountRoute,
   BestSellersRoute: BestSellersRoute,
   BlogRoute: BlogRoute,
+  CartRoute: CartRoute,
+  CheckoutRoute: CheckoutRoute,
   ClutchesRoute: ClutchesRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
@@ -630,6 +713,7 @@ const rootRouteChildren: RootRouteChildren = {
   ShopRoute: ShopRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
+  WishlistRoute: WishlistRoute,
   BagsGymBagsRoute: BagsGymBagsRoute,
   BagsHandbagsRoute: BagsHandbagsRoute,
   BagsPartyBagsRoute: BagsPartyBagsRoute,
