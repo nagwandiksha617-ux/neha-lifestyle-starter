@@ -3,10 +3,16 @@ import { Link } from "@tanstack/react-router";
 import { SlidersHorizontal, X } from "lucide-react";
 
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { effectivePrice, type Product } from "@/data/products";
+import { buildFacets, type Product } from "@/data/products";
 import { FilterPanel } from "./FilterPanel";
 import { ProductCard } from "./ProductCard";
-import { applyFilters, countActiveFilters, emptyFilters, sortOptions, type FilterState } from "./filters";
+import {
+  applyFilters,
+  countActiveFilters,
+  emptyFilters,
+  sortOptionsFor,
+  type FilterState,
+} from "./filters";
 
 interface ProductBrowserProps {
   /** Products in scope for this page. */
@@ -30,14 +36,8 @@ export function ProductBrowser({
   const [visible, setVisible] = useState(pageSize);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const priceCeiling = useMemo(
-    () => Math.max(1000, ...products.map((p) => effectivePrice(p))),
-    [products],
-  );
-  const subcategorySlugs = useMemo(
-    () => Array.from(new Set(products.map((p) => p.subcategory))),
-    [products],
-  );
+  const facets = useMemo(() => buildFacets(products), [products]);
+  const sortOptions = useMemo(() => sortOptionsFor(facets), [facets]);
   const results = useMemo(() => applyFilters(products, filters), [products, filters]);
 
   const update = (next: FilterState) => {
@@ -52,9 +52,8 @@ export function ProductBrowser({
     <FilterPanel
       filters={filters}
       onChange={update}
-      subcategorySlugs={subcategorySlugs}
+      facets={facets}
       showCategories={showCategoryFilter}
-      priceCeiling={priceCeiling}
       idPrefix={idPrefix}
     />
   );
@@ -80,7 +79,7 @@ export function ProductBrowser({
                 type="search"
                 value={filters.query}
                 onChange={(e) => update({ ...filters, query: e.target.value })}
-                placeholder="Search by name or category"
+                placeholder="Search by name, category or tag"
                 className="min-h-11 w-full border border-gold/20 bg-transparent px-4 py-2.5 pr-10 text-[0.8rem] font-light text-ivory placeholder:text-muted-foreground/60 focus-visible:border-gold/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
               />
               {filters.query && (
@@ -147,10 +146,14 @@ export function ProductBrowser({
         {results.length === 0 ? (
           <div className="mt-10 border border-gold/15 bg-card/30 px-6 py-16 text-center">
             <p className="font-display text-xl font-light tracking-[0.05em] text-ivory">
-              Sorry, we couldn't find what you're looking for.
+              {products.length === 0
+                ? "This collection is being prepared."
+                : "Sorry, we couldn't find what you're looking for."}
             </p>
             <p className="mt-4 text-[0.82rem] font-light text-muted-foreground">
-              Try a different search term or clear your filters.
+              {products.length === 0
+                ? "Pieces will appear here as soon as the collection is published."
+                : "Try a different search term or clear your filters."}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <button

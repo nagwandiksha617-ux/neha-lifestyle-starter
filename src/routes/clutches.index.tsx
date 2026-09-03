@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
 import { SubcategoryCards } from "@/components/shop/SubcategoryCards";
-import { bagSubcategories, getProductsByCategory } from "@/data/products";
+import { clutchSubcategories, getProductsByCategory } from "@/data/products";
 import { pageHead } from "@/lib/seo";
 
 const PRODUCTS = getProductsByCategory("clutches");
@@ -28,7 +28,11 @@ function Page() {
       breadcrumbs={[{ label: "Clutches", to: "/clutches" }]}
       products={PRODUCTS}
     >
-      <SubcategoryCards heading="Explore bags" headingId="bag-categories" items={bagSubcategories} />
+      <SubcategoryCards
+        heading="Explore clutches"
+        headingId="clutch-categories"
+        items={clutchSubcategories}
+      />
     </CategoryListingPage>
   );
 }

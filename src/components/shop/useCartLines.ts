@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 import { useShop } from "@/lib/shop-store";
-import { effectivePrice, getProductById, type Product } from "@/data/products";
+import { getProductById, priceValue, type Product } from "@/data/products";
 
 export interface ResolvedCartLine {
   product: Product;
@@ -21,7 +21,7 @@ export function useCartLines() {
       lines.push({
         product,
         quantity: line.quantity,
-        lineTotal: effectivePrice(product) * line.quantity,
+        lineTotal: priceValue(product) * line.quantity,
       });
     }
     const subtotal = lines.reduce((sum, l) => sum + l.lineTotal, 0);
