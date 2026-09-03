@@ -26,6 +26,7 @@ import { Route as ShopRouteImport } from './routes/shop'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WishlistRouteImport } from './routes/wishlist'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as BagsIndexRouteImport } from './routes/bags.index'
 import { Route as ClutchesIndexRouteImport } from './routes/clutches.index'
 import { Route as JewelleryIndexRouteImport } from './routes/jewellery.index'
@@ -148,6 +149,11 @@ const TermsRoute = TermsRouteImport.update({
 const WishlistRoute = WishlistRouteImport.update({
   id: '/wishlist',
   path: '/wishlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BagsIndexRoute = BagsIndexRouteImport.update({
@@ -362,6 +368,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/wishlist': typeof WishlistRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/admin/': typeof AdminIndexRoute
   '/bags/': typeof BagsIndexRoute
   '/clutches/': typeof ClutchesIndexRoute
   '/jewellery/': typeof JewelleryIndexRoute
@@ -419,6 +426,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/wishlist': typeof WishlistRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/admin': typeof AdminIndexRoute
   '/bags': typeof BagsIndexRoute
   '/clutches': typeof ClutchesIndexRoute
   '/jewellery': typeof JewelleryIndexRoute
@@ -477,6 +485,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/wishlist': typeof WishlistRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/admin/': typeof AdminIndexRoute
   '/bags/': typeof BagsIndexRoute
   '/clutches/': typeof ClutchesIndexRoute
   '/jewellery/': typeof JewelleryIndexRoute
@@ -536,6 +545,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wishlist'
     | '/order/$reference'
+    | '/admin/'
     | '/bags/'
     | '/clutches/'
     | '/jewellery/'
@@ -593,6 +603,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wishlist'
     | '/order/$reference'
+    | '/admin'
     | '/bags'
     | '/clutches'
     | '/jewellery'
@@ -650,6 +661,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wishlist'
     | '/order/$reference'
+    | '/admin/'
     | '/bags/'
     | '/clutches/'
     | '/jewellery/'
@@ -708,6 +720,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   WishlistRoute: typeof WishlistRoute
   OrderReferenceRoute: typeof OrderReferenceRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   BagsIndexRoute: typeof BagsIndexRoute
   ClutchesIndexRoute: typeof ClutchesIndexRoute
   JewelleryIndexRoute: typeof JewelleryIndexRoute
@@ -866,6 +879,13 @@ declare module '@tanstack/react-router' {
       path: '/wishlist'
       fullPath: '/wishlist'
       preLoaderRoute: typeof WishlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bags/': {
@@ -1156,6 +1176,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   WishlistRoute: WishlistRoute,
   OrderReferenceRoute: OrderReferenceRoute,
+  AdminIndexRoute: AdminIndexRoute,
   BagsIndexRoute: BagsIndexRoute,
   ClutchesIndexRoute: ClutchesIndexRoute,
   JewelleryIndexRoute: JewelleryIndexRoute,
