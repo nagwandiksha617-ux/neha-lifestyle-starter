@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { productPath, publishedProducts } from "@/data/products";
+import { normalizeCatalog } from "@/data/catalog/normalize";
+import { productPath } from "@/data/products";
+import { readPublishedCatalog } from "@/lib/catalog.server";
 
 /**
  * Public, indexable routes. Product detail URLs are appended from the catalog
@@ -41,7 +43,7 @@ const publicPaths = [
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
-      GET: ({ request }) => {
+      GET: async ({ request }) => {
         // The deployment origin is not hardcoded; it is read from the request
         // so the sitemap stays correct on preview and production hosts.
         const url = new URL(request.url);
@@ -49,9 +51,11 @@ export const Route = createFileRoute("/sitemap.xml")({
           url.hostname === "localhost" ? request.headers.get("x-forwarded-host") : null;
         const origin = forwardedHost ? `https://${forwardedHost}` : url.origin;
 
+        const { products } = normalizeCatalog(await readPublishedCatalog());
+
         const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[...publicPaths, ...publishedProducts().map(productPath)].map((p) => `  <url><loc>${origin}${p === "/" ? "/" : p}</loc></url>`).join("\n")}
+${[...publicPaths, ...products.map(productPath)].map((p) => `  <url><loc>${origin}${p === "/" ? "/" : p}</loc></url>`).join("\n")}
 </urlset>
 `;
 

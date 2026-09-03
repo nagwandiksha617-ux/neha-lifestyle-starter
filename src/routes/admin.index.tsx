@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { CatalogTable } from "@/components/admin/CatalogTable";
 import { CsvPanel } from "@/components/admin/CsvPanel";
+import { MigratePanel } from "@/components/admin/MigratePanel";
 import { useAdminCatalog } from "@/hooks/useCatalog";
 import { pageHead } from "@/lib/seo";
 
