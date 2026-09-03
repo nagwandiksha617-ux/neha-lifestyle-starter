@@ -134,7 +134,6 @@ export function ProductForm({ initial, existing, heading }: ProductFormProps) {
             label="URL slug"
             value={form.slug}
             onChange={(v) => set("slug", v)}
-            onBlurSuggestion={undefined}
             required={false}
             hint="Leave blank to generate it from the product name."
             error={errors.slug}
