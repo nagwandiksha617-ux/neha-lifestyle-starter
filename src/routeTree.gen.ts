@@ -17,7 +17,11 @@ import { Route as ClutchesRouteImport } from './routes/clutches'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as NewArrivalsRouteImport } from './routes/new-arrivals'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ReturnsRouteImport } from './routes/returns'
+import { Route as ShippingRouteImport } from './routes/shipping'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as BagsIndexRouteImport } from './routes/bags.index'
 import { Route as BagsGymBagsRouteImport } from './routes/bags.gym-bags'
 import { Route as BagsHandbagsRouteImport } from './routes/bags.handbags'
@@ -74,9 +78,29 @@ const NewArrivalsRoute = NewArrivalsRouteImport.update({
   path: '/new-arrivals',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReturnsRoute = ReturnsRouteImport.update({
+  id: '/returns',
+  path: '/returns',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShippingRoute = ShippingRouteImport.update({
+  id: '/shipping',
+  path: '/shipping',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BagsIndexRoute = BagsIndexRouteImport.update({
@@ -164,7 +188,11 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/new-arrivals': typeof NewArrivalsRoute
+  '/privacy': typeof PrivacyRoute
+  '/returns': typeof ReturnsRoute
+  '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/terms': typeof TermsRoute
   '/bags/gym-bags': typeof BagsGymBagsRoute
   '/bags/handbags': typeof BagsHandbagsRoute
   '/bags/party-bags': typeof BagsPartyBagsRoute
@@ -190,7 +218,11 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/new-arrivals': typeof NewArrivalsRoute
+  '/privacy': typeof PrivacyRoute
+  '/returns': typeof ReturnsRoute
+  '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/terms': typeof TermsRoute
   '/bags/gym-bags': typeof BagsGymBagsRoute
   '/bags/handbags': typeof BagsHandbagsRoute
   '/bags/party-bags': typeof BagsPartyBagsRoute
@@ -217,7 +249,11 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/new-arrivals': typeof NewArrivalsRoute
+  '/privacy': typeof PrivacyRoute
+  '/returns': typeof ReturnsRoute
+  '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/terms': typeof TermsRoute
   '/bags/gym-bags': typeof BagsGymBagsRoute
   '/bags/handbags': typeof BagsHandbagsRoute
   '/bags/party-bags': typeof BagsPartyBagsRoute
@@ -245,7 +281,11 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/new-arrivals'
+    | '/privacy'
+    | '/returns'
+    | '/shipping'
     | '/shop'
+    | '/terms'
     | '/bags/gym-bags'
     | '/bags/handbags'
     | '/bags/party-bags'
@@ -271,7 +311,11 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/new-arrivals'
+    | '/privacy'
+    | '/returns'
+    | '/shipping'
     | '/shop'
+    | '/terms'
     | '/bags/gym-bags'
     | '/bags/handbags'
     | '/bags/party-bags'
@@ -297,7 +341,11 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/new-arrivals'
+    | '/privacy'
+    | '/returns'
+    | '/shipping'
     | '/shop'
+    | '/terms'
     | '/bags/gym-bags'
     | '/bags/handbags'
     | '/bags/party-bags'
@@ -324,7 +372,11 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   NewArrivalsRoute: typeof NewArrivalsRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ReturnsRoute: typeof ReturnsRoute
+  ShippingRoute: typeof ShippingRoute
   ShopRoute: typeof ShopRoute
+  TermsRoute: typeof TermsRoute
   BagsGymBagsRoute: typeof BagsGymBagsRoute
   BagsHandbagsRoute: typeof BagsHandbagsRoute
   BagsPartyBagsRoute: typeof BagsPartyBagsRoute
@@ -400,11 +452,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewArrivalsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/returns': {
+      id: '/returns'
+      path: '/returns'
+      fullPath: '/returns'
+      preLoaderRoute: typeof ReturnsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shipping': {
+      id: '/shipping'
+      path: '/shipping'
+      fullPath: '/shipping'
+      preLoaderRoute: typeof ShippingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shop': {
       id: '/shop'
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bags/': {
@@ -524,7 +604,11 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   NewArrivalsRoute: NewArrivalsRoute,
+  PrivacyRoute: PrivacyRoute,
+  ReturnsRoute: ReturnsRoute,
+  ShippingRoute: ShippingRoute,
   ShopRoute: ShopRoute,
+  TermsRoute: TermsRoute,
   BagsGymBagsRoute: BagsGymBagsRoute,
   BagsHandbagsRoute: BagsHandbagsRoute,
   BagsPartyBagsRoute: BagsPartyBagsRoute,

@@ -1,39 +1,51 @@
 import { createFileRoute } from "@tanstack/react-router";
+
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { SectionHeading } from "@/components/SectionHeading";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About — NEHA LIFESTYLE" },
-      { name: "description", content: "The story behind NEHA LIFESTYLE: statement bags and timeless jewellery for everyday elegance." },
-      { property: "og:title", content: "About — NEHA LIFESTYLE" },
-      { property: "og:description", content: "The story behind NEHA LIFESTYLE." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      title: "About Neha Lifestyle | Our Story",
+      description:
+        "Learn about Neha Lifestyle, a premium label bringing together statement bags and timeless jewellery for everyday elegance.",
+      path: "/about",
+      breadcrumbs: [{ name: "About", path: "/about" }],
+    }),
   component: AboutPage,
 });
 
 function AboutPage() {
   return (
-    <main className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+    <main className="mx-auto w-full max-w-[84rem] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+      <Breadcrumbs items={[{ label: "About", to: "/about" }]} />
+
       <SectionHeading
+        as="h1"
         eyebrow="Our Story"
-        title="Elevate Your Everyday"
+        title="About Neha Lifestyle"
         description="Where Elegance Becomes Your Signature."
         className="mx-auto"
       />
-      <div className="mt-12 grid items-center gap-10 lg:grid-cols-2">
-        <ImagePlaceholder label="Brand Image" hint="Editorial brand image to be added" ratio="landscape" />
-        <div className="flex flex-col gap-4 text-sm leading-relaxed text-muted-foreground">
-          <p>
-            NEHA LIFESTYLE begins with a simple idea: the pieces you reach for
+
+      <div className="mt-16 grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <ImagePlaceholder
+          label="Brand Image"
+          hint="Editorial brand image to be added"
+          ratio="landscape"
+        />
+        <div className="flex flex-col gap-5">
+          <h2 className="font-display text-2xl font-light tracking-[0.06em] text-ivory">
+            Elevate Your Everyday
+          </h2>
+          <p className="text-[0.88rem] leading-[1.95] font-light text-muted-foreground">
+            Neha Lifestyle begins with a simple idea: the pieces you reach for
             every day should feel considered. Bags with presence, jewellery with
             quiet confidence.
           </p>
-          <p>
+          <p className="text-[0.88rem] leading-[1.95] font-light text-muted-foreground">
             The collection is being prepared with that intent. Each edit will
             stay deliberately small, so every piece earns its place.
           </p>
