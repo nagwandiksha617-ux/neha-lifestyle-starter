@@ -6,6 +6,7 @@ interface SectionHeadingProps {
   description?: string;
   align?: "center" | "left";
   className?: string;
+  id?: string;
 }
 
 export function SectionHeading({
@@ -14,26 +15,38 @@ export function SectionHeading({
   description,
   align = "center",
   className,
+  id,
 }: SectionHeadingProps) {
+  const centered = align === "center";
+
   return (
     <div
       className={cn(
-        "flex flex-col gap-3",
-        align === "center" ? "items-center text-center" : "items-start text-left",
+        "flex flex-col",
+        centered ? "mx-auto max-w-2xl items-center text-center" : "items-start text-left",
         className,
       )}
     >
       {eyebrow && (
-        <span className="text-[0.65rem] tracking-[0.32em] text-gold-soft uppercase">
+        <span className="text-[0.6rem] leading-none font-light tracking-[0.42em] text-gold-soft uppercase">
           {eyebrow}
         </span>
       )}
-      <h2 className="font-display text-3xl leading-tight tracking-wide text-ivory sm:text-4xl">
+      <h2
+        id={id}
+        className={cn(
+          "font-display text-[2rem] leading-[1.15] font-light tracking-[0.06em] text-ivory sm:text-[2.6rem]",
+          eyebrow ? "mt-5" : "",
+        )}
+      >
         {title}
       </h2>
-      <span aria-hidden="true" className="h-px w-24 gold-rule" />
+      <span
+        aria-hidden="true"
+        className={cn("mt-6 h-px w-16 bg-gold/50", centered && "mx-auto")}
+      />
       {description && (
-        <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
+        <p className="mt-6 max-w-xl text-[0.9rem] leading-[1.9] font-light text-muted-foreground">
           {description}
         </p>
       )}
