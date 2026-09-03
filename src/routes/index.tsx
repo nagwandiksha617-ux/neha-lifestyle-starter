@@ -12,7 +12,7 @@ import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { ProductCardPlaceholder } from "@/components/ProductCardPlaceholder";
 import { Section } from "@/components/Section";
 import { SectionHeading } from "@/components/SectionHeading";
-import { pageHead } from "@/lib/seo";
+import { organizationSchema, pageHead, websiteSchema } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   head: () =>
@@ -22,6 +22,7 @@ export const Route = createFileRoute("/")({
         "Discover premium bags, clutches and jewellery at Neha Lifestyle. Explore elegant, trend-focused styles designed to elevate your everyday look.",
       path: "/",
       twitterCard: "summary_large_image",
+      jsonLd: [organizationSchema(), websiteSchema()],
     }),
   component: Index,
 });
