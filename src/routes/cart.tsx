@@ -9,7 +9,7 @@ import { OrderSummary } from "@/components/checkout/OrderSummary";
 import { WhatsAppOrderButton } from "@/components/checkout/WhatsAppOrderButton";
 import { ProductImage } from "@/components/shop/ProductImage";
 import { useCartLines } from "@/components/shop/useCartLines";
-import { formatPrice, productPath, subcategoryName } from "@/data/products";
+import { formatPrice, productRoutePattern, subcategoryName } from "@/data/products";
 import { calculateTotals } from "@/lib/commerce/pricing";
 import { useShop } from "@/lib/shop-store";
 import { pageHead } from "@/lib/seo";
@@ -71,7 +71,8 @@ function CartPage() {
                 return (
                   <li key={product.id} className="flex gap-5 border-b border-gold/12 py-6">
                     <Link
-                      to={productPath(product)}
+                      to={productRoutePattern(product)}
+                      params={{ slug: product.slug }}
                       className="w-24 shrink-0 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none sm:w-28"
                     >
                       <ProductImage product={product} />
@@ -80,7 +81,8 @@ function CartPage() {
                     <div className="flex min-w-0 flex-1 flex-col gap-2">
                       <h2 className="min-w-0 font-display text-lg font-light tracking-[0.04em] text-ivory">
                         <Link
-                          to={productPath(product)}
+                          to={productRoutePattern(product)}
+                          params={{ slug: product.slug }}
                           className="block truncate transition-colors hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                         >
                           {product.name}
