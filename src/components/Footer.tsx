@@ -42,7 +42,7 @@ const columns = [
 export function Footer() {
   return (
     <footer className="border-t border-gold/15 bg-onyx">
-      <div className="mx-auto grid w-full max-w-[84rem] gap-12 px-5 py-16 sm:px-8 lg:grid-cols-[1.5fr_repeat(3,1fr)] lg:gap-16 lg:px-12 lg:py-20">
+      <div className="mx-auto grid w-full max-w-[84rem] gap-12 px-5 py-16 sm:px-8 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)] lg:gap-16 lg:px-12 lg:py-20">
         <div className="flex flex-col">
           <div className="flex min-w-0 items-center gap-3.5">
             <img
