@@ -1,29 +1,32 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { CollectionPlaceholderPage } from "@/components/CollectionPlaceholderPage";
-import { topCollectionLinks } from "@/lib/catalog";
+import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
+import { products } from "@/data/products";
 import { pageHead } from "@/lib/seo";
+
+const PRODUCTS = products.filter((p) => p.bestSeller);
 
 export const Route = createFileRoute("/best-sellers")({
   head: () =>
     pageHead({
       title: "Best Sellers | Neha Lifestyle",
       description:
-        "The Neha Lifestyle best sellers page. Most-loved bags, clutches and jewellery will be ranked here once sales data exists.",
+        "The most-loved Neha Lifestyle pieces across bags, clutches and jewellery, gathered into one edit.",
       path: "/best-sellers",
       breadcrumbs: [{ name: "Best Sellers", path: "/best-sellers" }],
     }),
-  component: BestSellersPage,
+  component: Page,
 });
 
-function BestSellersPage() {
+function Page() {
   return (
-    <CollectionPlaceholderPage
-      eyebrow="Most Loved"
+    <CategoryListingPage
+      eyebrow="Signature"
       title="Best Sellers"
-      description="This page will rank the most-loved pieces once the collection is live and orders are placed."
+      intro="The pieces that define the collection — refined shapes that work season after season."
       breadcrumbs={[{ label: "Best Sellers", to: "/best-sellers" }]}
-      relatedLinks={topCollectionLinks}
+      products={PRODUCTS}
+      showCategoryFilter
     />
   );
 }

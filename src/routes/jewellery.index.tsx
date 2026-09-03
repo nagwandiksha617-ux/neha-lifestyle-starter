@@ -1,14 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { CollectionPlaceholderPage } from "@/components/CollectionPlaceholderPage";
+import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
+import { SubcategoryCards } from "@/components/shop/SubcategoryCards";
+import { getProductsByCategory, jewellerySubcategories } from "@/data/products";
 import { pageHead } from "@/lib/seo";
-import { jewelleryCategoryLinks, topCollectionLinks } from "@/lib/catalog";
+
+const PRODUCTS = getProductsByCategory("jewellery");
 
 export const Route = createFileRoute("/jewellery/")({
   head: () =>
     pageHead({
       title: "Jewellery | Neha Lifestyle",
-      description: "Explore the Neha Lifestyle jewellery collection: earrings, rings, necklaces, bracelets, jewellery sets, pendants and watches.",
+      description:
+        "Explore the Neha Lifestyle jewellery collection: earrings, rings, necklaces, bracelets, jewellery sets, pendants and watches.",
       path: "/jewellery",
       breadcrumbs: [{ name: "Jewellery", path: "/jewellery" }],
     }),
@@ -17,14 +21,18 @@ export const Route = createFileRoute("/jewellery/")({
 
 function Page() {
   return (
-    <CollectionPlaceholderPage
+    <CategoryListingPage
       eyebrow="Collection"
       title="Jewellery Collection"
-      description="Earrings, rings, necklaces, bracelets, jewellery sets, pendants and watches. Pieces and photography are added as each category launches."
+      intro="Earrings, rings, necklaces, bracelets, sets, pendants and watches — finishing details with quiet presence."
       breadcrumbs={[{ label: "Jewellery", to: "/jewellery" }]}
-      subcategories={jewelleryCategoryLinks}
-      subcategoriesHeading="Browse jewellery categories"
-      relatedLinks={topCollectionLinks}
-    />
+      products={PRODUCTS}
+    >
+      <SubcategoryCards
+        heading="Browse jewellery categories"
+        headingId="jewellery-categories"
+        items={jewellerySubcategories}
+      />
+    </CategoryListingPage>
   );
 }

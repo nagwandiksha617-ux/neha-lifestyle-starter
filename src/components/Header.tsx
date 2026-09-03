@@ -1,30 +1,72 @@
-import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
-import { Heart, Menu, Search, ShoppingBag, User, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { ChevronDown, Heart, Menu, Search, ShoppingBag, User, X } from "lucide-react";
+
 import { cn } from "@/lib/utils";
+import { useShop } from "@/lib/shop-store";
+import { bagSubcategories, clutchSubcategory, jewellerySubcategories } from "@/data/products";
+import { SearchOverlay } from "./shop/SearchOverlay";
 import monogramAsset from "../assets/neha-monogram.png.asset.json";
 
-const navItems = [
+const shopGroups = [
+  {
+    label: "Bags",
+    to: "/bags" as const,
+    links: [...bagSubcategories, clutchSubcategory],
+  },
+  {
+    label: "Jewellery",
+    to: "/jewellery" as const,
+    links: jewellerySubcategories,
+  },
+];
+
+const simpleNav = [
   { label: "Home", to: "/" },
   { label: "Shop", to: "/shop" },
-  { label: "Bags", to: "/bags" },
-  { label: "Jewellery", to: "/jewellery" },
+] as const;
+
+const tailNav = [
   { label: "New Arrivals", to: "/new-arrivals" },
   { label: "Best Sellers", to: "/best-sellers" },
   { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
 ] as const;
 
-const actions = [
-  { label: "Search", Icon: Search },
-  { label: "Wishlist", Icon: Heart },
-  { label: "Account", Icon: User },
-  { label: "Cart", Icon: ShoppingBag },
-] as const;
+const navLinkClass =
+  "group relative py-1 text-[0.65rem] font-light tracking-[0.24em] text-ivory/70 uppercase transition-colors duration-500 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none";
+
+function Underline() {
+  return (
+    <span
+      aria-hidden="true"
+      className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-gold/70 transition-transform duration-500 ease-out group-hover:scale-x-100 group-data-[status=active]:scale-x-100"
+    />
+  );
+}
+
+function CountBadge({ count }: { count: number }) {
+  if (count <= 0) return null;
+  return (
+    <span
+      aria-hidden="true"
+      className="absolute -top-0.5 -right-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-gold px-1 text-[0.55rem] leading-none font-medium text-primary-foreground"
+    >
+      {count > 99 ? "99+" : count}
+    </span>
+  );
+}
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [dropdown, setDropdown] = useState<string | null>(null);
+  const [mobileGroup, setMobileGroup] = useState<string | null>(null);
+  const navRef = useRef<HTMLElement>(null);
+
+  const { cartCount, wishlistCount, setCartOpen, hydrated } = useShop();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -32,6 +74,30 @@ export function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Close every overlay when the route changes.
+  useEffect(() => {
+    setOpen(false);
+    setSearchOpen(false);
+    setDropdown(null);
+    setMobileGroup(null);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!dropdown) return;
+    const onDown = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) setDropdown(null);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setDropdown(null);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [dropdown]);
 
   return (
     <header
@@ -61,7 +127,6 @@ export function Header() {
           />
           <span className="hidden min-w-0 flex-col gap-1 overflow-hidden sm:flex">
             <span className="truncate font-display text-base leading-none font-light tracking-[0.22em] text-gold uppercase 2xl:text-lg">
-
               Neha Lifestyle
             </span>
             <span className="text-[0.55rem] leading-none font-light tracking-[0.36em] whitespace-nowrap text-muted-foreground/80 uppercase">
@@ -71,34 +136,130 @@ export function Header() {
         </Link>
 
         <div className="flex items-center gap-0.5 sm:gap-1">
-          <nav aria-label="Primary" className="mr-4 hidden items-center gap-5 xl:flex 2xl:gap-7">
-            {navItems.map((item) => (
+          <nav
+            ref={navRef}
+            aria-label="Primary"
+            className="mr-4 hidden items-center gap-5 xl:flex 2xl:gap-7"
+          >
+            {simpleNav.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
                 activeOptions={{ exact: item.to === "/" }}
-                className="group relative py-1 text-[0.65rem] font-light tracking-[0.24em] text-ivory/70 uppercase transition-colors duration-500 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                className={navLinkClass}
                 activeProps={{ className: "text-gold" }}
               >
                 {item.label}
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-gold/70 transition-transform duration-500 ease-out group-hover:scale-x-100 group-data-[status=active]:scale-x-100"
-                />
+                <Underline />
+              </Link>
+            ))}
+
+            {shopGroups.map((group) => (
+              <div key={group.label} className="relative">
+                <button
+                  type="button"
+                  aria-expanded={dropdown === group.label}
+                  aria-haspopup="true"
+                  onClick={() => setDropdown((d) => (d === group.label ? null : group.label))}
+                  className={cn(
+                    navLinkClass,
+                    "inline-flex items-center gap-1.5",
+                    pathname.startsWith(group.to) && "text-gold",
+                  )}
+                >
+                  {group.label}
+                  <ChevronDown
+                    className={cn(
+                      "h-3 w-3 transition-transform duration-300",
+                      dropdown === group.label && "rotate-180",
+                    )}
+                    strokeWidth={1.5}
+                    aria-hidden="true"
+                  />
+                </button>
+
+                {dropdown === group.label && (
+                  <div className="absolute top-full left-1/2 z-50 mt-4 w-60 -translate-x-1/2 border border-gold/20 bg-onyx p-2 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.9)]">
+                    <ul className="flex flex-col">
+                      <li>
+                        <Link
+                          to={group.to}
+                          className="flex min-h-10 items-center px-4 text-[0.62rem] font-light tracking-[0.24em] text-gold uppercase transition-colors duration-300 hover:text-gold-soft focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                        >
+                          All {group.label}
+                        </Link>
+                      </li>
+                      {group.links.map((link) => (
+                        <li key={link.path}>
+                          <Link
+                            to={link.path}
+                            className="flex min-h-10 items-center px-4 text-[0.7rem] font-light tracking-[0.14em] text-ivory/75 transition-colors duration-300 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                          >
+                            {link.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {tailNav.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={navLinkClass}
+                activeProps={{ className: "text-gold" }}
+              >
+                {item.label}
+                <Underline />
               </Link>
             ))}
           </nav>
 
-          {actions.map(({ label, Icon }) => (
-            <button
-              key={label}
-              type="button"
-              aria-label={label}
-              className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-ivory/75 transition-colors duration-500 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-            >
-              <Icon className="h-[1.1rem] w-[1.1rem]" strokeWidth={1.25} aria-hidden="true" />
-            </button>
-          ))}
+          <button
+            type="button"
+            aria-label={searchOpen ? "Close search" : "Search"}
+            aria-expanded={searchOpen}
+            onClick={() => setSearchOpen((v) => !v)}
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-ivory/75 transition-colors duration-500 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          >
+            <Search className="h-[1.1rem] w-[1.1rem]" strokeWidth={1.25} aria-hidden="true" />
+          </button>
+
+          <Link
+            to="/wishlist"
+            aria-label={
+              hydrated && wishlistCount > 0
+                ? `Wishlist, ${wishlistCount} items`
+                : "Wishlist"
+            }
+            className="relative grid h-11 w-11 shrink-0 place-items-center rounded-full text-ivory/75 transition-colors duration-500 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            activeProps={{ className: "text-gold" }}
+          >
+            <Heart className="h-[1.1rem] w-[1.1rem]" strokeWidth={1.25} aria-hidden="true" />
+            {hydrated && <CountBadge count={wishlistCount} />}
+          </Link>
+
+          <Link
+            to="/account"
+            aria-label="Account"
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-ivory/75 transition-colors duration-500 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            activeProps={{ className: "text-gold" }}
+          >
+            <User className="h-[1.1rem] w-[1.1rem]" strokeWidth={1.25} aria-hidden="true" />
+          </Link>
+
+          <button
+            type="button"
+            onClick={() => setCartOpen(true)}
+            aria-label={hydrated && cartCount > 0 ? `Cart, ${cartCount} items` : "Cart"}
+            className="relative grid h-11 w-11 shrink-0 place-items-center rounded-full text-ivory/75 transition-colors duration-500 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          >
+            <ShoppingBag className="h-[1.1rem] w-[1.1rem]" strokeWidth={1.25} aria-hidden="true" />
+            {hydrated && <CountBadge count={cartCount} />}
+          </button>
 
           <button
             type="button"
@@ -117,19 +278,75 @@ export function Header() {
         </div>
       </div>
 
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+
       {open && (
         <nav
           id="mobile-menu"
           aria-label="Mobile"
-          className="border-t border-gold/15 bg-onyx xl:hidden"
+          className="max-h-[75vh] overflow-y-auto border-t border-gold/15 bg-onyx xl:hidden"
         >
           <ul className="mx-auto flex w-full max-w-[84rem] flex-col px-5 py-3 sm:px-8">
-            {navItems.map((item) => (
+            {simpleNav.map((item) => (
               <li key={item.to}>
                 <Link
                   to={item.to}
                   activeOptions={{ exact: item.to === "/" }}
-                  onClick={() => setOpen(false)}
+                  className="flex min-h-12 items-center border-b border-gold/10 text-[0.7rem] font-light tracking-[0.28em] text-ivory/80 uppercase transition-colors duration-500 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                  activeProps={{ className: "text-gold" }}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+
+            {shopGroups.map((group) => (
+              <li key={group.label} className="border-b border-gold/10">
+                <button
+                  type="button"
+                  aria-expanded={mobileGroup === group.label}
+                  onClick={() => setMobileGroup((g) => (g === group.label ? null : group.label))}
+                  className="flex min-h-12 w-full items-center justify-between text-[0.7rem] font-light tracking-[0.28em] text-ivory/80 uppercase transition-colors duration-500 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                >
+                  {group.label}
+                  <ChevronDown
+                    className={cn(
+                      "h-4 w-4 transition-transform duration-300",
+                      mobileGroup === group.label && "rotate-180",
+                    )}
+                    strokeWidth={1.25}
+                    aria-hidden="true"
+                  />
+                </button>
+                {mobileGroup === group.label && (
+                  <ul className="pb-3 pl-4">
+                    <li>
+                      <Link
+                        to={group.to}
+                        className="flex min-h-11 items-center text-[0.65rem] font-light tracking-[0.22em] text-gold uppercase focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                      >
+                        All {group.label}
+                      </Link>
+                    </li>
+                    {group.links.map((link) => (
+                      <li key={link.path}>
+                        <Link
+                          to={link.path}
+                          className="flex min-h-11 items-center text-[0.72rem] font-light tracking-[0.14em] text-ivory/70 transition-colors duration-500 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                        >
+                          {link.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+
+            {tailNav.map((item) => (
+              <li key={item.to}>
+                <Link
+                  to={item.to}
                   className="flex min-h-12 items-center border-b border-gold/10 text-[0.7rem] font-light tracking-[0.28em] text-ivory/80 uppercase transition-colors duration-500 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                   activeProps={{ className: "text-gold" }}
                 >

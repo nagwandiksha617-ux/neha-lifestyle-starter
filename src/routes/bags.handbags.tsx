@@ -1,14 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { CollectionPlaceholderPage } from "@/components/CollectionPlaceholderPage";
+import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
+import { SubcategoryCards } from "@/components/shop/SubcategoryCards";
+import { bagSubcategories, getProductsBySubcategory } from "@/data/products";
 import { pageHead } from "@/lib/seo";
-import { bagCategoryLinks, topCollectionLinks } from "@/lib/catalog";
+
+const PRODUCTS = getProductsBySubcategory("handbags");
 
 export const Route = createFileRoute("/bags/handbags")({
   head: () =>
     pageHead({
-      title: "Hand Bags | Neha Lifestyle",
-      description: "Browse the hand bags category at Neha Lifestyle. This bags category is being prepared and pieces will be listed here as they are added.",
+      title: "Hand Bags | Bags | Neha Lifestyle",
+      description:
+        "Browse hand bags at Neha Lifestyle. Filter by price, availability and rating to find the piece that suits you.",
       path: "/bags/handbags",
       breadcrumbs: [{ name: "Bags", path: "/bags" }, { name: "Hand Bags", path: "/bags/handbags" }],
     }),
@@ -17,14 +21,18 @@ export const Route = createFileRoute("/bags/handbags")({
 
 function Page() {
   return (
-    <CollectionPlaceholderPage
+    <CategoryListingPage
       eyebrow="Bags Category"
       title="Hand Bags"
-      description="This category is being prepared. Hand Bags will be listed here once the collection is added."
+      intro="Explore the hand bags edit at Neha Lifestyle, refined for everyday wear and occasion dressing alike."
       breadcrumbs={[{ label: "Bags", to: "/bags" }, { label: "Hand Bags", to: "/bags/handbags" }]}
-      subcategories={bagCategoryLinks.filter((c) => c.to !== "/bags/handbags")}
-      subcategoriesHeading="Other bags categories"
-      relatedLinks={topCollectionLinks}
-    />
+      products={PRODUCTS}
+    >
+      <SubcategoryCards
+        heading="Other bags categories"
+        headingId="related-categories"
+        items={bagSubcategories.filter((s) => s.slug !== "handbags")}
+      />
+    </CategoryListingPage>
   );
 }
