@@ -248,7 +248,7 @@ function buildDemoProducts(): Product[] {
         material: materials[index % materials.length]!,
         dimensions: "Dimensions to be added",
         color: colors[index % colors.length]!,
-        compareAtPrice: onSale ? price : undefined,
+        ...(onSale ? { compareAtPrice: price } : {}),
         sku: `SKU-PLACEHOLDER-${String(index).padStart(3, "0")}`,
         specifications: [
           { label: "Material", value: "Placeholder material" },
