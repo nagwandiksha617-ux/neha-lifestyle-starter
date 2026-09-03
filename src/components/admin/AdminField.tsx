@@ -17,7 +17,7 @@ function Shell({
   label,
   hint,
   error,
-  required,
+  required = true,
   className = "",
   id,
   children,
