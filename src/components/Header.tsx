@@ -59,8 +59,9 @@ export function Header() {
               scrolled ? "h-9 sm:h-10" : "h-11 sm:h-13",
             )}
           />
-          <span className="hidden min-w-0 flex-col gap-1 sm:flex">
-            <span className="font-display text-lg leading-none font-light tracking-[0.26em] whitespace-nowrap text-gold uppercase lg:text-xl">
+          <span className="hidden min-w-0 flex-col gap-1 overflow-hidden sm:flex">
+            <span className="truncate font-display text-base leading-none font-light tracking-[0.22em] text-gold uppercase 2xl:text-lg">
+
               Neha Lifestyle
             </span>
             <span className="text-[0.55rem] leading-none font-light tracking-[0.36em] whitespace-nowrap text-muted-foreground/80 uppercase">
