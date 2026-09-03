@@ -11,7 +11,7 @@ const PARENT_CRUMBS = [
     { label: "Clutches", to: BASE_PATH },
 ];
 
-export const Route = createFileRoute("/clutches/$slug")({
+export const Route = createFileRoute("/clutches/party/$slug")({
   head: ({ params }) =>
     buildProductHead({
       subcategory: SUBCATEGORY,

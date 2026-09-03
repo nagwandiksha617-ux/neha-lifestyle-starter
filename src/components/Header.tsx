@@ -4,7 +4,11 @@ import { ChevronDown, Heart, Menu, Search, ShoppingBag, User, X } from "lucide-r
 
 import { cn } from "@/lib/utils";
 import { useShop } from "@/lib/shop-store";
-import { bagSubcategories, clutchSubcategory, jewellerySubcategories } from "@/data/products";
+import {
+  bagSubcategories,
+  clutchSubcategories,
+  jewellerySubcategories,
+} from "@/data/products";
 import { SearchOverlay } from "./shop/SearchOverlay";
 import monogramAsset from "../assets/neha-monogram.png.asset.json";
 
@@ -12,7 +16,12 @@ const shopGroups = [
   {
     label: "Bags",
     to: "/bags" as const,
-    links: [...bagSubcategories, clutchSubcategory],
+    links: bagSubcategories,
+  },
+  {
+    label: "Clutches",
+    to: "/clutches" as const,
+    links: clutchSubcategories,
   },
   {
     label: "Jewellery",
