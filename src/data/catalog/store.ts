@@ -57,12 +57,30 @@ export function getServerCatalogState(): CatalogState {
   return serverState;
 }
 
-/** Reads the saved catalog once, in the browser, after hydration. */
-export function hydrateCatalog(): void {
+let hydrationScheduled = false;
+
+function loadStoredCatalog() {
   if (state.hydrated) return;
   const stored = catalogRepository.read();
   state = build(stored ?? catalogRecords, true);
   emit();
+}
+
+/**
+ * Reads the saved catalog once, in the browser.
+ *
+ * The read is deferred until after the document has finished loading so that
+ * React has hydrated every route subtree against the server-rendered markup
+ * first; swapping the record set mid-hydration would trip a mismatch warning.
+ */
+export function hydrateCatalog(): void {
+  if (state.hydrated || hydrationScheduled || typeof window === "undefined") return;
+  hydrationScheduled = true;
+  if (document.readyState === "complete") {
+    window.setTimeout(loadStoredCatalog, 0);
+  } else {
+    window.addEventListener("load", () => window.setTimeout(loadStoredCatalog, 0), { once: true });
+  }
 }
 
 /* ------------------------------------------------------------------ */
