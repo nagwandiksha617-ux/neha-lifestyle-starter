@@ -1,10 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
-import { products } from "@/data/products";
 import { pageHead } from "@/lib/seo";
-
-const PRODUCTS = products.filter((p) => p.bestSeller);
+import { useBestSellers } from "@/hooks/useCatalog";
 
 export const Route = createFileRoute("/best-sellers")({
   head: () =>
@@ -19,13 +17,15 @@ export const Route = createFileRoute("/best-sellers")({
 });
 
 function Page() {
+  const products = useBestSellers();
+
   return (
     <CategoryListingPage
       eyebrow="Signature"
       title="Best Sellers"
       intro="The pieces that define the collection — refined shapes that work season after season."
       breadcrumbs={[{ label: "Best Sellers", to: "/best-sellers" }]}
-      products={PRODUCTS}
+      products={products}
       showCategoryFilter
     />
   );

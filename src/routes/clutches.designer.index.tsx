@@ -2,10 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
 import { SubcategoryCards } from "@/components/shop/SubcategoryCards";
-import { clutchSubcategories, getProductsBySubcategory } from "@/data/products";
+import { clutchSubcategories } from "@/data/products";
+import { useProductsBySubcategory } from "@/hooks/useCatalog";
 import { pageHead } from "@/lib/seo";
-
-const PRODUCTS = getProductsBySubcategory("designer");
 
 export const Route = createFileRoute("/clutches/designer/")({
   head: () =>
@@ -23,6 +22,8 @@ export const Route = createFileRoute("/clutches/designer/")({
 });
 
 function Page() {
+  const products = useProductsBySubcategory("designer");
+
   return (
     <CategoryListingPage
       eyebrow="Clutches Category"
@@ -32,7 +33,7 @@ function Page() {
         { label: "Clutches", to: "/clutches" },
         { label: "Designer Clutches", to: "/clutches/designer" },
       ]}
-      products={PRODUCTS}
+      products={products}
     >
       <SubcategoryCards
         heading="Other clutch categories"

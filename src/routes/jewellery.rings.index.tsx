@@ -2,10 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
 import { SubcategoryCards } from "@/components/shop/SubcategoryCards";
-import { jewellerySubcategories, getProductsBySubcategory } from "@/data/products";
+import { jewellerySubcategories } from "@/data/products";
+import { useProductsBySubcategory } from "@/hooks/useCatalog";
 import { pageHead } from "@/lib/seo";
-
-const PRODUCTS = getProductsBySubcategory("rings");
 
 export const Route = createFileRoute("/jewellery/rings/")({
   head: () =>
@@ -20,13 +19,15 @@ export const Route = createFileRoute("/jewellery/rings/")({
 });
 
 function Page() {
+  const products = useProductsBySubcategory("rings");
+
   return (
     <CategoryListingPage
       eyebrow="Jewellery Category"
       title="Rings"
       intro="Explore the rings edit at Neha Lifestyle, refined for everyday wear and occasion dressing alike."
       breadcrumbs={[{ label: "Jewellery", to: "/jewellery" }, { label: "Rings", to: "/jewellery/rings" }]}
-      products={PRODUCTS}
+      products={products}
     >
       <SubcategoryCards
         heading="Other jewellery categories"
