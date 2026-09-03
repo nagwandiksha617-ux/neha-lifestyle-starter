@@ -1,9 +1,9 @@
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Heart, Star } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { useShop } from "@/lib/shop-store";
-import { formatPrice, type Product } from "@/data/products";
+import { formatPrice, productRoutePattern, type Product } from "@/data/products";
 import { ProductImage } from "./ProductImage";
 
 interface ProductCardProps {
@@ -78,7 +78,13 @@ export function ProductCard({ product, className, imageLoading }: ProductCardPro
         </span>
 
         <h3 className="font-display text-lg leading-tight font-light tracking-[0.05em] text-ivory">
-          {product.name}
+          <Link
+            to={productRoutePattern(product)}
+            params={{ slug: product.slug }}
+            className="transition-colors duration-500 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          >
+            {product.name}
+          </Link>
         </h3>
 
         <p className="text-[0.72rem] leading-relaxed font-light text-muted-foreground">
