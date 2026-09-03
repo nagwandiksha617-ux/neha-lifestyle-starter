@@ -7,6 +7,8 @@ interface SectionHeadingProps {
   align?: "center" | "left";
   className?: string;
   id?: string;
+  /** Heading level rendered. Defaults to h2. */
+  as?: "h1" | "h2";
 }
 
 export function SectionHeading({
@@ -16,6 +18,7 @@ export function SectionHeading({
   align = "center",
   className,
   id,
+  as: Heading = "h2",
 }: SectionHeadingProps) {
   const centered = align === "center";
 
@@ -32,7 +35,7 @@ export function SectionHeading({
           {eyebrow}
         </span>
       )}
-      <h2
+      <Heading
         id={id}
         className={cn(
           "font-display text-[2rem] leading-[1.15] font-light tracking-[0.06em] text-ivory sm:text-[2.6rem]",
@@ -40,7 +43,7 @@ export function SectionHeading({
         )}
       >
         {title}
-      </h2>
+      </Heading>
       <span
         aria-hidden="true"
         className={cn("mt-6 h-px w-16 bg-gold/50", centered && "mx-auto")}
