@@ -23,9 +23,21 @@ const columns = [
     links: [
       { label: "About", to: "/about" },
       { label: "Contact", to: "/contact" },
+      { label: "Journal", to: "/blog" },
+      { label: "FAQ", to: "/faq" },
+    ],
+  },
+  {
+    heading: "Customer Care",
+    links: [
+      { label: "Shipping", to: "/shipping" },
+      { label: "Returns", to: "/returns" },
+      { label: "Privacy Policy", to: "/privacy" },
+      { label: "Terms & Conditions", to: "/terms" },
     ],
   },
 ] as const;
+
 
 export function Footer() {
   return (
