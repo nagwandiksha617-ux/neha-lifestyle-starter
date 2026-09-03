@@ -110,10 +110,10 @@ export function productSchema(input: ProductSchemaInput): Record<string, unknown
     url: normalizePath(input.url),
     brand: { "@type": "Brand", name: input.brand ?? SITE_NAME },
   };
-  if (input.images?.length) schema.image = input.images;
-  if (input.sku) schema.sku = input.sku;
+  if (input.images?.length) schema["image"] = input.images;
+  if (input.sku) schema["sku"] = input.sku;
   if (input.offer) {
-    schema.offers = {
+    schema["offers"] = {
       "@type": "Offer",
       price: input.offer.price,
       priceCurrency: input.offer.priceCurrency,

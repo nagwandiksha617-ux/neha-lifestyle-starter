@@ -32,7 +32,7 @@ export function InfoPage({
 
       <SectionHeading
         as="h1"
-        eyebrow={eyebrow}
+        {...(eyebrow ? { eyebrow } : {})}
         title={title}
         description={description}
         className="mx-auto"

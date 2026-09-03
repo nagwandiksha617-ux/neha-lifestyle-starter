@@ -6,7 +6,7 @@ import { ProductCardPlaceholder } from "./ProductCardPlaceholder";
 
 export interface CollectionLink {
   name: string;
-  to: LinkProps["to"];
+  to: NonNullable<LinkProps["to"]>;
   /** Short, factual descriptor used for the accessible link name. */
   blurb?: string;
 }
