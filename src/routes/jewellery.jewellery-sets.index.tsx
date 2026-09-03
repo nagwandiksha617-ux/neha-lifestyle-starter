@@ -7,7 +7,7 @@ import { pageHead } from "@/lib/seo";
 
 const PRODUCTS = getProductsBySubcategory("jewellery-sets");
 
-export const Route = createFileRoute("/jewellery/jewellery-sets")({
+export const Route = createFileRoute("/jewellery/jewellery-sets/")({
   head: () =>
     pageHead({
       title: "Jewellery Sets | Jewellery | Neha Lifestyle",
