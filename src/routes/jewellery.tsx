@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { CollectionPlaceholderPage } from "@/components/CollectionPlaceholderPage";
 
 export const Route = createFileRoute("/jewellery")({
   head: () => ({
     meta: [
-      { title: "Jewellery — NEHA LIFESTYLE" },
-      { name: "description", content: "Explore the Jewellery collection at NEHA LIFESTYLE." },
-      { property: "og:title", content: "Jewellery — NEHA LIFESTYLE" },
-      { property: "og:description", content: "Explore the Jewellery collection at NEHA LIFESTYLE." },
+      { title: "Jewellery Collection — NEHA LIFESTYLE" },
+      { name: "description", content: "Earrings, rings, necklaces, bracelets, jewellery sets, pendants and watches at NEHA LIFESTYLE." },
+      { property: "og:title", content: "Jewellery Collection — NEHA LIFESTYLE" },
+      { property: "og:description", content: "Timeless jewellery to finish every look." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -16,9 +17,18 @@ export const Route = createFileRoute("/jewellery")({
 
 function JewelleryPage() {
   return (
-    <main className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-semibold tracking-tight text-foreground">Jewellery</h1>
-      <p className="mt-4 text-muted-foreground">Collection coming soon.</p>
-    </main>
+    <CollectionPlaceholderPage
+      title="Jewellery Collection"
+      description="Category layout preview. Products and imagery will be added with the first drop."
+      categories={[
+        "Earrings",
+        "Rings",
+        "Necklaces",
+        "Bracelets",
+        "Jewellery Sets",
+        "Pendants",
+        "Watches",
+      ]}
+    />
   );
 }
