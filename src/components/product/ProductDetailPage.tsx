@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { Heart, MessageCircle, Star } from "lucide-react";
 import { toast } from "sonner";
 
@@ -15,7 +15,6 @@ import { isWhatsAppConfigured } from "@/config/business";
 import {
   formatPrice,
   getRelatedProducts,
-  productPath,
   subcategoryName,
   type Product,
 } from "@/data/products";
@@ -197,10 +196,6 @@ export function ProductDetailPage({ product, breadcrumbs }: ProductDetailPagePro
         </button>
       </div>
       <div aria-hidden="true" className="h-20 lg:hidden" />
-
-      <p className="sr-only">
-        <Link to={productPath(product) as never}>Permanent link to {product.name}</Link>
-      </p>
     </div>
   );
 }
