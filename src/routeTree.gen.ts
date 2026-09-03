@@ -10,13 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as BagsRouteImport } from './routes/bags'
+import { Route as BestSellersRouteImport } from './routes/best-sellers'
 import { Route as ClutchesRouteImport } from './routes/clutches'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as JewelleryRouteImport } from './routes/jewellery'
+import { Route as NewArrivalsRouteImport } from './routes/new-arrivals'
+import { Route as ShopRouteImport } from './routes/shop'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BagsRoute = BagsRouteImport.update({
@@ -24,9 +34,19 @@ const BagsRoute = BagsRouteImport.update({
   path: '/bags',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BestSellersRoute = BestSellersRouteImport.update({
+  id: '/best-sellers',
+  path: '/best-sellers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ClutchesRoute = ClutchesRouteImport.update({
   id: '/clutches',
   path: '/clutches',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JewelleryRoute = JewelleryRouteImport.update({
@@ -34,39 +54,97 @@ const JewelleryRoute = JewelleryRouteImport.update({
   path: '/jewellery',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewArrivalsRoute = NewArrivalsRouteImport.update({
+  id: '/new-arrivals',
+  path: '/new-arrivals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShopRoute = ShopRouteImport.update({
+  id: '/shop',
+  path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/bags': typeof BagsRoute
+  '/best-sellers': typeof BestSellersRoute
   '/clutches': typeof ClutchesRoute
+  '/contact': typeof ContactRoute
   '/jewellery': typeof JewelleryRoute
+  '/new-arrivals': typeof NewArrivalsRoute
+  '/shop': typeof ShopRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/bags': typeof BagsRoute
+  '/best-sellers': typeof BestSellersRoute
   '/clutches': typeof ClutchesRoute
+  '/contact': typeof ContactRoute
   '/jewellery': typeof JewelleryRoute
+  '/new-arrivals': typeof NewArrivalsRoute
+  '/shop': typeof ShopRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/bags': typeof BagsRoute
+  '/best-sellers': typeof BestSellersRoute
   '/clutches': typeof ClutchesRoute
+  '/contact': typeof ContactRoute
   '/jewellery': typeof JewelleryRoute
+  '/new-arrivals': typeof NewArrivalsRoute
+  '/shop': typeof ShopRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bags' | '/clutches' | '/jewellery'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/bags'
+    | '/best-sellers'
+    | '/clutches'
+    | '/contact'
+    | '/jewellery'
+    | '/new-arrivals'
+    | '/shop'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bags' | '/clutches' | '/jewellery'
-  id: '__root__' | '/' | '/bags' | '/clutches' | '/jewellery'
+  to:
+    | '/'
+    | '/about'
+    | '/bags'
+    | '/best-sellers'
+    | '/clutches'
+    | '/contact'
+    | '/jewellery'
+    | '/new-arrivals'
+    | '/shop'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/bags'
+    | '/best-sellers'
+    | '/clutches'
+    | '/contact'
+    | '/jewellery'
+    | '/new-arrivals'
+    | '/shop'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   BagsRoute: typeof BagsRoute
+  BestSellersRoute: typeof BestSellersRoute
   ClutchesRoute: typeof ClutchesRoute
+  ContactRoute: typeof ContactRoute
   JewelleryRoute: typeof JewelleryRoute
+  NewArrivalsRoute: typeof NewArrivalsRoute
+  ShopRoute: typeof ShopRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -78,11 +156,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/bags': {
       id: '/bags'
       path: '/bags'
       fullPath: '/bags'
       preLoaderRoute: typeof BagsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/best-sellers': {
+      id: '/best-sellers'
+      path: '/best-sellers'
+      fullPath: '/best-sellers'
+      preLoaderRoute: typeof BestSellersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/clutches': {
@@ -92,6 +184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClutchesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/jewellery': {
       id: '/jewellery'
       path: '/jewellery'
@@ -99,14 +198,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JewelleryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/new-arrivals': {
+      id: '/new-arrivals'
+      path: '/new-arrivals'
+      fullPath: '/new-arrivals'
+      preLoaderRoute: typeof NewArrivalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shop': {
+      id: '/shop'
+      path: '/shop'
+      fullPath: '/shop'
+      preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   BagsRoute: BagsRoute,
+  BestSellersRoute: BestSellersRoute,
   ClutchesRoute: ClutchesRoute,
+  ContactRoute: ContactRoute,
   JewelleryRoute: JewelleryRoute,
+  NewArrivalsRoute: NewArrivalsRoute,
+  ShopRoute: ShopRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
