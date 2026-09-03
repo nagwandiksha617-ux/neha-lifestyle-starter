@@ -10,13 +10,9 @@
 import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
 
 import {
-  allProducts,
-  catalogImportIssues,
-  catalogRows,
   getCatalogState,
   getServerCatalogState,
   hydrateCatalog,
-  publishedProducts,
   subscribeCatalog,
 } from "@/data/catalog/store";
 import { getRelatedProducts } from "@/data/products";
@@ -29,10 +25,16 @@ function useCatalogState() {
   return useSyncExternalStore(subscribeCatalog, getCatalogState, getServerCatalogState);
 }
 
-/** All published products. */
+/**
+ * All published products.
+ *
+ * The list comes from the snapshot returned by `useSyncExternalStore`, so the
+ * hydration render sees exactly the server-rendered record set and React
+ * re-renders cleanly once the local catalog is read.
+ */
 export function useProducts(): Product[] {
-  useCatalogState();
-  return publishedProducts();
+  const state = useCatalogState();
+  return useMemo(() => state.products.filter((p) => p.status === "published"), [state]);
 }
 
 export function useProductsByCategory(category: CategorySlug): Product[] {
@@ -92,9 +94,9 @@ export function useAdminCatalog() {
   const state = useCatalogState();
   const refresh = useCallback(() => hydrateCatalog(), []);
   return {
-    products: allProducts(),
-    rows: catalogRows(),
-    issues: catalogImportIssues(),
+    products: state.products,
+    rows: state.rows,
+    issues: state.issues,
     hydrated: state.hydrated,
     refresh,
   };
