@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as BestSellersRouteImport } from './routes/best-sellers'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ClutchesRouteImport } from './routes/clutches'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as NewArrivalsRouteImport } from './routes/new-arrivals'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as BagsIndexRouteImport } from './routes/bags.index'
@@ -47,6 +49,11 @@ const BestSellersRoute = BestSellersRouteImport.update({
   path: '/best-sellers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ClutchesRoute = ClutchesRouteImport.update({
   id: '/clutches',
   path: '/clutches',
@@ -55,6 +62,11 @@ const ClutchesRoute = ClutchesRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewArrivalsRoute = NewArrivalsRouteImport.update({
@@ -147,8 +159,10 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/best-sellers': typeof BestSellersRoute
+  '/blog': typeof BlogRoute
   '/clutches': typeof ClutchesRoute
   '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/new-arrivals': typeof NewArrivalsRoute
   '/shop': typeof ShopRoute
   '/bags/gym-bags': typeof BagsGymBagsRoute
@@ -171,8 +185,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/best-sellers': typeof BestSellersRoute
+  '/blog': typeof BlogRoute
   '/clutches': typeof ClutchesRoute
   '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/new-arrivals': typeof NewArrivalsRoute
   '/shop': typeof ShopRoute
   '/bags/gym-bags': typeof BagsGymBagsRoute
@@ -196,8 +212,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/best-sellers': typeof BestSellersRoute
+  '/blog': typeof BlogRoute
   '/clutches': typeof ClutchesRoute
   '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/new-arrivals': typeof NewArrivalsRoute
   '/shop': typeof ShopRoute
   '/bags/gym-bags': typeof BagsGymBagsRoute
@@ -222,8 +240,10 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/best-sellers'
+    | '/blog'
     | '/clutches'
     | '/contact'
+    | '/faq'
     | '/new-arrivals'
     | '/shop'
     | '/bags/gym-bags'
@@ -246,8 +266,10 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/best-sellers'
+    | '/blog'
     | '/clutches'
     | '/contact'
+    | '/faq'
     | '/new-arrivals'
     | '/shop'
     | '/bags/gym-bags'
@@ -270,8 +292,10 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/best-sellers'
+    | '/blog'
     | '/clutches'
     | '/contact'
+    | '/faq'
     | '/new-arrivals'
     | '/shop'
     | '/bags/gym-bags'
@@ -295,8 +319,10 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   BestSellersRoute: typeof BestSellersRoute
+  BlogRoute: typeof BlogRoute
   ClutchesRoute: typeof ClutchesRoute
   ContactRoute: typeof ContactRoute
+  FaqRoute: typeof FaqRoute
   NewArrivalsRoute: typeof NewArrivalsRoute
   ShopRoute: typeof ShopRoute
   BagsGymBagsRoute: typeof BagsGymBagsRoute
@@ -339,6 +365,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BestSellersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/clutches': {
       id: '/clutches'
       path: '/clutches'
@@ -351,6 +384,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/new-arrivals': {
@@ -479,8 +519,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BestSellersRoute: BestSellersRoute,
+  BlogRoute: BlogRoute,
   ClutchesRoute: ClutchesRoute,
   ContactRoute: ContactRoute,
+  FaqRoute: FaqRoute,
   NewArrivalsRoute: NewArrivalsRoute,
   ShopRoute: ShopRoute,
   BagsGymBagsRoute: BagsGymBagsRoute,
