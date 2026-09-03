@@ -7,10 +7,10 @@ const controlClass =
 
 interface BaseProps {
   label: string;
-  hint?: string;
-  error?: string;
-  required?: boolean;
-  className?: string;
+  hint?: string | undefined;
+  error?: string | undefined;
+  required?: boolean | undefined;
+  className?: string | undefined;
 }
 
 function Shell({
@@ -43,10 +43,10 @@ function Shell({
 interface TextFieldProps extends BaseProps {
   value: string;
   onChange: (value: string) => void;
-  placeholder?: string;
-  inputMode?: "text" | "numeric" | "decimal";
-  multiline?: boolean;
-  rows?: number;
+  placeholder?: string | undefined;
+  inputMode?: "text" | "numeric" | "decimal" | undefined;
+  multiline?: boolean | undefined;
+  rows?: number | undefined;
 }
 
 export function TextField({
@@ -79,7 +79,7 @@ interface SelectFieldProps extends BaseProps {
   value: string;
   onChange: (value: string) => void;
   options: Array<{ value: string; label: string }>;
-  placeholder?: string;
+  placeholder?: string | undefined;
 }
 
 export function SelectField({ value, onChange, options, placeholder, ...rest }: SelectFieldProps) {
@@ -107,7 +107,7 @@ export function SelectField({ value, onChange, options, placeholder, ...rest }: 
 
 interface ToggleFieldProps {
   label: string;
-  description?: string;
+  description?: string | undefined;
   checked: boolean;
   onChange: (checked: boolean) => void;
 }
