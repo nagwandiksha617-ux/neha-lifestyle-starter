@@ -4,7 +4,7 @@ import { CollectionPlaceholderPage } from "@/components/CollectionPlaceholderPag
 import { pageHead } from "@/lib/seo";
 import { bagCategoryLinks, topCollectionLinks } from "@/lib/catalog";
 
-export const Route = createFileRoute("/bags")({
+export const Route = createFileRoute("/bags/")({
   head: () =>
     pageHead({
       title: "Bags | Neha Lifestyle",

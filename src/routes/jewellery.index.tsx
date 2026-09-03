@@ -4,7 +4,7 @@ import { CollectionPlaceholderPage } from "@/components/CollectionPlaceholderPag
 import { pageHead } from "@/lib/seo";
 import { jewelleryCategoryLinks, topCollectionLinks } from "@/lib/catalog";
 
-export const Route = createFileRoute("/jewellery")({
+export const Route = createFileRoute("/jewellery/")({
   head: () =>
     pageHead({
       title: "Jewellery | Neha Lifestyle",
