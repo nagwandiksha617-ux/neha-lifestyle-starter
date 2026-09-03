@@ -92,6 +92,7 @@ export function ProductGallery({ product }: ProductGalleryProps) {
                   label={`${altBase} thumbnail ${index + 1}`}
                   ratio="square"
                   zoomOnHover={false}
+                  hideCaption
                 />
               )}
             </button>
