@@ -71,7 +71,7 @@ export function Header() {
         </Link>
 
         <div className="flex items-center gap-0.5 sm:gap-1">
-          <nav aria-label="Primary" className="mr-4 hidden items-center gap-7 xl:flex">
+          <nav aria-label="Primary" className="mr-4 hidden items-center gap-5 xl:flex 2xl:gap-7">
             {navItems.map((item) => (
               <Link
                 key={item.to}
