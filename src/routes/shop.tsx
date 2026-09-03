@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { CollectionPlaceholderPage } from "@/components/CollectionPlaceholderPage";
-import { bagCategoryLinks, jewelleryCategoryLinks, topCollectionLinks } from "@/lib/catalog";
+import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
+import { SubcategoryCards } from "@/components/shop/SubcategoryCards";
+import { allSubcategories, products } from "@/data/products";
 import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/shop")({
@@ -9,7 +10,7 @@ export const Route = createFileRoute("/shop")({
     pageHead({
       title: "Shop All | Neha Lifestyle",
       description:
-        "Shop the full Neha Lifestyle edit across bags, clutches and jewellery, with every category in one place.",
+        "Shop the full Neha Lifestyle edit across bags, clutches and jewellery. Search, filter and sort every category in one place.",
       path: "/shop",
       breadcrumbs: [{ name: "Shop", path: "/shop" }],
     }),
@@ -18,13 +19,15 @@ export const Route = createFileRoute("/shop")({
 
 function ShopPage() {
   return (
-    <CollectionPlaceholderPage
+    <CategoryListingPage
       eyebrow="Shop"
       title="Shop All"
-      description="Every Neha Lifestyle category in one place. Products appear here as each collection is added."
+      intro="Every Neha Lifestyle category in one place — bags, clutches and jewellery, filtered exactly how you like."
       breadcrumbs={[{ label: "Shop", to: "/shop" }]}
-      subcategories={[...topCollectionLinks, ...bagCategoryLinks, ...jewelleryCategoryLinks]}
-      subcategoriesHeading="Browse all categories"
-    />
+      products={products}
+      showCategoryFilter
+    >
+      <SubcategoryCards heading="Browse by category" headingId="all-categories" items={allSubcategories} />
+    </CategoryListingPage>
   );
 }
