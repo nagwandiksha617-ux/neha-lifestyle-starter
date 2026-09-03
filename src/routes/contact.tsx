@@ -1,0 +1,73 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { SectionHeading } from "@/components/SectionHeading";
+
+export const Route = createFileRoute("/contact")({
+  head: () => ({
+    meta: [
+      { title: "Contact — NEHA LIFESTYLE" },
+      { name: "description", content: "Get in touch with NEHA LIFESTYLE about bags, clutches and jewellery." },
+      { property: "og:title", content: "Contact — NEHA LIFESTYLE" },
+      { property: "og:description", content: "Get in touch with NEHA LIFESTYLE." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: ContactPage,
+});
+
+function ContactPage() {
+  return (
+    <main className="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
+      <SectionHeading
+        eyebrow="Say Hello"
+        title="Contact"
+        description="Contact details will be published here soon. Leave a note and we'll be in touch once the collection launches."
+        className="mx-auto"
+      />
+      <form className="mt-12 flex flex-col gap-5" onSubmit={(e) => e.preventDefault()}>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="name" className="text-[0.65rem] tracking-[0.22em] text-gold uppercase">
+            Name
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            className="rounded-sm border border-gold/25 bg-card px-4 py-3 text-sm text-ivory placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            placeholder="Your name"
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="email" className="text-[0.65rem] tracking-[0.22em] text-gold uppercase">
+            Email
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            className="rounded-sm border border-gold/25 bg-card px-4 py-3 text-sm text-ivory placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            placeholder="you@example.com"
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="message" className="text-[0.65rem] tracking-[0.22em] text-gold uppercase">
+            Message
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows={5}
+            className="rounded-sm border border-gold/25 bg-card px-4 py-3 text-sm text-ivory placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            placeholder="How can we help?"
+          />
+        </div>
+        <button
+          type="submit"
+          className="self-start rounded-sm bg-gold px-8 py-3.5 text-xs font-medium tracking-[0.24em] text-primary-foreground uppercase transition-colors duration-300 hover:bg-gold-soft focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        >
+          Send Message
+        </button>
+      </form>
+    </main>
+  );
+}
