@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { ProductDetailPage } from "@/components/product/ProductDetailPage";
 import { ProductNotFound } from "@/components/product/ProductNotFound";
-import { getProductBySlug } from "@/data/products";
+import { useProductBySlug } from "@/hooks/useCatalog";
 import { buildProductHead } from "@/lib/product-seo";
 
 const SUBCATEGORY = "gym-bags";
@@ -25,7 +25,7 @@ export const Route = createFileRoute("/bags/gym-bags/$slug")({
 
 function ProductRoute() {
   const { slug } = Route.useParams();
-  const product = getProductBySlug(SUBCATEGORY, slug);
+  const product = useProductBySlug(SUBCATEGORY, slug);
 
   if (!product) {
     return <ProductNotFound backTo={BASE_PATH} backLabel="Back to Gym Bags" />;

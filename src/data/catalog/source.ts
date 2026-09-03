@@ -17,7 +17,12 @@
 import { normalizeCatalog, type ImportIssue } from "./normalize";
 import type { Product, ProductInput } from "./types";
 
-export const USE_DEMO_CATALOG = true;
+/**
+ * The store ships with an EMPTY catalog: no invented product names, prices,
+ * SKUs, stock levels, imagery or claims. Real products are added through the
+ * catalog manager at /admin, or by importing a CSV/JSON export.
+ */
+export const USE_DEMO_CATALOG = false;
 
 interface DemoSeed {
   subcategory: string;

@@ -2,7 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { X } from "lucide-react";
 
-import { priceLabel, productRoutePattern, products, subcategoryName } from "@/data/products";
+import { priceLabel, productRoutePattern, subcategoryName } from "@/data/products";
+import { useProducts } from "@/hooks/useCatalog";
 import { matchesQuery } from "./filters";
 
 interface SearchOverlayProps {
@@ -30,10 +31,11 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
+  const products = useProducts();
   const results = useMemo(() => {
     if (!query.trim()) return [];
     return products.filter((p) => matchesQuery(p, query)).slice(0, 8);
-  }, [query]);
+  }, [products, query]);
 
   if (!open) return null;
 

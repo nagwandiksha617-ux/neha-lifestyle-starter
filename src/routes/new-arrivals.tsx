@@ -1,10 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
-import { products } from "@/data/products";
 import { pageHead } from "@/lib/seo";
-
-const PRODUCTS = products.filter((p) => p.newArrival);
+import { useNewArrivals } from "@/hooks/useCatalog";
 
 export const Route = createFileRoute("/new-arrivals")({
   head: () =>
@@ -19,13 +17,15 @@ export const Route = createFileRoute("/new-arrivals")({
 });
 
 function Page() {
+  const products = useNewArrivals();
+
   return (
     <CategoryListingPage
       eyebrow="Just In"
       title="New Arrivals"
       intro="The latest additions across bags, clutches and jewellery, gathered in one place."
       breadcrumbs={[{ label: "New Arrivals", to: "/new-arrivals" }]}
-      products={PRODUCTS}
+      products={products}
       showCategoryFilter
     />
   );

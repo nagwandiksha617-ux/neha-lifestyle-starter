@@ -11,7 +11,7 @@
  * renders a neutral state for it.
  */
 
-import type { CategorySlug, Product, ProductInput, StockStatus } from "./types";
+import type { CategorySlug, Product, ProductInput, ProductStatus, StockStatus } from "./types";
 import { findSubcategory } from "./taxonomy";
 
 const CATEGORY_SLUGS: CategorySlug[] = ["bags", "clutches", "jewellery"];
@@ -31,6 +31,21 @@ export interface ImportIssue {
 export interface ImportResult {
   products: Product[];
   issues: ImportIssue[];
+}
+
+/**
+ * Publication state. Records without an explicit status stay published so
+ * existing exports and API rows keep behaving exactly as before.
+ */
+function parseStatus(raw: ProductInput): ProductStatus {
+  const value = typeof raw.status === "string" ? raw.status.trim().toLowerCase() : "";
+  if (value === "draft" || value === "unpublished") return "draft";
+  if (value === "published" || value === "active") return "published";
+  if (raw.published !== undefined) {
+    const flag = String(raw.published).trim().toLowerCase();
+    if (flag) return ["false", "0", "no", "draft"].includes(flag) ? "draft" : "published";
+  }
+  return "published";
 }
 
 export function slugify(value: string): string {
@@ -125,6 +140,7 @@ export function normalizeProduct(
     subcategory: subcategory.slug,
     currency: "INR",
     stockStatus,
+    status: parseStatus(raw),
     images,
     featured: bool(raw.featured),
     newArrival: bool(raw.newArrival),
@@ -179,6 +195,16 @@ export function normalizeProduct(
   if (seoDescription) product.seoDescription = seoDescription;
   if (seoKeywords.length) product.seoKeywords = seoKeywords;
   if (canonicalUrl) product.canonicalUrl = canonicalUrl;
+
+  const imageAlts = list(raw.imageAlts);
+  const lowStockThreshold = num(raw.lowStockThreshold);
+  const updatedAt = text(raw.updatedAt);
+  if (imageAlts.length) product.imageAlts = imageAlts;
+  if (lowStockThreshold != null) product.lowStockThreshold = lowStockThreshold;
+  if (raw.taxInclusive !== undefined && text(String(raw.taxInclusive ?? "")) !== undefined) {
+    product.taxInclusive = bool(raw.taxInclusive);
+  }
+  if (updatedAt) product.updatedAt = updatedAt;
 
   return { product };
 }

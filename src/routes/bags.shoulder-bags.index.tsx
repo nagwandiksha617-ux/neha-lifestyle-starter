@@ -2,10 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
 import { SubcategoryCards } from "@/components/shop/SubcategoryCards";
-import { bagSubcategories, getProductsBySubcategory } from "@/data/products";
+import { bagSubcategories } from "@/data/products";
+import { useProductsBySubcategory } from "@/hooks/useCatalog";
 import { pageHead } from "@/lib/seo";
-
-const PRODUCTS = getProductsBySubcategory("shoulder-bags");
 
 export const Route = createFileRoute("/bags/shoulder-bags/")({
   head: () =>
@@ -20,13 +19,15 @@ export const Route = createFileRoute("/bags/shoulder-bags/")({
 });
 
 function Page() {
+  const products = useProductsBySubcategory("shoulder-bags");
+
   return (
     <CategoryListingPage
       eyebrow="Bags Category"
       title="Shoulder Bags"
       intro="Explore the shoulder bags edit at Neha Lifestyle, refined for everyday wear and occasion dressing alike."
       breadcrumbs={[{ label: "Bags", to: "/bags" }, { label: "Shoulder Bags", to: "/bags/shoulder-bags" }]}
-      products={PRODUCTS}
+      products={products}
     >
       <SubcategoryCards
         heading="Other bags categories"

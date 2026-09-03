@@ -85,6 +85,12 @@ export function Footer() {
       <div className="border-t border-gold/10">
         <div className="mx-auto flex w-full max-w-[84rem] flex-col gap-3 px-5 py-7 text-center text-[0.6rem] font-light tracking-[0.32em] text-muted-foreground/80 uppercase sm:flex-row sm:justify-between sm:px-8 sm:text-left lg:px-12">
           <p>Neha Lifestyle</p>
+          <Link
+            to="/admin"
+            className="transition-colors hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          >
+            Catalog Manager
+          </Link>
           <p>Elevate Your Everyday</p>
         </div>
       </div>

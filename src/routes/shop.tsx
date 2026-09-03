@@ -2,8 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
 import { SubcategoryCards } from "@/components/shop/SubcategoryCards";
-import { allSubcategories, products } from "@/data/products";
+import { allSubcategories } from "@/data/products";
 import { pageHead } from "@/lib/seo";
+import { useProducts } from "@/hooks/useCatalog";
 
 export const Route = createFileRoute("/shop")({
   head: () =>
@@ -18,6 +19,8 @@ export const Route = createFileRoute("/shop")({
 });
 
 function ShopPage() {
+  const products = useProducts();
+
   return (
     <CategoryListingPage
       eyebrow="Shop"

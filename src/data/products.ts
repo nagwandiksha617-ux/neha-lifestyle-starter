@@ -12,6 +12,7 @@ export type {
   CurrencyCode,
   Product,
   ProductInput,
+  ProductStatus,
   RoutePath,
   SpecRow,
   StockStatus,
@@ -41,10 +42,28 @@ export {
   type ImportResult,
 } from "./catalog/normalize";
 
-export { catalogIssues, catalogRecords, isDemoCatalog, products } from "./catalog/source";
+export { catalogIssues, catalogRecords, isDemoCatalog } from "./catalog/source";
+
+export {
+  allProducts,
+  catalogImportIssues,
+  catalogRows,
+  deleteProductRows,
+  duplicateProductRow,
+  hydrateCatalog,
+  mergeImportedRows,
+  patchProductRows,
+  publishedProducts,
+  replaceCatalogRows,
+  resetCatalog,
+  subscribeCatalog,
+  upsertProductRow,
+} from "./catalog/store";
+
+export { catalogRepository, type CatalogRepository } from "./catalog/repository";
 
 import { findSubcategory } from "./catalog/taxonomy";
-import { products } from "./catalog/source";
+import { publishedProducts } from "./catalog/store";
 import type { CategorySlug, CurrencyCode, Product, RoutePath, StockStatus } from "./catalog/types";
 
 /* ------------------------------------------------------------------ */
@@ -52,34 +71,34 @@ import type { CategorySlug, CurrencyCode, Product, RoutePath, StockStatus } from
 /* ------------------------------------------------------------------ */
 
 export function getProductsByCategory(category: CategorySlug): Product[] {
-  return products.filter((p) => p.category === category);
+  return publishedProducts().filter((p) => p.category === category);
 }
 
 export function getProductsBySubcategory(subcategory: string): Product[] {
-  return products.filter((p) => p.subcategory === subcategory);
+  return publishedProducts().filter((p) => p.subcategory === subcategory);
 }
 
 export function getProductById(id: string): Product | undefined {
-  return products.find((p) => p.id === id);
+  return publishedProducts().find((p) => p.id === id);
 }
 
 /** Looks a product up inside a single subcategory, so URLs stay unambiguous. */
 export function getProductBySlug(subcategory: string, slug: string): Product | undefined {
-  return products.find((p) => p.subcategory === subcategory && p.slug === slug);
+  return publishedProducts().find((p) => p.subcategory === subcategory && p.slug === slug);
 }
 
 export function getFeaturedProducts(limit?: number): Product[] {
-  const list = products.filter((p) => p.featured);
+  const list = publishedProducts().filter((p) => p.featured);
   return limit != null ? list.slice(0, limit) : list;
 }
 
 export function getNewArrivals(limit?: number): Product[] {
-  const list = products.filter((p) => p.newArrival);
+  const list = publishedProducts().filter((p) => p.newArrival);
   return limit != null ? list.slice(0, limit) : list;
 }
 
 export function getBestSellers(limit?: number): Product[] {
-  const list = products.filter((p) => p.bestSeller);
+  const list = publishedProducts().filter((p) => p.bestSeller);
   return limit != null ? list.slice(0, limit) : list;
 }
 
@@ -183,16 +202,17 @@ export function getRelatedProducts(product: Product, limit = 4): Product[] {
   };
 
   for (const id of product.relatedProducts ?? []) push(getProductById(id));
-  for (const p of products) if (p.subcategory === product.subcategory) push(p);
+  const catalog = publishedProducts();
+  for (const p of catalog) if (p.subcategory === product.subcategory) push(p);
 
   const tags = new Set(product.tags ?? []);
   if (tags.size > 0) {
-    for (const p of products) {
+    for (const p of catalog) {
       if (p.category !== product.category) continue;
       if ((p.tags ?? []).some((t) => tags.has(t))) push(p);
     }
   }
-  for (const p of products) if (p.category === product.category) push(p);
+  for (const p of catalog) if (p.category === product.category) push(p);
 
   return picked;
 }

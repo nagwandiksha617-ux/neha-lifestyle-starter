@@ -25,6 +25,9 @@ export type Availability = StockStatus;
 
 export type CurrencyCode = "INR";
 
+/** Publication state. Only "published" records reach any public surface. */
+export type ProductStatus = "draft" | "published";
+
 export interface SpecRow {
   label: string;
   value: string;
@@ -58,12 +61,23 @@ export interface Product {
   stockStatus: StockStatus;
   stockQuantity?: number;
 
+  /** Draft records are hidden from every public surface. */
+  status: ProductStatus;
   featured: boolean;
   newArrival: boolean;
   bestSeller: boolean;
 
+  /** Whether the stored price already includes tax. */
+  taxInclusive?: boolean;
+  /** Quantity at which the admin list flags low stock. */
+  lowStockThreshold?: number;
+
   /** Ordered gallery images. Empty renders a labelled placeholder. */
   images: string[];
+  /** Alt text per gallery image, positionally aligned with `images`. */
+  imageAlts?: string[];
+  /** ISO timestamp of the last catalog edit. */
+  updatedAt?: string;
   /** Optional card/thumbnail override; defaults to the first gallery image. */
   thumbnailImage?: string;
 
@@ -123,6 +137,13 @@ export interface ProductInput {
   stockStatus?: string;
   availability?: string;
   stockQuantity?: number | string;
+
+  status?: string;
+  published?: boolean | string;
+  taxInclusive?: boolean | string;
+  lowStockThreshold?: number | string;
+  imageAlts?: string[] | string;
+  updatedAt?: string;
 
   featured?: boolean | string;
   newArrival?: boolean | string;

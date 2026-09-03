@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { productPath, products } from "@/data/products";
+import { productPath, publishedProducts } from "@/data/products";
 
 /**
  * Public, indexable routes. Product detail URLs are appended from the catalog
@@ -51,7 +51,7 @@ export const Route = createFileRoute("/sitemap.xml")({
 
         const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[...publicPaths, ...products.map(productPath)].map((p) => `  <url><loc>${origin}${p === "/" ? "/" : p}</loc></url>`).join("\n")}
+${[...publicPaths, ...publishedProducts().map(productPath)].map((p) => `  <url><loc>${origin}${p === "/" ? "/" : p}</loc></url>`).join("\n")}
 </urlset>
 `;
 

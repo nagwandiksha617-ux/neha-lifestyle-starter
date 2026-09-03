@@ -26,10 +26,13 @@ import { Route as ShopRouteImport } from './routes/shop'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WishlistRouteImport } from './routes/wishlist'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as BagsIndexRouteImport } from './routes/bags.index'
 import { Route as ClutchesIndexRouteImport } from './routes/clutches.index'
 import { Route as JewelleryIndexRouteImport } from './routes/jewellery.index'
 import { Route as OrderReferenceRouteImport } from './routes/order.$reference'
+import { Route as AdminProductsIdRouteImport } from './routes/admin.products.$id'
+import { Route as AdminProductsNewRouteImport } from './routes/admin.products.new'
 import { Route as BagsGymBagsIndexRouteImport } from './routes/bags.gym-bags.index'
 import { Route as BagsGymBagsSlugRouteImport } from './routes/bags.gym-bags.$slug'
 import { Route as BagsHandbagsIndexRouteImport } from './routes/bags.handbags.index'
@@ -150,6 +153,11 @@ const WishlistRoute = WishlistRouteImport.update({
   path: '/wishlist',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BagsIndexRoute = BagsIndexRouteImport.update({
   id: '/bags/',
   path: '/bags/',
@@ -168,6 +176,16 @@ const JewelleryIndexRoute = JewelleryIndexRouteImport.update({
 const OrderReferenceRoute = OrderReferenceRouteImport.update({
   id: '/order/$reference',
   path: '/order/$reference',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProductsIdRoute = AdminProductsIdRouteImport.update({
+  id: '/admin/products/$id',
+  path: '/admin/products/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProductsNewRoute = AdminProductsNewRouteImport.update({
+  id: '/admin/products/new',
+  path: '/admin/products/new',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BagsGymBagsIndexRoute = BagsGymBagsIndexRouteImport.update({
@@ -362,9 +380,12 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/wishlist': typeof WishlistRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/admin/': typeof AdminIndexRoute
   '/bags/': typeof BagsIndexRoute
   '/clutches/': typeof ClutchesIndexRoute
   '/jewellery/': typeof JewelleryIndexRoute
+  '/admin/products/$id': typeof AdminProductsIdRoute
+  '/admin/products/new': typeof AdminProductsNewRoute
   '/bags/gym-bags/$slug': typeof BagsGymBagsSlugRoute
   '/bags/handbags/$slug': typeof BagsHandbagsSlugRoute
   '/bags/party-bags/$slug': typeof BagsPartyBagsSlugRoute
@@ -419,9 +440,12 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/wishlist': typeof WishlistRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/admin': typeof AdminIndexRoute
   '/bags': typeof BagsIndexRoute
   '/clutches': typeof ClutchesIndexRoute
   '/jewellery': typeof JewelleryIndexRoute
+  '/admin/products/$id': typeof AdminProductsIdRoute
+  '/admin/products/new': typeof AdminProductsNewRoute
   '/bags/gym-bags/$slug': typeof BagsGymBagsSlugRoute
   '/bags/handbags/$slug': typeof BagsHandbagsSlugRoute
   '/bags/party-bags/$slug': typeof BagsPartyBagsSlugRoute
@@ -477,9 +501,12 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/wishlist': typeof WishlistRoute
   '/order/$reference': typeof OrderReferenceRoute
+  '/admin/': typeof AdminIndexRoute
   '/bags/': typeof BagsIndexRoute
   '/clutches/': typeof ClutchesIndexRoute
   '/jewellery/': typeof JewelleryIndexRoute
+  '/admin/products/$id': typeof AdminProductsIdRoute
+  '/admin/products/new': typeof AdminProductsNewRoute
   '/bags/gym-bags/$slug': typeof BagsGymBagsSlugRoute
   '/bags/handbags/$slug': typeof BagsHandbagsSlugRoute
   '/bags/party-bags/$slug': typeof BagsPartyBagsSlugRoute
@@ -536,9 +563,12 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wishlist'
     | '/order/$reference'
+    | '/admin/'
     | '/bags/'
     | '/clutches/'
     | '/jewellery/'
+    | '/admin/products/$id'
+    | '/admin/products/new'
     | '/bags/gym-bags/$slug'
     | '/bags/handbags/$slug'
     | '/bags/party-bags/$slug'
@@ -593,9 +623,12 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wishlist'
     | '/order/$reference'
+    | '/admin'
     | '/bags'
     | '/clutches'
     | '/jewellery'
+    | '/admin/products/$id'
+    | '/admin/products/new'
     | '/bags/gym-bags/$slug'
     | '/bags/handbags/$slug'
     | '/bags/party-bags/$slug'
@@ -650,9 +683,12 @@ export interface FileRouteTypes {
     | '/terms'
     | '/wishlist'
     | '/order/$reference'
+    | '/admin/'
     | '/bags/'
     | '/clutches/'
     | '/jewellery/'
+    | '/admin/products/$id'
+    | '/admin/products/new'
     | '/bags/gym-bags/$slug'
     | '/bags/handbags/$slug'
     | '/bags/party-bags/$slug'
@@ -708,9 +744,12 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   WishlistRoute: typeof WishlistRoute
   OrderReferenceRoute: typeof OrderReferenceRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   BagsIndexRoute: typeof BagsIndexRoute
   ClutchesIndexRoute: typeof ClutchesIndexRoute
   JewelleryIndexRoute: typeof JewelleryIndexRoute
+  AdminProductsIdRoute: typeof AdminProductsIdRoute
+  AdminProductsNewRoute: typeof AdminProductsNewRoute
   BagsGymBagsSlugRoute: typeof BagsGymBagsSlugRoute
   BagsHandbagsSlugRoute: typeof BagsHandbagsSlugRoute
   BagsPartyBagsSlugRoute: typeof BagsPartyBagsSlugRoute
@@ -868,6 +907,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WishlistRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/bags/': {
       id: '/bags/'
       path: '/bags'
@@ -894,6 +940,20 @@ declare module '@tanstack/react-router' {
       path: '/order/$reference'
       fullPath: '/order/$reference'
       preLoaderRoute: typeof OrderReferenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/products/$id': {
+      id: '/admin/products/$id'
+      path: '/admin/products/$id'
+      fullPath: '/admin/products/$id'
+      preLoaderRoute: typeof AdminProductsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/products/new': {
+      id: '/admin/products/new'
+      path: '/admin/products/new'
+      fullPath: '/admin/products/new'
+      preLoaderRoute: typeof AdminProductsNewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bags/gym-bags/': {
@@ -1156,9 +1216,12 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   WishlistRoute: WishlistRoute,
   OrderReferenceRoute: OrderReferenceRoute,
+  AdminIndexRoute: AdminIndexRoute,
   BagsIndexRoute: BagsIndexRoute,
   ClutchesIndexRoute: ClutchesIndexRoute,
   JewelleryIndexRoute: JewelleryIndexRoute,
+  AdminProductsIdRoute: AdminProductsIdRoute,
+  AdminProductsNewRoute: AdminProductsNewRoute,
   BagsGymBagsSlugRoute: BagsGymBagsSlugRoute,
   BagsHandbagsSlugRoute: BagsHandbagsSlugRoute,
   BagsPartyBagsSlugRoute: BagsPartyBagsSlugRoute,
