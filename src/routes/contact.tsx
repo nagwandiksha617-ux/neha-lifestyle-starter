@@ -1,24 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
+
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SectionHeading } from "@/components/SectionHeading";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact — NEHA LIFESTYLE" },
-      { name: "description", content: "Get in touch with NEHA LIFESTYLE about bags, clutches and jewellery." },
-      { property: "og:title", content: "Contact — NEHA LIFESTYLE" },
-      { property: "og:description", content: "Get in touch with NEHA LIFESTYLE." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      title: "Contact Neha Lifestyle",
+      description:
+        "Contact Neha Lifestyle with a question about bags, clutches or jewellery, and we will get back to you.",
+      path: "/contact",
+      breadcrumbs: [{ name: "Contact", path: "/contact" }],
+    }),
   component: ContactPage,
 });
 
 function ContactPage() {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
+    <main className="mx-auto w-full max-w-3xl px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
+      <Breadcrumbs items={[{ label: "Contact", to: "/contact" }]} />
       <SectionHeading
+        as="h1"
         eyebrow="Say Hello"
         title="Contact"
         description="Contact details will be published here soon. Leave a note and we'll be in touch once the collection launches."

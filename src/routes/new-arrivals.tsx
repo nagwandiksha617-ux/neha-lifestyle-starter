@@ -1,25 +1,29 @@
 import { createFileRoute } from "@tanstack/react-router";
+
 import { CollectionPlaceholderPage } from "@/components/CollectionPlaceholderPage";
+import { topCollectionLinks } from "@/lib/catalog";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/new-arrivals")({
-  head: () => ({
-    meta: [
-      { title: "New Arrivals — NEHA LIFESTYLE" },
-      { name: "description", content: "The newest bags and jewellery joining the NEHA LIFESTYLE edit." },
-      { property: "og:title", content: "New Arrivals — NEHA LIFESTYLE" },
-      { property: "og:description", content: "The newest pieces joining the NEHA LIFESTYLE edit." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      title: "New Arrivals | Neha Lifestyle",
+      description:
+        "See what has just landed at Neha Lifestyle. The newest bags, clutches and jewellery are listed here as they are added.",
+      path: "/new-arrivals",
+      breadcrumbs: [{ name: "New Arrivals", path: "/new-arrivals" }],
+    }),
   component: NewArrivalsPage,
 });
 
 function NewArrivalsPage() {
   return (
     <CollectionPlaceholderPage
+      eyebrow="Just In"
       title="New Arrivals"
-      description="Catalog layout preview reserved for the newest pieces."
+      description="Reserved for the newest pieces. Products appear here as soon as the first drop is added."
+      breadcrumbs={[{ label: "New Arrivals", to: "/new-arrivals" }]}
+      relatedLinks={topCollectionLinks}
     />
   );
 }

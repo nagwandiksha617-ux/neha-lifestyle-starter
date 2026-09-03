@@ -11,13 +11,33 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
-import { Route as BagsRouteImport } from './routes/bags'
 import { Route as BestSellersRouteImport } from './routes/best-sellers'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ClutchesRouteImport } from './routes/clutches'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as JewelleryRouteImport } from './routes/jewellery'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as NewArrivalsRouteImport } from './routes/new-arrivals'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ReturnsRouteImport } from './routes/returns'
+import { Route as ShippingRouteImport } from './routes/shipping'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as BagsIndexRouteImport } from './routes/bags.index'
+import { Route as BagsGymBagsRouteImport } from './routes/bags.gym-bags'
+import { Route as BagsHandbagsRouteImport } from './routes/bags.handbags'
+import { Route as BagsPartyBagsRouteImport } from './routes/bags.party-bags'
+import { Route as BagsPotliBagsRouteImport } from './routes/bags.potli-bags'
+import { Route as BagsShoulderBagsRouteImport } from './routes/bags.shoulder-bags'
+import { Route as BagsTravelBagsRouteImport } from './routes/bags.travel-bags'
+import { Route as JewelleryIndexRouteImport } from './routes/jewellery.index'
+import { Route as JewelleryBraceletsRouteImport } from './routes/jewellery.bracelets'
+import { Route as JewelleryEarringsRouteImport } from './routes/jewellery.earrings'
+import { Route as JewelleryJewellerySetsRouteImport } from './routes/jewellery.jewellery-sets'
+import { Route as JewelleryNecklacesRouteImport } from './routes/jewellery.necklaces'
+import { Route as JewelleryPendantsRouteImport } from './routes/jewellery.pendants'
+import { Route as JewelleryRingsRouteImport } from './routes/jewellery.rings'
+import { Route as JewelleryWatchesRouteImport } from './routes/jewellery.watches'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,14 +49,14 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BagsRoute = BagsRouteImport.update({
-  id: '/bags',
-  path: '/bags',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const BestSellersRoute = BestSellersRouteImport.update({
   id: '/best-sellers',
   path: '/best-sellers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClutchesRoute = ClutchesRouteImport.update({
@@ -49,9 +69,9 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const JewelleryRoute = JewelleryRouteImport.update({
-  id: '/jewellery',
-  path: '/jewellery',
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewArrivalsRoute = NewArrivalsRouteImport.update({
@@ -59,92 +79,332 @@ const NewArrivalsRoute = NewArrivalsRouteImport.update({
   path: '/new-arrivals',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReturnsRoute = ReturnsRouteImport.update({
+  id: '/returns',
+  path: '/returns',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShippingRoute = ShippingRouteImport.update({
+  id: '/shipping',
+  path: '/shipping',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BagsIndexRoute = BagsIndexRouteImport.update({
+  id: '/bags/',
+  path: '/bags/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BagsGymBagsRoute = BagsGymBagsRouteImport.update({
+  id: '/bags/gym-bags',
+  path: '/bags/gym-bags',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BagsHandbagsRoute = BagsHandbagsRouteImport.update({
+  id: '/bags/handbags',
+  path: '/bags/handbags',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BagsPartyBagsRoute = BagsPartyBagsRouteImport.update({
+  id: '/bags/party-bags',
+  path: '/bags/party-bags',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BagsPotliBagsRoute = BagsPotliBagsRouteImport.update({
+  id: '/bags/potli-bags',
+  path: '/bags/potli-bags',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BagsShoulderBagsRoute = BagsShoulderBagsRouteImport.update({
+  id: '/bags/shoulder-bags',
+  path: '/bags/shoulder-bags',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BagsTravelBagsRoute = BagsTravelBagsRouteImport.update({
+  id: '/bags/travel-bags',
+  path: '/bags/travel-bags',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JewelleryIndexRoute = JewelleryIndexRouteImport.update({
+  id: '/jewellery/',
+  path: '/jewellery/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JewelleryBraceletsRoute = JewelleryBraceletsRouteImport.update({
+  id: '/jewellery/bracelets',
+  path: '/jewellery/bracelets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JewelleryEarringsRoute = JewelleryEarringsRouteImport.update({
+  id: '/jewellery/earrings',
+  path: '/jewellery/earrings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JewelleryJewellerySetsRoute = JewelleryJewellerySetsRouteImport.update({
+  id: '/jewellery/jewellery-sets',
+  path: '/jewellery/jewellery-sets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JewelleryNecklacesRoute = JewelleryNecklacesRouteImport.update({
+  id: '/jewellery/necklaces',
+  path: '/jewellery/necklaces',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JewelleryPendantsRoute = JewelleryPendantsRouteImport.update({
+  id: '/jewellery/pendants',
+  path: '/jewellery/pendants',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JewelleryRingsRoute = JewelleryRingsRouteImport.update({
+  id: '/jewellery/rings',
+  path: '/jewellery/rings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JewelleryWatchesRoute = JewelleryWatchesRouteImport.update({
+  id: '/jewellery/watches',
+  path: '/jewellery/watches',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/bags': typeof BagsRoute
   '/best-sellers': typeof BestSellersRoute
+  '/blog': typeof BlogRoute
   '/clutches': typeof ClutchesRoute
   '/contact': typeof ContactRoute
-  '/jewellery': typeof JewelleryRoute
+  '/faq': typeof FaqRoute
   '/new-arrivals': typeof NewArrivalsRoute
+  '/privacy': typeof PrivacyRoute
+  '/returns': typeof ReturnsRoute
+  '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
+  '/bags/gym-bags': typeof BagsGymBagsRoute
+  '/bags/handbags': typeof BagsHandbagsRoute
+  '/bags/party-bags': typeof BagsPartyBagsRoute
+  '/bags/potli-bags': typeof BagsPotliBagsRoute
+  '/bags/shoulder-bags': typeof BagsShoulderBagsRoute
+  '/bags/travel-bags': typeof BagsTravelBagsRoute
+  '/jewellery/bracelets': typeof JewelleryBraceletsRoute
+  '/jewellery/earrings': typeof JewelleryEarringsRoute
+  '/jewellery/jewellery-sets': typeof JewelleryJewellerySetsRoute
+  '/jewellery/necklaces': typeof JewelleryNecklacesRoute
+  '/jewellery/pendants': typeof JewelleryPendantsRoute
+  '/jewellery/rings': typeof JewelleryRingsRoute
+  '/jewellery/watches': typeof JewelleryWatchesRoute
+  '/bags/': typeof BagsIndexRoute
+  '/jewellery/': typeof JewelleryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/bags': typeof BagsRoute
   '/best-sellers': typeof BestSellersRoute
+  '/blog': typeof BlogRoute
   '/clutches': typeof ClutchesRoute
   '/contact': typeof ContactRoute
-  '/jewellery': typeof JewelleryRoute
+  '/faq': typeof FaqRoute
   '/new-arrivals': typeof NewArrivalsRoute
+  '/privacy': typeof PrivacyRoute
+  '/returns': typeof ReturnsRoute
+  '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
+  '/bags/gym-bags': typeof BagsGymBagsRoute
+  '/bags/handbags': typeof BagsHandbagsRoute
+  '/bags/party-bags': typeof BagsPartyBagsRoute
+  '/bags/potli-bags': typeof BagsPotliBagsRoute
+  '/bags/shoulder-bags': typeof BagsShoulderBagsRoute
+  '/bags/travel-bags': typeof BagsTravelBagsRoute
+  '/jewellery/bracelets': typeof JewelleryBraceletsRoute
+  '/jewellery/earrings': typeof JewelleryEarringsRoute
+  '/jewellery/jewellery-sets': typeof JewelleryJewellerySetsRoute
+  '/jewellery/necklaces': typeof JewelleryNecklacesRoute
+  '/jewellery/pendants': typeof JewelleryPendantsRoute
+  '/jewellery/rings': typeof JewelleryRingsRoute
+  '/jewellery/watches': typeof JewelleryWatchesRoute
+  '/bags': typeof BagsIndexRoute
+  '/jewellery': typeof JewelleryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/bags': typeof BagsRoute
   '/best-sellers': typeof BestSellersRoute
+  '/blog': typeof BlogRoute
   '/clutches': typeof ClutchesRoute
   '/contact': typeof ContactRoute
-  '/jewellery': typeof JewelleryRoute
+  '/faq': typeof FaqRoute
   '/new-arrivals': typeof NewArrivalsRoute
+  '/privacy': typeof PrivacyRoute
+  '/returns': typeof ReturnsRoute
+  '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
+  '/bags/gym-bags': typeof BagsGymBagsRoute
+  '/bags/handbags': typeof BagsHandbagsRoute
+  '/bags/party-bags': typeof BagsPartyBagsRoute
+  '/bags/potli-bags': typeof BagsPotliBagsRoute
+  '/bags/shoulder-bags': typeof BagsShoulderBagsRoute
+  '/bags/travel-bags': typeof BagsTravelBagsRoute
+  '/jewellery/bracelets': typeof JewelleryBraceletsRoute
+  '/jewellery/earrings': typeof JewelleryEarringsRoute
+  '/jewellery/jewellery-sets': typeof JewelleryJewellerySetsRoute
+  '/jewellery/necklaces': typeof JewelleryNecklacesRoute
+  '/jewellery/pendants': typeof JewelleryPendantsRoute
+  '/jewellery/rings': typeof JewelleryRingsRoute
+  '/jewellery/watches': typeof JewelleryWatchesRoute
+  '/bags/': typeof BagsIndexRoute
+  '/jewellery/': typeof JewelleryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
-    | '/bags'
     | '/best-sellers'
+    | '/blog'
     | '/clutches'
     | '/contact'
-    | '/jewellery'
+    | '/faq'
     | '/new-arrivals'
+    | '/privacy'
+    | '/returns'
+    | '/shipping'
     | '/shop'
+    | '/sitemap.xml'
+    | '/terms'
+    | '/bags/gym-bags'
+    | '/bags/handbags'
+    | '/bags/party-bags'
+    | '/bags/potli-bags'
+    | '/bags/shoulder-bags'
+    | '/bags/travel-bags'
+    | '/jewellery/bracelets'
+    | '/jewellery/earrings'
+    | '/jewellery/jewellery-sets'
+    | '/jewellery/necklaces'
+    | '/jewellery/pendants'
+    | '/jewellery/rings'
+    | '/jewellery/watches'
+    | '/bags/'
+    | '/jewellery/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/bags'
     | '/best-sellers'
+    | '/blog'
     | '/clutches'
     | '/contact'
-    | '/jewellery'
+    | '/faq'
     | '/new-arrivals'
+    | '/privacy'
+    | '/returns'
+    | '/shipping'
     | '/shop'
+    | '/sitemap.xml'
+    | '/terms'
+    | '/bags/gym-bags'
+    | '/bags/handbags'
+    | '/bags/party-bags'
+    | '/bags/potli-bags'
+    | '/bags/shoulder-bags'
+    | '/bags/travel-bags'
+    | '/jewellery/bracelets'
+    | '/jewellery/earrings'
+    | '/jewellery/jewellery-sets'
+    | '/jewellery/necklaces'
+    | '/jewellery/pendants'
+    | '/jewellery/rings'
+    | '/jewellery/watches'
+    | '/bags'
+    | '/jewellery'
   id:
     | '__root__'
     | '/'
     | '/about'
-    | '/bags'
     | '/best-sellers'
+    | '/blog'
     | '/clutches'
     | '/contact'
-    | '/jewellery'
+    | '/faq'
     | '/new-arrivals'
+    | '/privacy'
+    | '/returns'
+    | '/shipping'
     | '/shop'
+    | '/sitemap.xml'
+    | '/terms'
+    | '/bags/gym-bags'
+    | '/bags/handbags'
+    | '/bags/party-bags'
+    | '/bags/potli-bags'
+    | '/bags/shoulder-bags'
+    | '/bags/travel-bags'
+    | '/jewellery/bracelets'
+    | '/jewellery/earrings'
+    | '/jewellery/jewellery-sets'
+    | '/jewellery/necklaces'
+    | '/jewellery/pendants'
+    | '/jewellery/rings'
+    | '/jewellery/watches'
+    | '/bags/'
+    | '/jewellery/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  BagsRoute: typeof BagsRoute
   BestSellersRoute: typeof BestSellersRoute
+  BlogRoute: typeof BlogRoute
   ClutchesRoute: typeof ClutchesRoute
   ContactRoute: typeof ContactRoute
-  JewelleryRoute: typeof JewelleryRoute
+  FaqRoute: typeof FaqRoute
   NewArrivalsRoute: typeof NewArrivalsRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ReturnsRoute: typeof ReturnsRoute
+  ShippingRoute: typeof ShippingRoute
   ShopRoute: typeof ShopRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TermsRoute: typeof TermsRoute
+  BagsGymBagsRoute: typeof BagsGymBagsRoute
+  BagsHandbagsRoute: typeof BagsHandbagsRoute
+  BagsPartyBagsRoute: typeof BagsPartyBagsRoute
+  BagsPotliBagsRoute: typeof BagsPotliBagsRoute
+  BagsShoulderBagsRoute: typeof BagsShoulderBagsRoute
+  BagsTravelBagsRoute: typeof BagsTravelBagsRoute
+  JewelleryBraceletsRoute: typeof JewelleryBraceletsRoute
+  JewelleryEarringsRoute: typeof JewelleryEarringsRoute
+  JewelleryJewellerySetsRoute: typeof JewelleryJewellerySetsRoute
+  JewelleryNecklacesRoute: typeof JewelleryNecklacesRoute
+  JewelleryPendantsRoute: typeof JewelleryPendantsRoute
+  JewelleryRingsRoute: typeof JewelleryRingsRoute
+  JewelleryWatchesRoute: typeof JewelleryWatchesRoute
+  BagsIndexRoute: typeof BagsIndexRoute
+  JewelleryIndexRoute: typeof JewelleryIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -163,18 +423,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/bags': {
-      id: '/bags'
-      path: '/bags'
-      fullPath: '/bags'
-      preLoaderRoute: typeof BagsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/best-sellers': {
       id: '/best-sellers'
       path: '/best-sellers'
       fullPath: '/best-sellers'
       preLoaderRoute: typeof BestSellersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/clutches': {
@@ -191,11 +451,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/jewellery': {
-      id: '/jewellery'
-      path: '/jewellery'
-      fullPath: '/jewellery'
-      preLoaderRoute: typeof JewelleryRouteImport
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/new-arrivals': {
@@ -205,11 +465,151 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewArrivalsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/returns': {
+      id: '/returns'
+      path: '/returns'
+      fullPath: '/returns'
+      preLoaderRoute: typeof ReturnsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shipping': {
+      id: '/shipping'
+      path: '/shipping'
+      fullPath: '/shipping'
+      preLoaderRoute: typeof ShippingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shop': {
       id: '/shop'
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bags/': {
+      id: '/bags/'
+      path: '/bags'
+      fullPath: '/bags/'
+      preLoaderRoute: typeof BagsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bags/gym-bags': {
+      id: '/bags/gym-bags'
+      path: '/bags/gym-bags'
+      fullPath: '/bags/gym-bags'
+      preLoaderRoute: typeof BagsGymBagsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bags/handbags': {
+      id: '/bags/handbags'
+      path: '/bags/handbags'
+      fullPath: '/bags/handbags'
+      preLoaderRoute: typeof BagsHandbagsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bags/party-bags': {
+      id: '/bags/party-bags'
+      path: '/bags/party-bags'
+      fullPath: '/bags/party-bags'
+      preLoaderRoute: typeof BagsPartyBagsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bags/potli-bags': {
+      id: '/bags/potli-bags'
+      path: '/bags/potli-bags'
+      fullPath: '/bags/potli-bags'
+      preLoaderRoute: typeof BagsPotliBagsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bags/shoulder-bags': {
+      id: '/bags/shoulder-bags'
+      path: '/bags/shoulder-bags'
+      fullPath: '/bags/shoulder-bags'
+      preLoaderRoute: typeof BagsShoulderBagsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bags/travel-bags': {
+      id: '/bags/travel-bags'
+      path: '/bags/travel-bags'
+      fullPath: '/bags/travel-bags'
+      preLoaderRoute: typeof BagsTravelBagsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jewellery/': {
+      id: '/jewellery/'
+      path: '/jewellery'
+      fullPath: '/jewellery/'
+      preLoaderRoute: typeof JewelleryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jewellery/bracelets': {
+      id: '/jewellery/bracelets'
+      path: '/jewellery/bracelets'
+      fullPath: '/jewellery/bracelets'
+      preLoaderRoute: typeof JewelleryBraceletsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jewellery/earrings': {
+      id: '/jewellery/earrings'
+      path: '/jewellery/earrings'
+      fullPath: '/jewellery/earrings'
+      preLoaderRoute: typeof JewelleryEarringsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jewellery/jewellery-sets': {
+      id: '/jewellery/jewellery-sets'
+      path: '/jewellery/jewellery-sets'
+      fullPath: '/jewellery/jewellery-sets'
+      preLoaderRoute: typeof JewelleryJewellerySetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jewellery/necklaces': {
+      id: '/jewellery/necklaces'
+      path: '/jewellery/necklaces'
+      fullPath: '/jewellery/necklaces'
+      preLoaderRoute: typeof JewelleryNecklacesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jewellery/pendants': {
+      id: '/jewellery/pendants'
+      path: '/jewellery/pendants'
+      fullPath: '/jewellery/pendants'
+      preLoaderRoute: typeof JewelleryPendantsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jewellery/rings': {
+      id: '/jewellery/rings'
+      path: '/jewellery/rings'
+      fullPath: '/jewellery/rings'
+      preLoaderRoute: typeof JewelleryRingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jewellery/watches': {
+      id: '/jewellery/watches'
+      path: '/jewellery/watches'
+      fullPath: '/jewellery/watches'
+      preLoaderRoute: typeof JewelleryWatchesRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -218,13 +618,33 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  BagsRoute: BagsRoute,
   BestSellersRoute: BestSellersRoute,
+  BlogRoute: BlogRoute,
   ClutchesRoute: ClutchesRoute,
   ContactRoute: ContactRoute,
-  JewelleryRoute: JewelleryRoute,
+  FaqRoute: FaqRoute,
   NewArrivalsRoute: NewArrivalsRoute,
+  PrivacyRoute: PrivacyRoute,
+  ReturnsRoute: ReturnsRoute,
+  ShippingRoute: ShippingRoute,
   ShopRoute: ShopRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TermsRoute: TermsRoute,
+  BagsGymBagsRoute: BagsGymBagsRoute,
+  BagsHandbagsRoute: BagsHandbagsRoute,
+  BagsPartyBagsRoute: BagsPartyBagsRoute,
+  BagsPotliBagsRoute: BagsPotliBagsRoute,
+  BagsShoulderBagsRoute: BagsShoulderBagsRoute,
+  BagsTravelBagsRoute: BagsTravelBagsRoute,
+  JewelleryBraceletsRoute: JewelleryBraceletsRoute,
+  JewelleryEarringsRoute: JewelleryEarringsRoute,
+  JewelleryJewellerySetsRoute: JewelleryJewellerySetsRoute,
+  JewelleryNecklacesRoute: JewelleryNecklacesRoute,
+  JewelleryPendantsRoute: JewelleryPendantsRoute,
+  JewelleryRingsRoute: JewelleryRingsRoute,
+  JewelleryWatchesRoute: JewelleryWatchesRoute,
+  BagsIndexRoute: BagsIndexRoute,
+  JewelleryIndexRoute: JewelleryIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
