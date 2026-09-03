@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { productPath, products } from "@/data/products";
+
 /**
- * Public, indexable static routes only. No product URLs are claimed — there are
- * no product detail pages yet. Policy shells are excluded because they are
- * noindex until real content is published.
+ * Public, indexable routes. Product detail URLs are appended from the catalog
+ * data model. Policy shells are excluded because they are noindex until real
+ * content is published.
  */
 const publicPaths = [
   "/",
@@ -45,7 +47,7 @@ export const Route = createFileRoute("/sitemap.xml")({
 
         const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${publicPaths.map((p) => `  <url><loc>${origin}${p === "/" ? "/" : p}</loc></url>`).join("\n")}
+${[...publicPaths, ...products.map(productPath)].map((p) => `  <url><loc>${origin}${p === "/" ? "/" : p}</loc></url>`).join("\n")}
 </urlset>
 `;
 
