@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BagsRouteImport } from './routes/bags'
+import { Route as ClutchesRouteImport } from './routes/clutches'
+import { Route as JewelleryRouteImport } from './routes/jewellery'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BagsRoute = BagsRouteImport.update({
+  id: '/bags',
+  path: '/bags',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClutchesRoute = ClutchesRouteImport.update({
+  id: '/clutches',
+  path: '/clutches',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JewelleryRoute = JewelleryRouteImport.update({
+  id: '/jewellery',
+  path: '/jewellery',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bags': typeof BagsRoute
+  '/clutches': typeof ClutchesRoute
+  '/jewellery': typeof JewelleryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bags': typeof BagsRoute
+  '/clutches': typeof ClutchesRoute
+  '/jewellery': typeof JewelleryRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bags': typeof BagsRoute
+  '/clutches': typeof ClutchesRoute
+  '/jewellery': typeof JewelleryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/bags' | '/clutches' | '/jewellery'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/bags' | '/clutches' | '/jewellery'
+  id: '__root__' | '/' | '/bags' | '/clutches' | '/jewellery'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BagsRoute: typeof BagsRoute
+  ClutchesRoute: typeof ClutchesRoute
+  JewelleryRoute: typeof JewelleryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bags': {
+      id: '/bags'
+      path: '/bags'
+      fullPath: '/bags'
+      preLoaderRoute: typeof BagsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clutches': {
+      id: '/clutches'
+      path: '/clutches'
+      fullPath: '/clutches'
+      preLoaderRoute: typeof ClutchesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jewellery': {
+      id: '/jewellery'
+      path: '/jewellery'
+      fullPath: '/jewellery'
+      preLoaderRoute: typeof JewelleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BagsRoute: BagsRoute,
+  ClutchesRoute: ClutchesRoute,
+  JewelleryRoute: JewelleryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
