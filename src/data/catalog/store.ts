@@ -148,17 +148,28 @@ export async function duplicateProductRow(id: string): Promise<string | undefine
   const original = state.rows.find((r) => r.id === id);
   if (!original) return undefined;
   const suffix = Date.now().toString(36).slice(-4);
-  const { id: _ignoredId, name: _ignoredName, updatedAt: _ignoredAt, ...rest } = original;
+  const {
+    id: _ignoredId,
+    name: _ignoredName,
+    updatedAt: _ignoredAt,
+    sku: _ignoredSku,
+    ...rest
+  } = original;
   const copy: ProductInput = {
     ...rest,
     slug: `${original.slug ?? "product"}-copy-${suffix}`,
     productName: `${original.productName ?? original.name ?? "Product"} (copy)`,
-    sku: undefined,
     status: "draft",
   };
   const saved = await catalogRepository.save(copy);
   await refreshCatalog();
   return saved.id;
+}
+
+/** Drops the id so the database assigns one. */
+function withoutId(row: ProductInput): ProductInput {
+  const { id: _ignored, ...rest } = row;
+  return rest as ProductInput;
 }
 
 /** Bulk field patch — powers publish / unpublish / flag actions. */
@@ -182,7 +193,7 @@ export async function mergeImportedRows(
       (r) => r.subcategory === row.subcategory && r.slug === row.slug,
     );
     try {
-      await catalogRepository.save(existing?.id ? { ...row, id: existing.id } : { ...row, id: undefined });
+      await catalogRepository.save(existing?.id ? { ...row, id: existing.id } : withoutId(row));
       saved += 1;
     } catch (error) {
       failures.push({

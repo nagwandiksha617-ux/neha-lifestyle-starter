@@ -23,7 +23,10 @@ export function MigratePanel() {
   const upload = async () => {
     setBusy(true);
     try {
-      const outcome = await mergeImportedRows(pending.map((row) => ({ ...row, id: undefined })));
+      const outcome = await mergeImportedRows(pending.map((row) => {
+        const { id: _ignored, ...rest } = row;
+        return rest as ProductInput;
+      }));
       if (outcome.saved > 0) {
         legacyLocalCatalog.clear();
         setPending(null);

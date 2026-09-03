@@ -79,8 +79,8 @@ export class SupabaseCatalogRepository implements CatalogRepository {
     const id = isDatabaseId(row.id) ? row.id : undefined;
 
     const query = id
-      ? supabase.from("products").update(values).eq("id", id).select(PRODUCT_COLUMNS).single()
-      : supabase.from("products").insert(values).select(PRODUCT_COLUMNS).single();
+      ? supabase.from("products").update(values as never).eq("id", id).select(PRODUCT_COLUMNS).single()
+      : supabase.from("products").insert(values as never).select(PRODUCT_COLUMNS).single();
 
     const { data, error } = await query;
     if (error) throw new Error(error.message);
@@ -106,7 +106,7 @@ export class SupabaseCatalogRepository implements CatalogRepository {
 
     const images = imageRowsFromRow(row, productId);
     if (images.length === 0) return;
-    const { error } = await supabase.from("product_images").insert(images);
+    const { error } = await supabase.from("product_images").insert(images as never);
     if (error) throw new Error(error.message);
   }
 
@@ -129,7 +129,7 @@ export class SupabaseCatalogRepository implements CatalogRepository {
     if (patch.bestSeller !== undefined) values['best_seller'] = Boolean(patch.bestSeller);
     if (Object.keys(values).length === 0) return;
 
-    const { error } = await supabase.from("products").update(values).in("id", target);
+    const { error } = await supabase.from("products").update(values as never).in("id", target);
     if (error) throw new Error(error.message);
   }
 }
