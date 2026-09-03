@@ -13,7 +13,7 @@ export const Route = createFileRoute("/wishlist")({
       title: "Wishlist | Neha Lifestyle",
       description: "The Neha Lifestyle pieces you have saved for later.",
       path: "/wishlist",
-      robots: "noindex, follow",
+      robots: "noindex, nofollow",
       breadcrumbs: [{ name: "Wishlist", path: "/wishlist" }],
     }),
   component: WishlistPage,
