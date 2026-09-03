@@ -12,26 +12,17 @@ import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { ProductCardPlaceholder } from "@/components/ProductCardPlaceholder";
 import { Section } from "@/components/Section";
 import { SectionHeading } from "@/components/SectionHeading";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "NEHA LIFESTYLE — Where Elegance Becomes Your Signature" },
-      {
-        name: "description",
-        content:
-          "Discover statement bags and timeless jewellery designed to elevate your everyday style at NEHA LIFESTYLE.",
-      },
-      { property: "og:title", content: "NEHA LIFESTYLE — Where Elegance Becomes Your Signature" },
-      {
-        property: "og:description",
-        content:
-          "Statement bags and timeless jewellery, curated to elevate your everyday style.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      title: "Neha Lifestyle | Premium Bags, Clutches & Jewellery",
+      description:
+        "Discover premium bags, clutches and jewellery at Neha Lifestyle. Explore elegant, trend-focused styles designed to elevate your everyday look.",
+      path: "/",
+      twitterCard: "summary_large_image",
+    }),
   component: Index,
 });
 
@@ -122,18 +113,18 @@ function Index() {
               Elevate Your Everyday
             </span>
 
-            <h1
-              id="hero-heading"
-              className="mt-8 font-display text-[2.75rem] leading-[1.02] font-light tracking-[0.16em] text-ivory uppercase sm:text-6xl lg:text-[4.25rem]"
-            >
+            <p className="mt-8 font-display text-[2.75rem] leading-[1.02] font-light tracking-[0.16em] text-ivory uppercase sm:text-6xl lg:text-[4.25rem]">
               Neha Lifestyle
-            </h1>
+            </p>
 
             <span aria-hidden="true" className="mt-8 h-px w-20 bg-gold/60" />
 
-            <p className="mt-8 font-display text-[1.6rem] leading-[1.35] font-light tracking-[0.02em] text-gold sm:text-[2rem]">
+            <h1
+              id="hero-heading"
+              className="mt-8 font-display text-[1.6rem] leading-[1.35] font-light tracking-[0.02em] text-gold sm:text-[2rem]"
+            >
               Where Elegance Becomes Your Signature
-            </p>
+            </h1>
 
             <p className="mt-6 max-w-md text-[0.9rem] leading-[2] font-light text-muted-foreground">
               Discover statement bags and timeless jewellery designed to elevate
