@@ -1,14 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { CollectionPlaceholderPage } from "@/components/CollectionPlaceholderPage";
+import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
+import { SubcategoryCards } from "@/components/shop/SubcategoryCards";
+import { bagSubcategories, getProductsBySubcategory } from "@/data/products";
 import { pageHead } from "@/lib/seo";
-import { bagCategoryLinks, topCollectionLinks } from "@/lib/catalog";
+
+const PRODUCTS = getProductsBySubcategory("travel-bags");
 
 export const Route = createFileRoute("/bags/travel-bags")({
   head: () =>
     pageHead({
-      title: "Travel Bags | Neha Lifestyle",
-      description: "Browse the travel bags category at Neha Lifestyle. This bags category is being prepared and pieces will be listed here as they are added.",
+      title: "Travel Bags | Bags | Neha Lifestyle",
+      description:
+        "Browse travel bags at Neha Lifestyle. Filter by price, availability and rating to find the piece that suits you.",
       path: "/bags/travel-bags",
       breadcrumbs: [{ name: "Bags", path: "/bags" }, { name: "Travel Bags", path: "/bags/travel-bags" }],
     }),
@@ -17,14 +21,18 @@ export const Route = createFileRoute("/bags/travel-bags")({
 
 function Page() {
   return (
-    <CollectionPlaceholderPage
+    <CategoryListingPage
       eyebrow="Bags Category"
       title="Travel Bags"
-      description="This category is being prepared. Travel Bags will be listed here once the collection is added."
+      intro="Explore the travel bags edit at Neha Lifestyle, refined for everyday wear and occasion dressing alike."
       breadcrumbs={[{ label: "Bags", to: "/bags" }, { label: "Travel Bags", to: "/bags/travel-bags" }]}
-      subcategories={bagCategoryLinks.filter((c) => c.to !== "/bags/travel-bags")}
-      subcategoriesHeading="Other bags categories"
-      relatedLinks={topCollectionLinks}
-    />
+      products={PRODUCTS}
+    >
+      <SubcategoryCards
+        heading="Other bags categories"
+        headingId="related-categories"
+        items={bagSubcategories.filter((s) => s.slug !== "travel-bags")}
+      />
+    </CategoryListingPage>
   );
 }

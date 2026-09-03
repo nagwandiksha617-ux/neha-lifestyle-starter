@@ -1,14 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { CollectionPlaceholderPage } from "@/components/CollectionPlaceholderPage";
+import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
+import { SubcategoryCards } from "@/components/shop/SubcategoryCards";
+import { bagSubcategories, getProductsBySubcategory } from "@/data/products";
 import { pageHead } from "@/lib/seo";
-import { bagCategoryLinks, topCollectionLinks } from "@/lib/catalog";
+
+const PRODUCTS = getProductsBySubcategory("gym-bags");
 
 export const Route = createFileRoute("/bags/gym-bags")({
   head: () =>
     pageHead({
-      title: "Gym Bags | Neha Lifestyle",
-      description: "Browse the gym bags category at Neha Lifestyle. This bags category is being prepared and pieces will be listed here as they are added.",
+      title: "Gym Bags | Bags | Neha Lifestyle",
+      description:
+        "Browse gym bags at Neha Lifestyle. Filter by price, availability and rating to find the piece that suits you.",
       path: "/bags/gym-bags",
       breadcrumbs: [{ name: "Bags", path: "/bags" }, { name: "Gym Bags", path: "/bags/gym-bags" }],
     }),
@@ -17,14 +21,18 @@ export const Route = createFileRoute("/bags/gym-bags")({
 
 function Page() {
   return (
-    <CollectionPlaceholderPage
+    <CategoryListingPage
       eyebrow="Bags Category"
       title="Gym Bags"
-      description="This category is being prepared. Gym Bags will be listed here once the collection is added."
+      intro="Explore the gym bags edit at Neha Lifestyle, refined for everyday wear and occasion dressing alike."
       breadcrumbs={[{ label: "Bags", to: "/bags" }, { label: "Gym Bags", to: "/bags/gym-bags" }]}
-      subcategories={bagCategoryLinks.filter((c) => c.to !== "/bags/gym-bags")}
-      subcategoriesHeading="Other bags categories"
-      relatedLinks={topCollectionLinks}
-    />
+      products={PRODUCTS}
+    >
+      <SubcategoryCards
+        heading="Other bags categories"
+        headingId="related-categories"
+        items={bagSubcategories.filter((s) => s.slug !== "gym-bags")}
+      />
+    </CategoryListingPage>
   );
 }

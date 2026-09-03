@@ -1,14 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { CollectionPlaceholderPage } from "@/components/CollectionPlaceholderPage";
+import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
+import { SubcategoryCards } from "@/components/shop/SubcategoryCards";
+import { jewellerySubcategories, getProductsBySubcategory } from "@/data/products";
 import { pageHead } from "@/lib/seo";
-import { jewelleryCategoryLinks, topCollectionLinks } from "@/lib/catalog";
+
+const PRODUCTS = getProductsBySubcategory("bracelets");
 
 export const Route = createFileRoute("/jewellery/bracelets")({
   head: () =>
     pageHead({
-      title: "Bracelets | Neha Lifestyle",
-      description: "Browse the bracelets category at Neha Lifestyle. This jewellery category is being prepared and pieces will be listed here as they are added.",
+      title: "Bracelets | Jewellery | Neha Lifestyle",
+      description:
+        "Browse bracelets at Neha Lifestyle. Filter by price, availability and rating to find the piece that suits you.",
       path: "/jewellery/bracelets",
       breadcrumbs: [{ name: "Jewellery", path: "/jewellery" }, { name: "Bracelets", path: "/jewellery/bracelets" }],
     }),
@@ -17,14 +21,18 @@ export const Route = createFileRoute("/jewellery/bracelets")({
 
 function Page() {
   return (
-    <CollectionPlaceholderPage
+    <CategoryListingPage
       eyebrow="Jewellery Category"
       title="Bracelets"
-      description="This category is being prepared. Bracelets will be listed here once the collection is added."
+      intro="Explore the bracelets edit at Neha Lifestyle, refined for everyday wear and occasion dressing alike."
       breadcrumbs={[{ label: "Jewellery", to: "/jewellery" }, { label: "Bracelets", to: "/jewellery/bracelets" }]}
-      subcategories={jewelleryCategoryLinks.filter((c) => c.to !== "/jewellery/bracelets")}
-      subcategoriesHeading="Other jewellery categories"
-      relatedLinks={topCollectionLinks}
-    />
+      products={PRODUCTS}
+    >
+      <SubcategoryCards
+        heading="Other jewellery categories"
+        headingId="related-categories"
+        items={jewellerySubcategories.filter((s) => s.slug !== "bracelets")}
+      />
+    </CategoryListingPage>
   );
 }
