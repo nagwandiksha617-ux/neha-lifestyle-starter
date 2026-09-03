@@ -23,7 +23,7 @@ export function ProductImage({ product, className, loading = "lazy" }: ProductIm
         label={`${product.name} photograph`}
         hint="Product image to be added"
         ratio="portrait"
-        className={className}
+        className={className ?? ""}
       />
     );
   }
