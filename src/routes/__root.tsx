@@ -16,6 +16,9 @@ import { Footer } from "../components/Footer";
 import { CartDrawer } from "../components/shop/CartDrawer";
 import { ShopProvider } from "../lib/shop-store";
 import { Toaster } from "../components/ui/sonner";
+import { fetchPublishedCatalog } from "../lib/catalog.functions";
+import { seedCatalog } from "../data/catalog/store";
+
 
 function NotFoundComponent() {
   return (
@@ -78,7 +81,16 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  loader: async () => {
+    // Published products are loaded once per navigation entry and seeded into
+    // the catalog store, so server rendering, metadata and structured data all
+    // see the same records as the browser.
+    const rows = await fetchPublishedCatalog();
+    seedCatalog(rows);
+    return null;
+  },
   head: () => ({
+
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },

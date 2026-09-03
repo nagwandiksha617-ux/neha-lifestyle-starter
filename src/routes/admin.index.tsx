@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { CatalogTable } from "@/components/admin/CatalogTable";
 import { CsvPanel } from "@/components/admin/CsvPanel";
+import { MigratePanel } from "@/components/admin/MigratePanel";
 import { useAdminCatalog } from "@/hooks/useCatalog";
 import { pageHead } from "@/lib/seo";
 
@@ -18,8 +19,23 @@ export const Route = createFileRoute("/admin/")({
 });
 
 function AdminHome() {
-  const { products, rows } = useAdminCatalog();
+  const { products, rows, loading, error, hydrated } = useAdminCatalog();
   const published = products.filter((p) => p.status === "published").length;
+  const lowStock = products.filter(
+    (p) =>
+      p.stockQuantity != null &&
+      p.lowStockThreshold != null &&
+      p.stockQuantity <= p.lowStockThreshold,
+  ).length;
+
+  const stats = [
+    { label: "Products", value: products.length },
+    { label: "Published", value: published },
+    { label: "Drafts", value: products.length - published },
+    { label: "Featured", value: products.filter((p) => p.featured).length },
+    { label: "New arrivals", value: products.filter((p) => p.newArrival).length },
+    { label: "Low stock", value: lowStock },
+  ];
 
   return (
     <AdminShell
@@ -34,23 +50,37 @@ function AdminHome() {
         </Link>
       }
     >
-      <dl className="grid gap-4 sm:grid-cols-3">
-        {[
-          { label: "Products", value: products.length },
-          { label: "Published", value: published },
-          { label: "Drafts", value: products.length - published },
-        ].map((stat) => (
-          <div key={stat.label} className="border border-gold/15 px-5 py-6">
-            <dt className="text-[0.55rem] font-light tracking-[0.26em] text-muted-foreground uppercase">
-              {stat.label}
-            </dt>
-            <dd className="mt-2 font-display text-3xl font-light text-ivory">{stat.value}</dd>
-          </div>
-        ))}
-      </dl>
+      {error && (
+        <p
+          role="alert"
+          className="border border-destructive/40 bg-destructive/10 px-5 py-4 text-[0.78rem] font-light text-destructive"
+        >
+          The catalog could not be loaded just now. Check your connection and refresh the page.
+        </p>
+      )}
 
-      <CatalogTable products={products} />
-      <CsvPanel products={products} rows={rows} />
+      {loading && !hydrated ? (
+        <p className="text-[0.8rem] font-light tracking-[0.16em] text-muted-foreground uppercase">
+          Loading your catalog…
+        </p>
+      ) : (
+        <>
+          <dl className="grid gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            {stats.map((stat) => (
+              <div key={stat.label} className="border border-gold/15 px-5 py-6">
+                <dt className="text-[0.55rem] font-light tracking-[0.26em] text-muted-foreground uppercase">
+                  {stat.label}
+                </dt>
+                <dd className="mt-2 font-display text-3xl font-light text-ivory">{stat.value}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <MigratePanel />
+          <CatalogTable products={products} />
+          <CsvPanel products={products} rows={rows} />
+        </>
+      )}
     </AdminShell>
   );
 }

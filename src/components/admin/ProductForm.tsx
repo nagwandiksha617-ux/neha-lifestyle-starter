@@ -47,6 +47,7 @@ export function ProductForm({ initial, existing, heading }: ProductFormProps) {
   const [form, setForm] = useState<ProductFormValues>(initial ?? emptyProductForm());
   const [errors, setErrors] = useState<ProductFormErrors>({});
   const [summary, setSummary] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
 
   const set = <K extends keyof ProductFormValues>(key: K, value: ProductFormValues[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -70,8 +71,9 @@ export function ProductForm({ initial, existing, heading }: ProductFormProps) {
     }));
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (saving) return;
     const result = validateProductForm(form, existing);
     setErrors(result.errors);
     const count = Object.keys(result.errors).length;
@@ -80,7 +82,20 @@ export function ProductForm({ initial, existing, heading }: ProductFormProps) {
       return;
     }
     setSummary(null);
-    upsertProductRow(result.row);
+    setSaving(true);
+    try {
+      await upsertProductRow(result.row);
+    } catch (error) {
+      setSaving(false);
+      const message = error instanceof Error ? error.message : "";
+      setSummary(
+        message.toLowerCase().includes("duplicate")
+          ? "This product was not saved: another product already uses that URL or SKU."
+          : "This product was not saved. Check your connection and try again.",
+      );
+      return;
+    }
+    setSaving(false);
     toast.success(
       form.status === "published"
         ? "Product saved and published to the storefront."
@@ -90,7 +105,7 @@ export function ProductForm({ initial, existing, heading }: ProductFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-8">
+    <form onSubmit={(event) => void handleSubmit(event)} noValidate className="flex flex-col gap-8">
       <h1 className="font-display text-3xl font-light tracking-[0.12em] text-ivory">{heading}</h1>
 
       {summary && (
@@ -372,8 +387,8 @@ export function ProductForm({ initial, existing, heading }: ProductFormProps) {
       </section>
 
       <div className="flex flex-wrap gap-4">
-        <button type="submit" className={primaryButton}>
-          Save product
+        <button type="submit" className={primaryButton} disabled={saving}>
+          {saving ? "Saving…" : "Save product"}
         </button>
         <button type="button" className={ghostButton} onClick={() => void navigate({ to: "/admin" })}>
           Cancel

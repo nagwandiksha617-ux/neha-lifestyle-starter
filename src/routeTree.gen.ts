@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AccountRouteImport } from './routes/account'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as BestSellersRouteImport } from './routes/best-sellers'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as CartRouteImport } from './routes/cart'
@@ -67,6 +68,7 @@ import { Route as JewelleryRingsIndexRouteImport } from './routes/jewellery.ring
 import { Route as JewelleryRingsSlugRouteImport } from './routes/jewellery.rings.$slug'
 import { Route as JewelleryWatchesIndexRouteImport } from './routes/jewellery.watches.index'
 import { Route as JewelleryWatchesSlugRouteImport } from './routes/jewellery.watches.$slug'
+import { Route as ApiPublicProductImageSplatRouteImport } from './routes/api/public/product-image.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -81,6 +83,11 @@ const AboutRoute = AboutRouteImport.update({
 const AccountRoute = AccountRouteImport.update({
   id: '/account',
   path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BestSellersRoute = BestSellersRouteImport.update({
@@ -154,9 +161,9 @@ const WishlistRoute = WishlistRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/admin/',
-  path: '/admin/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const BagsIndexRoute = BagsIndexRouteImport.update({
   id: '/bags/',
@@ -179,14 +186,14 @@ const OrderReferenceRoute = OrderReferenceRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminProductsIdRoute = AdminProductsIdRouteImport.update({
-  id: '/admin/products/$id',
-  path: '/admin/products/$id',
-  getParentRoute: () => rootRouteImport,
+  id: '/products/$id',
+  path: '/products/$id',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminProductsNewRoute = AdminProductsNewRouteImport.update({
-  id: '/admin/products/new',
-  path: '/admin/products/new',
-  getParentRoute: () => rootRouteImport,
+  id: '/products/new',
+  path: '/products/new',
+  getParentRoute: () => AdminRoute,
 } as any)
 const BagsGymBagsIndexRoute = BagsGymBagsIndexRouteImport.update({
   id: '/bags/gym-bags/',
@@ -360,11 +367,18 @@ const JewelleryWatchesSlugRoute = JewelleryWatchesSlugRouteImport.update({
   path: '/jewellery/watches/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicProductImageSplatRoute =
+  ApiPublicProductImageSplatRouteImport.update({
+    id: '/api/public/product-image/$',
+    path: '/api/public/product-image/$',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
+  '/admin': typeof AdminRouteWithChildren
   '/best-sellers': typeof BestSellersRoute
   '/blog': typeof BlogRoute
   '/cart': typeof CartRoute
@@ -420,6 +434,7 @@ export interface FileRoutesByFullPath {
   '/jewellery/pendants/': typeof JewelleryPendantsIndexRoute
   '/jewellery/rings/': typeof JewelleryRingsIndexRoute
   '/jewellery/watches/': typeof JewelleryWatchesIndexRoute
+  '/api/public/product-image/$': typeof ApiPublicProductImageSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -480,12 +495,14 @@ export interface FileRoutesByTo {
   '/jewellery/pendants': typeof JewelleryPendantsIndexRoute
   '/jewellery/rings': typeof JewelleryRingsIndexRoute
   '/jewellery/watches': typeof JewelleryWatchesIndexRoute
+  '/api/public/product-image/$': typeof ApiPublicProductImageSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/account': typeof AccountRoute
+  '/admin': typeof AdminRouteWithChildren
   '/best-sellers': typeof BestSellersRoute
   '/blog': typeof BlogRoute
   '/cart': typeof CartRoute
@@ -541,6 +558,7 @@ export interface FileRoutesById {
   '/jewellery/pendants/': typeof JewelleryPendantsIndexRoute
   '/jewellery/rings/': typeof JewelleryRingsIndexRoute
   '/jewellery/watches/': typeof JewelleryWatchesIndexRoute
+  '/api/public/product-image/$': typeof ApiPublicProductImageSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -548,6 +566,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/account'
+    | '/admin'
     | '/best-sellers'
     | '/blog'
     | '/cart'
@@ -603,6 +622,7 @@ export interface FileRouteTypes {
     | '/jewellery/pendants/'
     | '/jewellery/rings/'
     | '/jewellery/watches/'
+    | '/api/public/product-image/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -663,11 +683,13 @@ export interface FileRouteTypes {
     | '/jewellery/pendants'
     | '/jewellery/rings'
     | '/jewellery/watches'
+    | '/api/public/product-image/$'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/account'
+    | '/admin'
     | '/best-sellers'
     | '/blog'
     | '/cart'
@@ -723,12 +745,14 @@ export interface FileRouteTypes {
     | '/jewellery/pendants/'
     | '/jewellery/rings/'
     | '/jewellery/watches/'
+    | '/api/public/product-image/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AccountRoute: typeof AccountRoute
+  AdminRoute: typeof AdminRouteWithChildren
   BestSellersRoute: typeof BestSellersRoute
   BlogRoute: typeof BlogRoute
   CartRoute: typeof CartRoute
@@ -744,12 +768,9 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   WishlistRoute: typeof WishlistRoute
   OrderReferenceRoute: typeof OrderReferenceRoute
-  AdminIndexRoute: typeof AdminIndexRoute
   BagsIndexRoute: typeof BagsIndexRoute
   ClutchesIndexRoute: typeof ClutchesIndexRoute
   JewelleryIndexRoute: typeof JewelleryIndexRoute
-  AdminProductsIdRoute: typeof AdminProductsIdRoute
-  AdminProductsNewRoute: typeof AdminProductsNewRoute
   BagsGymBagsSlugRoute: typeof BagsGymBagsSlugRoute
   BagsHandbagsSlugRoute: typeof BagsHandbagsSlugRoute
   BagsPartyBagsSlugRoute: typeof BagsPartyBagsSlugRoute
@@ -784,6 +805,7 @@ export interface RootRouteChildren {
   JewelleryPendantsIndexRoute: typeof JewelleryPendantsIndexRoute
   JewelleryRingsIndexRoute: typeof JewelleryRingsIndexRoute
   JewelleryWatchesIndexRoute: typeof JewelleryWatchesIndexRoute
+  ApiPublicProductImageSplatRoute: typeof ApiPublicProductImageSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -807,6 +829,13 @@ declare module '@tanstack/react-router' {
       path: '/account'
       fullPath: '/account'
       preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/best-sellers': {
@@ -909,10 +938,10 @@ declare module '@tanstack/react-router' {
     }
     '/admin/': {
       id: '/admin/'
-      path: '/admin'
+      path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/bags/': {
       id: '/bags/'
@@ -944,17 +973,17 @@ declare module '@tanstack/react-router' {
     }
     '/admin/products/$id': {
       id: '/admin/products/$id'
-      path: '/admin/products/$id'
+      path: '/products/$id'
       fullPath: '/admin/products/$id'
       preLoaderRoute: typeof AdminProductsIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/products/new': {
       id: '/admin/products/new'
-      path: '/admin/products/new'
+      path: '/products/new'
       fullPath: '/admin/products/new'
       preLoaderRoute: typeof AdminProductsNewRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/bags/gym-bags/': {
       id: '/bags/gym-bags/'
@@ -1194,13 +1223,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JewelleryWatchesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/product-image/$': {
+      id: '/api/public/product-image/$'
+      path: '/api/public/product-image/$'
+      fullPath: '/api/public/product-image/$'
+      preLoaderRoute: typeof ApiPublicProductImageSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
+
+interface AdminRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminProductsIdRoute: typeof AdminProductsIdRoute
+  AdminProductsNewRoute: typeof AdminProductsNewRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+  AdminProductsIdRoute: AdminProductsIdRoute,
+  AdminProductsNewRoute: AdminProductsNewRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AccountRoute: AccountRoute,
+  AdminRoute: AdminRouteWithChildren,
   BestSellersRoute: BestSellersRoute,
   BlogRoute: BlogRoute,
   CartRoute: CartRoute,
@@ -1216,12 +1267,9 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   WishlistRoute: WishlistRoute,
   OrderReferenceRoute: OrderReferenceRoute,
-  AdminIndexRoute: AdminIndexRoute,
   BagsIndexRoute: BagsIndexRoute,
   ClutchesIndexRoute: ClutchesIndexRoute,
   JewelleryIndexRoute: JewelleryIndexRoute,
-  AdminProductsIdRoute: AdminProductsIdRoute,
-  AdminProductsNewRoute: AdminProductsNewRoute,
   BagsGymBagsSlugRoute: BagsGymBagsSlugRoute,
   BagsHandbagsSlugRoute: BagsHandbagsSlugRoute,
   BagsPartyBagsSlugRoute: BagsPartyBagsSlugRoute,
@@ -1256,6 +1304,7 @@ const rootRouteChildren: RootRouteChildren = {
   JewelleryPendantsIndexRoute: JewelleryPendantsIndexRoute,
   JewelleryRingsIndexRoute: JewelleryRingsIndexRoute,
   JewelleryWatchesIndexRoute: JewelleryWatchesIndexRoute,
+  ApiPublicProductImageSplatRoute: ApiPublicProductImageSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

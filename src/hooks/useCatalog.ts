@@ -1,10 +1,8 @@
 /**
  * React bindings for the catalog store.
  *
- * Public surfaces use the `use*` hooks below so a product added or edited in
- * the catalog manager appears immediately across the storefront in this
- * browser. Every hook here returns published records only; drafts are
- * available exclusively through `useAdminCatalog`.
+ * Public surfaces use the `use*` hooks below, which return published records
+ * only; drafts are available exclusively through `useAdminCatalog`.
  */
 
 import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
@@ -13,6 +11,7 @@ import {
   getCatalogState,
   getServerCatalogState,
   hydrateCatalog,
+  refreshCatalog,
   subscribeCatalog,
 } from "@/data/catalog/store";
 import { getRelatedProducts } from "@/data/products";
@@ -25,13 +24,7 @@ function useCatalogState() {
   return useSyncExternalStore(subscribeCatalog, getCatalogState, getServerCatalogState);
 }
 
-/**
- * All published products.
- *
- * The list comes from the snapshot returned by `useSyncExternalStore`, so the
- * hydration render sees exactly the server-rendered record set and React
- * re-renders cleanly once the local catalog is read.
- */
+/** All published products. */
 export function useProducts(): Product[] {
   const state = useCatalogState();
   return useMemo(() => state.products.filter((p) => p.status === "published"), [state]);
@@ -87,17 +80,20 @@ export function useRelatedProducts(product: Product, limit = 4): Product[] {
 }
 
 /**
- * Admin view of the catalog: every record including drafts, the raw rows used
- * for export, and any rows the import layer could not publish.
+ * Admin view of the catalog: every record the signed-in administrator can
+ * read (drafts included), the raw rows used for export, and any rows the
+ * import layer could not publish.
  */
 export function useAdminCatalog() {
   const state = useCatalogState();
-  const refresh = useCallback(() => hydrateCatalog(), []);
+  const refresh = useCallback(() => refreshCatalog(), []);
   return {
     products: state.products,
     rows: state.rows,
     issues: state.issues,
     hydrated: state.hydrated,
+    loading: state.loading,
+    error: state.error,
     refresh,
   };
 }

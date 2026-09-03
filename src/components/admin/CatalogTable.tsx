@@ -76,21 +76,28 @@ export function CatalogTable({ products }: CatalogTableProps) {
   const toggle = (id: string) =>
     setSelected((prev) => (prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]));
 
-  const bulk = (patch: Parameters<typeof patchProductRows>[1], message: string) => {
+  const bulk = async (patch: Parameters<typeof patchProductRows>[1], message: string) => {
     if (selected.length === 0) return;
-    patchProductRows(selected, patch);
-    toast.success(message);
-    setSelected([]);
+    try {
+      await patchProductRows(selected, patch);
+      toast.success(message);
+      setSelected([]);
+    } catch {
+      toast.error("That change could not be saved. Please try again.");
+    }
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (!pendingDelete) return;
-    deleteProductRows(pendingDelete.ids);
-    setSelected((prev) => prev.filter((id) => !pendingDelete.ids.includes(id)));
-    toast.success(
-      pendingDelete.ids.length === 1 ? "Product deleted." : `${pendingDelete.ids.length} products deleted.`,
-    );
+    const ids = pendingDelete.ids;
     setPendingDelete(null);
+    try {
+      await deleteProductRows(ids);
+      setSelected((prev) => prev.filter((id) => !ids.includes(id)));
+      toast.success(ids.length === 1 ? "Product deleted." : `${ids.length} products deleted.`);
+    } catch {
+      toast.error("That product could not be deleted. Please try again.");
+    }
   };
 
   if (products.length === 0) {
@@ -169,16 +176,16 @@ export function CatalogTable({ products }: CatalogTableProps) {
           <span className="text-[0.6rem] font-light tracking-[0.22em] text-gold uppercase">
             {selected.length} selected
           </span>
-          <button type="button" className={actionClass} onClick={() => bulk({ status: "published" }, "Selected products published.")}>
+          <button type="button" className={actionClass} onClick={() => void bulk({ status: "published" }, "Selected products published.")}>
             Publish
           </button>
-          <button type="button" className={actionClass} onClick={() => bulk({ status: "draft" }, "Selected products moved to draft.")}>
+          <button type="button" className={actionClass} onClick={() => void bulk({ status: "draft" }, "Selected products moved to draft.")}>
             Unpublish
           </button>
-          <button type="button" className={actionClass} onClick={() => bulk({ newArrival: true }, "Marked as new arrivals.")}>
+          <button type="button" className={actionClass} onClick={() => void bulk({ newArrival: true }, "Marked as new arrivals.")}>
             Mark new arrival
           </button>
-          <button type="button" className={actionClass} onClick={() => bulk({ bestSeller: true }, "Marked as best sellers.")}>
+          <button type="button" className={actionClass} onClick={() => void bulk({ bestSeller: true }, "Marked as best sellers.")}>
             Mark best seller
           </button>
           <button
@@ -325,7 +332,7 @@ export function CatalogTable({ products }: CatalogTableProps) {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Keep product</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmDelete}>Delete</AlertDialogAction>
+            <AlertDialogAction onClick={() => void confirmDelete()}>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -390,8 +397,9 @@ function RowActions({
         type="button"
         className={actionClass}
         onClick={() => {
-          duplicateProductRow(product.id);
-          toast.success("Product duplicated as a draft.");
+          void duplicateProductRow(product.id)
+            .then(() => toast.success("Product duplicated as a draft."))
+            .catch(() => toast.error("That product could not be duplicated."));
         }}
       >
         Duplicate
@@ -400,9 +408,9 @@ function RowActions({
         type="button"
         className={actionClass}
         onClick={() =>
-          patchProductRows([product.id], {
+          void patchProductRows([product.id], {
             status: product.status === "published" ? "draft" : "published",
-          })
+          }).catch(() => toast.error("That change could not be saved."))
         }
       >
         {product.status === "published" ? "Unpublish" : "Publish"}

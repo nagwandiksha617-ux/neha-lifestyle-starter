@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { AlertTriangle } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import type { ReactNode } from "react";
+
+import { useAdminSession } from "@/hooks/useAdminSession";
 
 interface AdminShellProps {
   title: string;
@@ -12,13 +14,16 @@ interface AdminShellProps {
 /**
  * Layout for the catalog manager.
  *
- * The notice is deliberate and must stay: there is no authentication and no
- * server behind this area, so it should never be presented as secure.
+ * Access is decided by the database: only accounts holding the admin role can
+ * read drafts or change the catalog, and every save is checked server-side by
+ * row-level security rather than by this layout.
  */
 export function AdminShell({ title, intro, action, children }: AdminShellProps) {
+  const { session, signOut } = useAdminSession();
+
   return (
     <div className="mx-auto w-full max-w-7xl px-5 py-14 sm:px-8 lg:py-20">
-      <nav aria-label="Catalog manager" className="mb-8 flex flex-wrap gap-5">
+      <nav aria-label="Catalog manager" className="mb-8 flex flex-wrap items-center gap-5">
         <Link
           to="/admin"
           className="text-[0.58rem] font-light tracking-[0.26em] text-muted-foreground uppercase transition-colors hover:text-gold"
@@ -37,19 +42,31 @@ export function AdminShell({ title, intro, action, children }: AdminShellProps) 
         >
           View storefront
         </Link>
+        <span className="ml-auto flex items-center gap-4">
+          {session?.user.email && (
+            <span className="text-[0.58rem] font-light tracking-[0.2em] text-muted-foreground">
+              {session.user.email}
+            </span>
+          )}
+          <button
+            type="button"
+            onClick={() => void signOut()}
+            className="text-[0.58rem] font-light tracking-[0.26em] text-muted-foreground uppercase transition-colors hover:text-gold"
+          >
+            Sign out
+          </button>
+        </span>
       </nav>
 
       <div
         role="note"
         className="mb-10 flex gap-3 border border-gold/25 bg-onyx/40 px-5 py-4 text-[0.75rem] leading-relaxed font-light text-muted-foreground"
       >
-        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-gold" strokeWidth={1.25} aria-hidden="true" />
+        <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-gold" strokeWidth={1.25} aria-hidden="true" />
         <p>
-          <strong className="font-normal text-ivory">Local, unprotected workspace.</strong> There is
-          no login on this page and no server behind it — anyone who opens this URL can edit the
-          catalog, and products are saved only in this browser on this device. Clearing site data
-          erases them, and nobody else sees them. Connect a backend with authentication before this
-          is used for the real shop.
+          <strong className="font-normal text-ivory">Administrator area.</strong> Products are
+          stored in the shop&rsquo;s cloud database, so they stay available on every device and to
+          every administrator. Drafts are hidden from customers until you publish them.
         </p>
       </div>
 
