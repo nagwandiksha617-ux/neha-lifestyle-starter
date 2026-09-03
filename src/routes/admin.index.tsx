@@ -84,7 +84,3 @@ function AdminHome() {
     </AdminShell>
   );
 }
-
-    </AdminShell>
-  );
-}
