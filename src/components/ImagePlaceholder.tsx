@@ -19,6 +19,8 @@ interface ImagePlaceholderProps {
   zoomOnHover?: boolean;
   /** Larger, quieter treatment for hero/editorial use. */
   editorial?: boolean;
+  /** Keeps the accessible label but hides the visible caption (thumbnails). */
+  hideCaption?: boolean;
 }
 
 /**
@@ -32,6 +34,7 @@ export function ImagePlaceholder({
   className,
   zoomOnHover = true,
   editorial = false,
+  hideCaption = false,
 }: ImagePlaceholderProps) {
   return (
     <div
@@ -60,7 +63,12 @@ export function ImagePlaceholder({
         )}
       />
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center">
+      <div
+        className={cn(
+          "absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center",
+          hideCaption && "hidden",
+        )}
+      >
         <span
           aria-hidden="true"
           className={cn("h-px bg-gold/40", editorial ? "w-14" : "w-8")}

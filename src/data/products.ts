@@ -25,6 +25,10 @@ export interface Product {
   price: number;
   /** Discounted price when on offer. */
   salePrice?: number;
+  /** Original (struck-through) price when the piece is on offer. */
+  compareAtPrice?: number;
+  /** Stock keeping unit. Placeholder until real inventory codes exist. */
+  sku?: string;
   currency: "INR";
   /** Real image URLs once available; empty array renders an elegant placeholder. */
   images: string[];
@@ -37,9 +41,20 @@ export interface Product {
   rating: number;
   reviewCount: number;
   availability: Availability;
+  /** Label/value specification rows shown on the product page. */
+  specifications?: SpecRow[];
+  /** Care instructions. */
+  care?: string;
+  /** Free-form tags used for related-product affinity. */
+  tags?: string[];
   featured: boolean;
   newArrival: boolean;
   bestSeller: boolean;
+}
+
+export interface SpecRow {
+  label: string;
+  value: string;
 }
 
 export interface Subcategory {
@@ -233,6 +248,16 @@ function buildDemoProducts(): Product[] {
         material: materials[index % materials.length]!,
         dimensions: "Dimensions to be added",
         color: colors[index % colors.length]!,
+        ...(onSale ? { compareAtPrice: price } : {}),
+        sku: `SKU-PLACEHOLDER-${String(index).padStart(3, "0")}`,
+        specifications: [
+          { label: "Material", value: "Placeholder material" },
+          { label: "Dimensions", value: "Dimensions to be added" },
+          { label: "Closure", value: "Detail to be added" },
+          { label: "Finish", value: "Detail to be added" },
+        ],
+        care: "Care instructions to be added.",
+        tags: [seed.subcategory, seed.category],
         rating,
         reviewCount: 0,
         availability: index % 11 === 0 ? "out-of-stock" : "in-stock",
@@ -275,4 +300,53 @@ export function formatPrice(value: number, currency: Product["currency"] = "INR"
 
 export function subcategoryName(slug: string): string {
   return allSubcategories.find((s) => s.slug === slug)?.name ?? slug;
+}
+
+/** Route pattern for each subcategory's product detail page. */
+const productRoutePatterns: Record<string, RoutePath> = {
+  handbags: "/bags/handbags/$slug",
+  "gym-bags": "/bags/gym-bags/$slug",
+  "travel-bags": "/bags/travel-bags/$slug",
+  "shoulder-bags": "/bags/shoulder-bags/$slug",
+  "party-bags": "/bags/party-bags/$slug",
+  "potli-bags": "/bags/potli-bags/$slug",
+  clutches: "/clutches/$slug",
+  earrings: "/jewellery/earrings/$slug",
+  rings: "/jewellery/rings/$slug",
+  necklaces: "/jewellery/necklaces/$slug",
+  bracelets: "/jewellery/bracelets/$slug",
+  "jewellery-sets": "/jewellery/jewellery-sets/$slug",
+  pendants: "/jewellery/pendants/$slug",
+  watches: "/jewellery/watches/$slug",
+};
+
+/** Typed route pattern for <Link to=...>; falls back to the shop listing. */
+export function productRoutePattern(product: Product): RoutePath {
+  return productRoutePatterns[product.subcategory] ?? "/shop";
+}
+
+/** Root-relative URL of a product page — used for canonical, OG and sharing. */
+export function productPath(product: Product): string {
+  const subcategory = allSubcategories.find((s) => s.slug === product.subcategory);
+  const base = subcategory ? subcategory.path : "/shop";
+  return `${base}/${product.slug}`;
+}
+
+/** Looks a product up inside a single subcategory, so URLs stay unambiguous. */
+export function getProductBySlug(subcategory: string, slug: string): Product | undefined {
+  return products.find((p) => p.subcategory === subcategory && p.slug === slug);
+}
+
+/**
+ * Related pieces: same subcategory first, then the wider category, never the
+ * product itself. Returns at most `limit` items.
+ */
+export function getRelatedProducts(product: Product, limit = 4): Product[] {
+  const sameSub = products.filter(
+    (p) => p.id !== product.id && p.subcategory === product.subcategory,
+  );
+  const sameCategory = products.filter(
+    (p) => p.id !== product.id && p.category === product.category && p.subcategory !== product.subcategory,
+  );
+  return [...sameSub, ...sameCategory].slice(0, limit);
 }

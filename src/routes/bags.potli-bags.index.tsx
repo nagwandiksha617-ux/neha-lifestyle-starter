@@ -7,7 +7,7 @@ import { pageHead } from "@/lib/seo";
 
 const PRODUCTS = getProductsBySubcategory("potli-bags");
 
-export const Route = createFileRoute("/bags/potli-bags")({
+export const Route = createFileRoute("/bags/potli-bags/")({
   head: () =>
     pageHead({
       title: "Potli Bags | Bags | Neha Lifestyle",

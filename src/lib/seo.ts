@@ -33,7 +33,7 @@ export interface PageSeoInput {
    * than no tag at all.
    */
   ogImage?: string;
-  ogType?: "website" | "article";
+  ogType?: "website" | "article" | "product";
   twitterCard?: "summary" | "summary_large_image";
   /** e.g. "noindex, follow". Omitted entirely when not set. */
   robots?: string;
