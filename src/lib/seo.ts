@@ -37,6 +37,8 @@ export interface PageSeoInput {
   twitterCard?: "summary" | "summary_large_image";
   /** e.g. "noindex, follow". Omitted entirely when not set. */
   robots?: string;
+  /** Product/page keywords; emitted only when genuinely provided. */
+  keywords?: string[];
   /** Breadcrumb trail; "Home" is prepended automatically. */
   breadcrumbs?: BreadcrumbItem[];
   /** Extra JSON-LD blocks to inject for this route. */
@@ -135,6 +137,7 @@ export function pageHead(input: PageSeoInput) {
   const meta: MetaEntry[] = [
     { title: input.title },
     { name: "description", content: input.description },
+    ...(input.keywords?.length ? [{ name: "keywords", content: input.keywords.join(", ") }] : []),
     { property: "og:site_name", content: SITE_NAME },
     { property: "og:title", content: ogTitle },
     { property: "og:description", content: ogDescription },

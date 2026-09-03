@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { X } from "lucide-react";
 
-import { formatPrice, products } from "@/data/products";
+import { priceLabel, productRoutePattern, products, subcategoryName } from "@/data/products";
 import { matchesQuery } from "./filters";
 
 interface SearchOverlayProps {
@@ -11,7 +11,8 @@ interface SearchOverlayProps {
 }
 
 /**
- * Client-side search across product name, category and subcategory.
+ * Client-side search across product name, category, subcategory, tags, SKU
+ * and description copy.
  * The matcher is shared with the listing filters, so swapping in a
  * server-side search later means replacing only the results source.
  */
@@ -87,7 +88,8 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                 {results.map((product) => (
                   <li key={product.id}>
                     <Link
-                      to="/shop"
+                      to={productRoutePattern(product)}
+                      params={{ slug: product.slug }}
                       onClick={onClose}
                       className="flex min-h-14 items-center justify-between gap-4 py-3 text-left transition-colors duration-300 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                     >
@@ -96,11 +98,11 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                           {product.name}
                         </span>
                         <span className="block text-[0.6rem] font-light tracking-[0.24em] text-muted-foreground uppercase">
-                          {product.subcategory.replace(/-/g, " ")}
+                          {subcategoryName(product.subcategory)}
                         </span>
                       </span>
                       <span className="shrink-0 text-[0.78rem] font-light text-gold">
-                        {formatPrice(product.salePrice ?? product.price, product.currency)}
+                        {priceLabel(product)}
                       </span>
                     </Link>
                   </li>

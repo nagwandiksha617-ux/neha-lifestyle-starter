@@ -5,13 +5,14 @@ import { ProductNotFound } from "@/components/product/ProductNotFound";
 import { getProductBySlug } from "@/data/products";
 import { buildProductHead } from "@/lib/product-seo";
 
-const SUBCATEGORY = "clutches";
-const BASE_PATH = "/clutches";
+const SUBCATEGORY = "designer";
+const BASE_PATH = "/clutches/designer";
 const PARENT_CRUMBS = [
-    { label: "Clutches", to: BASE_PATH },
+  { label: "Clutches", to: "/clutches" },
+  { label: "Designer Clutches", to: BASE_PATH },
 ];
 
-export const Route = createFileRoute("/clutches/$slug")({
+export const Route = createFileRoute("/clutches/designer/$slug")({
   head: ({ params }) =>
     buildProductHead({
       subcategory: SUBCATEGORY,
@@ -27,7 +28,7 @@ function ProductRoute() {
   const product = getProductBySlug(SUBCATEGORY, slug);
 
   if (!product) {
-    return <ProductNotFound backTo={BASE_PATH} backLabel="Back to Clutches" />;
+    return <ProductNotFound backTo={BASE_PATH} backLabel="Back to Designer Clutches" />;
   }
 
   return (

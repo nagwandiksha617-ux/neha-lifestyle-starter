@@ -13,8 +13,14 @@ import { useShop } from "@/lib/shop-store";
 import { openWhatsAppOrder } from "@/lib/whatsapp";
 import { isWhatsAppConfigured } from "@/config/business";
 import {
+  comparePrice,
   formatPrice,
   getRelatedProducts,
+  hasPrice,
+  isDemoCatalog,
+  isPurchasable,
+  priceLabel,
+  stockStatusLabels,
   subcategoryName,
   type Product,
 } from "@/data/products";
@@ -35,7 +41,9 @@ export function ProductDetailPage({ product, breadcrumbs }: ProductDetailPagePro
   const [quantity, setQuantity] = useState(1);
 
   const wishlisted = hydrated && isWishlisted(product.id);
-  const soldOut = product.availability === "out-of-stock";
+  const soldOut = !isPurchasable(product);
+  const compareAt = comparePrice(product);
+  const priced = hasPrice(product);
   const related = getRelatedProducts(product, 4);
   const whatsAppReady = isWhatsAppConfigured();
 
@@ -74,44 +82,59 @@ export function ProductDetailPage({ product, breadcrumbs }: ProductDetailPagePro
           </h1>
           <span aria-hidden="true" className="mt-5 block h-px w-16 bg-gold/40" />
 
-          <p className="mt-6 text-[0.9rem] leading-relaxed font-light text-muted-foreground">
-            {product.shortDescription}
-          </p>
+          {product.shortDescription && (
+            <p className="mt-6 text-[0.9rem] leading-relaxed font-light text-muted-foreground">
+              {product.shortDescription}
+            </p>
+          )}
 
           <div className="mt-8 flex flex-wrap items-baseline gap-4">
-            <span className="text-xl font-light tracking-[0.12em] text-gold">
-              {formatPrice(product.salePrice ?? product.price, product.currency)}
+            <span
+              className={`text-xl font-light tracking-[0.12em] ${priced ? "text-gold" : "text-muted-foreground"}`}
+            >
+              {priceLabel(product)}
             </span>
-            {product.compareAtPrice != null && (
+            {compareAt != null && (
               <span className="text-sm font-light tracking-[0.12em] text-muted-foreground/70 line-through">
-                {formatPrice(product.compareAtPrice, product.currency)}
+                {formatPrice(compareAt, product.currency)}
               </span>
             )}
-            <span className="text-[0.55rem] font-light tracking-[0.26em] text-muted-foreground/70 uppercase">
-              Placeholder price
-            </span>
+            {isDemoCatalog && priced && (
+              <span className="text-[0.55rem] font-light tracking-[0.26em] text-muted-foreground/70 uppercase">
+                Placeholder price
+              </span>
+            )}
           </div>
 
           <dl className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 text-[0.7rem] font-light tracking-[0.14em] text-muted-foreground">
             <div className="flex items-center gap-2">
-              <dt className="sr-only">Availability</dt>
+              <dt className="text-muted-foreground/70">Availability</dt>
               <dd className={soldOut ? "text-ivory/70" : "text-gold"}>
-                {soldOut ? "Out of stock" : "In stock"}
-                <span className="sr-only"> — placeholder status</span>
+                {stockStatusLabels[product.stockStatus]}
+                {product.stockQuantity != null && !soldOut ? ` · ${product.stockQuantity} available` : ""}
               </dd>
             </div>
-            <div className="flex items-center gap-2">
-              <dt className="sr-only">Rating</dt>
-              <dd className="flex items-center gap-1.5">
-                <Star className="h-3.5 w-3.5 text-gold" strokeWidth={1.25} fill="currentColor" aria-hidden="true" />
-                {product.rating.toFixed(1)} · {product.reviewCount} reviews
-                <span className="sr-only"> — placeholder rating</span>
-              </dd>
-            </div>
-            <div className="flex items-center gap-2">
-              <dt className="text-muted-foreground/70">SKU</dt>
-              <dd className="text-ivory/80">{product.sku ?? "SKU placeholder"}</dd>
-            </div>
+            {product.rating != null && (product.reviewCount ?? 0) > 0 && (
+              <div className="flex items-center gap-2">
+                <dt className="sr-only">Rating</dt>
+                <dd className="flex items-center gap-1.5">
+                  <Star className="h-3.5 w-3.5 text-gold" strokeWidth={1.25} fill="currentColor" aria-hidden="true" />
+                  {product.rating.toFixed(1)} · {product.reviewCount} reviews
+                </dd>
+              </div>
+            )}
+            {product.sku && (
+              <div className="flex items-center gap-2">
+                <dt className="text-muted-foreground/70">SKU</dt>
+                <dd className="text-ivory/80">{product.sku}</dd>
+              </div>
+            )}
+            {product.color && (
+              <div className="flex items-center gap-2">
+                <dt className="text-muted-foreground/70">Colour</dt>
+                <dd className="text-ivory/80">{product.color}</dd>
+              </div>
+            )}
           </dl>
 
           <div className="mt-9">
@@ -127,7 +150,13 @@ export function ProductDetailPage({ product, breadcrumbs }: ProductDetailPagePro
             <button type="button" className={primaryButton} disabled={soldOut} onClick={handleAddToCart}>
               Add to Cart
             </button>
-            <button type="button" className={outlineButton} disabled={soldOut} onClick={handleBuyNow}>
+            <button
+              type="button"
+              className={outlineButton}
+              disabled={soldOut}
+              onClick={handleBuyNow}
+              aria-label={`Buy ${product.name} now`}
+            >
               Buy Now
             </button>
             <button
@@ -156,10 +185,12 @@ export function ProductDetailPage({ product, breadcrumbs }: ProductDetailPagePro
             </button>
           </div>
 
-          <p className="mt-5 text-[0.62rem] leading-relaxed font-light tracking-[0.1em] text-muted-foreground/70">
-            Pricing, availability, ratings and specifications shown here are placeholders for this
-            demo catalogue entry.
-          </p>
+          {isDemoCatalog && (
+            <p className="mt-5 text-[0.62rem] leading-relaxed font-light tracking-[0.1em] text-muted-foreground/70">
+              This is a demo catalogue entry. Pricing, availability and specifications shown here
+              are placeholders until the real product information is published.
+            </p>
+          )}
 
           <ProductAccordion product={product} />
         </div>

@@ -21,7 +21,12 @@ export function ProductGallery({ product }: ProductGalleryProps) {
   const [active, setActive] = useState(0);
   const [zoomOpen, setZoomOpen] = useState(false);
 
-  const images = product.images;
+  const images =
+    product.images.length > 0
+      ? product.images
+      : product.thumbnailImage
+        ? [product.thumbnailImage]
+        : [];
   const slotCount = Math.max(images.length, THUMB_COUNT);
   const slots = Array.from({ length: slotCount }, (_, i) => images[i]);
   const activeSrc = slots[active];

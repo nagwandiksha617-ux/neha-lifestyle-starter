@@ -20,6 +20,13 @@ export const jewelleryCategoryLinks: CollectionLink[] = [
   { name: "Watches", to: "/jewellery/watches", blurb: "Watches" },
 ];
 
+export const clutchCategoryLinks: CollectionLink[] = [
+  { name: "Bridal Clutches", to: "/clutches/bridal", blurb: "Bridal clutches" },
+  { name: "Party Clutches", to: "/clutches/party", blurb: "Party clutches" },
+  { name: "Designer Clutches", to: "/clutches/designer", blurb: "Designer clutches" },
+  { name: "Potli Clutches", to: "/clutches/potli", blurb: "Potli clutches" },
+];
+
 export const topCollectionLinks: CollectionLink[] = [
   { name: "Bags", to: "/bags", blurb: "Bags collection" },
   { name: "Clutches", to: "/clutches", blurb: "Clutches collection" },
