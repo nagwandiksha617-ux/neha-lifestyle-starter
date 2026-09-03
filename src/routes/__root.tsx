@@ -78,14 +78,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "NEHA LIFESTYLE" },
+      { name: "description", content: "Premium fashion destination for Bags, Clutches, and Jewellery." },
+      { name: "author", content: "NEHA LIFESTYLE" },
+      { property: "og:title", content: "NEHA LIFESTYLE" },
+      { property: "og:description", content: "Premium fashion destination for Bags, Clutches, and Jewellery." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
