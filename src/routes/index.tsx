@@ -8,6 +8,7 @@ import {
   Wand2,
 } from "lucide-react";
 
+import heroCampaign from "@/assets/hero-campaign.jpg";
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { ProductCardPlaceholder } from "@/components/ProductCardPlaceholder";
 import { Section } from "@/components/Section";
