@@ -114,30 +114,30 @@ function Index() {
               Elevate Your Everyday
             </span>
 
-            <p className="mt-8 font-display text-[2.75rem] leading-[1.02] font-light tracking-[0.16em] text-ivory uppercase sm:text-6xl lg:text-[4.25rem]">
+            <h1
+              id="hero-heading"
+              className="mt-8 font-display text-[2.75rem] leading-[1.02] font-light tracking-[0.16em] text-ivory uppercase sm:text-6xl lg:text-[4.25rem]"
+            >
               Neha Lifestyle
-            </p>
+            </h1>
 
             <span aria-hidden="true" className="mt-8 h-px w-20 bg-gold/60" />
 
-            <h1
-              id="hero-heading"
-              className="mt-8 font-display text-[1.6rem] leading-[1.35] font-light tracking-[0.02em] text-gold sm:text-[2rem]"
-            >
-              Where Elegance Becomes Your Signature
-            </h1>
+            <p className="mt-8 font-display text-[1.5rem] leading-[1.35] font-light tracking-[0.02em] text-gold sm:text-[1.9rem]">
+              Jewellery &amp; Bags Designed for Every Occasion
+            </p>
 
             <p className="mt-6 max-w-md text-[0.9rem] leading-[2] font-light text-muted-foreground">
-              Discover statement bags and timeless jewellery designed to elevate
-              your everyday style.
+              Discover timeless pieces that bring elegance, style and confidence
+              to your everyday look.
             </p>
 
             <div className="mt-12 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
-              <Link to="/new-arrivals" className={goldButton}>
-                Shop New Collection
+              <Link to="/jewellery" className={goldButton}>
+                Shop Jewellery
               </Link>
-              <Link to="/shop" className={outlineButton}>
-                Explore Collections
+              <Link to="/bags" className={outlineButton}>
+                Shop Bags
               </Link>
             </div>
           </div>
@@ -151,12 +151,20 @@ function Index() {
               aria-hidden="true"
               className="pointer-events-none absolute -right-4 -bottom-4 hidden h-16 w-16 border-r border-b border-gold/35 sm:block"
             />
-            <ImagePlaceholder
-              label="Campaign Image"
-              hint="Full-width NEHA LIFESTYLE editorial campaign"
-              ratio="hero"
-              editorial
-            />
+            <div className="relative w-full overflow-hidden border border-gold/15">
+              <img
+                src={heroCampaign}
+                alt="Elegant woman wearing gold jewellery and holding a premium burgundy handbag — Neha Lifestyle campaign"
+                width={1024}
+                height={1280}
+                fetchPriority="high"
+                className="aspect-[4/5] h-auto w-full object-cover sm:aspect-[3/2] lg:aspect-[4/5]"
+              />
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-onyx/40 via-transparent to-transparent"
+              />
+            </div>
             <p className="mt-5 text-center text-[0.55rem] font-light tracking-[0.4em] text-muted-foreground/70 uppercase">
               Bags · Jewellery · You
             </p>
