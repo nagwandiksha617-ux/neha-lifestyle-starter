@@ -66,7 +66,7 @@ function CartPage() {
               {lines.length} item{lines.length === 1 ? "" : "s"} in your cart. Total {formatPrice(totals.total)}.
             </p>
             <ul className="flex flex-col border-t border-gold/12">
-              {lines.map(({ product, quantity, lineTotal }) => {
+              {lines.map(({ product, quantity, lineTotal, colour }) => {
                 const wished = isWishlisted(product.id);
                 return (
                   <li key={product.id} className="flex gap-5 border-b border-gold/12 py-6">
@@ -90,6 +90,7 @@ function CartPage() {
                       </h2>
                       <p className="text-[0.6rem] font-light tracking-[0.24em] text-muted-foreground uppercase">
                         {subcategoryName(product.subcategory)}
+                        {colour ? ` · ${colour}` : ""}
                       </p>
                       <p className="text-[0.75rem] font-light text-muted-foreground">
                         {formatPrice(lineTotal / Math.max(quantity, 1), product.currency)} each

@@ -131,9 +131,9 @@ function CheckoutPage() {
         pincode: values.pincode,
         country: values.country,
       },
-      items: lines.map(({ product, quantity, lineTotal }) => ({
+      items: lines.map(({ product, quantity, lineTotal, colour }) => ({
         productId: product.id,
-        name: product.name,
+        name: colour ? `${product.name} (${colour})` : product.name,
         subcategory: subcategoryName(product.subcategory),
         unitPrice: lineTotal / Math.max(quantity, 1),
         quantity,

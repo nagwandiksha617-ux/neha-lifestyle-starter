@@ -39,6 +39,8 @@ export function ProductDetailPage({ product, breadcrumbs }: ProductDetailPagePro
   const navigate = useNavigate();
   const { addToCart, setCartOpen, toggleWishlist, isWishlisted, hydrated } = useShop();
   const [quantity, setQuantity] = useState(1);
+  const colourChoices = product.colourOptions ?? [];
+  const [colour, setColour] = useState<string>(colourChoices[0] ?? "");
 
   const wishlisted = hydrated && isWishlisted(product.id);
   const soldOut = !isPurchasable(product);
@@ -48,12 +50,12 @@ export function ProductDetailPage({ product, breadcrumbs }: ProductDetailPagePro
   const whatsAppReady = isWhatsAppConfigured();
 
   const handleAddToCart = () => {
-    addToCart(product.id, quantity);
+    addToCart(product.id, quantity, colour || undefined);
     setCartOpen(true);
   };
 
   const handleBuyNow = () => {
-    addToCart(product.id, quantity);
+    addToCart(product.id, quantity, colour || undefined);
     void navigate({ to: "/checkout" });
   };
 
@@ -136,6 +138,34 @@ export function ProductDetailPage({ product, breadcrumbs }: ProductDetailPagePro
               </div>
             )}
           </dl>
+
+          {colourChoices.length > 0 && (
+            <fieldset className="mt-8">
+              <legend className="text-[0.6rem] font-light tracking-[0.28em] text-muted-foreground uppercase">
+                Colour
+              </legend>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {colourChoices.map((option) => {
+                  const active = option === colour;
+                  return (
+                    <button
+                      key={option}
+                      type="button"
+                      aria-pressed={active}
+                      onClick={() => setColour(option)}
+                      className={`min-h-11 border px-4 text-[0.65rem] font-light tracking-[0.2em] uppercase transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
+                        active
+                          ? "border-gold bg-gold/10 text-gold"
+                          : "border-gold/25 text-ivory/75 hover:border-gold/60 hover:text-gold"
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
+          )}
 
           <div className="mt-9">
             <QuantitySelector
