@@ -75,6 +75,7 @@ export function matchesQuery(product: Product, rawQuery: string): boolean {
     product.subcategory.replace(/-/g, " "),
     product.sku ?? "",
     product.color ?? "",
+    (product.colourOptions ?? []).join(" "),
     product.material ?? "",
     (product.tags ?? []).join(" "),
     product.shortDescription ?? "",
@@ -91,8 +92,10 @@ export function applyFilters(source: Product[], filters: FilterState): Product[]
     if (filters.categories.length && !filters.categories.includes(product.category)) return false;
     if (filters.subcategories.length && !filters.subcategories.includes(product.subcategory))
       return false;
-    if (filters.colors.length && !(product.color && filters.colors.includes(product.color)))
-      return false;
+    if (filters.colors.length) {
+      const colours = [product.color, ...(product.colourOptions ?? [])].filter(Boolean) as string[];
+      if (!colours.some((c) => filters.colors.includes(c))) return false;
+    }
     if (
       filters.materials.length &&
       !(product.material && filters.materials.includes(product.material))

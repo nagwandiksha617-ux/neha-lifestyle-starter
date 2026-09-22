@@ -26,6 +26,7 @@ export interface ProductDbRow {
   low_stock_threshold: number | null;
   material: string | null;
   colour: string | null;
+  colour_options?: string[] | null;
   size: string | null;
   dimensions: string | null;
   weight: string | null;
@@ -139,6 +140,7 @@ export function rowFromDb(row: ProductDbRow, images: ProductImageDbRow[] = []): 
   put("lowStockThreshold", opt(row.low_stock_threshold));
   put("material", opt(row.material));
   put("colour", opt(row.colour));
+  if (row.colour_options?.length) input.colourOptions = row.colour_options;
   put("size", opt(row.size));
   put("dimensions", opt(row.dimensions));
   put("weight", opt(row.weight));
@@ -175,6 +177,7 @@ export function dbFromRow(row: ProductInput): Record<string, unknown> {
     low_stock_threshold: whole(row.lowStockThreshold),
     material: str(row.material),
     colour: str(row.colour ?? row.color),
+    colour_options: strList(row.colourOptions),
     size: str(row.size),
     dimensions: str(row.dimensions),
     weight: str(row.weight),
