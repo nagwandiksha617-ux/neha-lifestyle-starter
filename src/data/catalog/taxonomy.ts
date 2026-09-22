@@ -15,6 +15,7 @@ export const categories: Array<{
   { slug: "bags", name: "Bags", path: "/bags" },
   { slug: "clutches", name: "Clutches", path: "/clutches" },
   { slug: "jewellery", name: "Jewellery", path: "/jewellery" },
+  { slug: "travel-bags", name: "Travel Bags", path: "/travel-bags" },
 ];
 
 export const bagSubcategories: Subcategory[] = [
