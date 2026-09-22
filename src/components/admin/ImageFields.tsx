@@ -81,6 +81,16 @@ export function ImageFields({ images, onChange }: ImageFieldsProps) {
       <ul className="flex flex-col gap-5">
         {images.map((image, index) => (
           <li key={index} className="border border-gold/15 p-4">
+            <p className="mb-3 text-[0.55rem] font-light tracking-[0.22em] uppercase">
+              {index === 0 ? (
+                <span className="inline-flex items-center gap-1.5 text-gold">
+                  <Star className="h-3 w-3 fill-current" strokeWidth={1.25} aria-hidden="true" />
+                  Main product image
+                </span>
+              ) : (
+                <span className="text-muted-foreground">Image {index + 1}</span>
+              )}
+            </p>
             <div className="flex flex-col gap-4 sm:flex-row">
               <div className="grid h-24 w-24 shrink-0 place-items-center overflow-hidden border border-gold/15 bg-onyx/40">
                 {image.url ? (
