@@ -129,6 +129,16 @@ export function ImageFields({ images, onChange }: ImageFieldsProps) {
               <button
                 type="button"
                 className={buttonClass}
+                onClick={() => makePrimary(index)}
+                disabled={index === 0}
+                aria-label={`Set image ${index + 1} as the main product image`}
+              >
+                <Star className="h-3.5 w-3.5" strokeWidth={1.25} aria-hidden="true" />
+                {index === 0 ? "Main image" : "Set as main"}
+              </button>
+              <button
+                type="button"
+                className={buttonClass}
                 onClick={() => move(index, -1)}
                 disabled={index === 0}
                 aria-label={`Move image ${index + 1} earlier`}
