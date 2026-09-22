@@ -36,14 +36,6 @@ export const bagSubcategories: Subcategory[] = [
     shortDescription: "Easy, hands-free styles that move from day to evening.",
   },
   {
-    name: "Travel Bags",
-    slug: "travel-bags",
-    category: "bags",
-    path: "/bags/travel-bags",
-    productPattern: "/bags/travel-bags/$slug",
-    shortDescription: "Generous carryalls built for short trips and long journeys.",
-  },
-  {
     name: "Gym Bags",
     slug: "gym-bags",
     category: "bags",
