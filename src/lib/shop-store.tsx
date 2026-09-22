@@ -18,6 +18,8 @@ import {
 export interface CartLine {
   productId: string;
   quantity: number;
+  /** Colour chosen on the product page, when the product offers choices. */
+  colour?: string;
 }
 
 const CART_KEY = "nl.cart.v1";
@@ -30,7 +32,7 @@ interface ShopContextValue {
   cartCount: number;
   wishlist: string[];
   wishlistCount: number;
-  addToCart: (productId: string, quantity?: number) => void;
+  addToCart: (productId: string, quantity?: number, colour?: string) => void;
   removeFromCart: (productId: string) => void;
   setQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -80,17 +82,24 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     if (hydrated) writeJson(WISHLIST_KEY, wishlist);
   }, [wishlist, hydrated]);
 
-  const addToCart = useCallback((productId: string, quantity = 1) => {
+  const addToCart = useCallback((productId: string, quantity = 1, colour?: string) => {
     setCart((prev) => {
       const existing = prev.find((line) => line.productId === productId);
       if (existing) {
         return prev.map((line) =>
           line.productId === productId
-            ? { ...line, quantity: Math.min(99, line.quantity + quantity) }
+            ? {
+                ...line,
+                quantity: Math.min(99, line.quantity + quantity),
+                ...(colour ? { colour } : {}),
+              }
             : line,
         );
       }
-      return [...prev, { productId, quantity: Math.min(99, Math.max(1, quantity)) }];
+      return [
+        ...prev,
+        { productId, quantity: Math.min(99, Math.max(1, quantity)), ...(colour ? { colour } : {}) },
+      ];
     });
   }, []);
 

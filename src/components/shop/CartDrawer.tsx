@@ -35,7 +35,7 @@ export function CartDrawer() {
         ) : (
           <>
             <ul className="flex-1 overflow-y-auto px-4">
-              {lines.map(({ product, quantity, lineTotal }) => (
+              {lines.map(({ product, quantity, lineTotal, colour }) => (
                 <li key={product.id} className="flex gap-4 border-b border-gold/10 py-5">
                   <div className="min-w-0 flex-1">
                     <p className="truncate font-display text-[0.98rem] font-light tracking-[0.04em] text-ivory">
@@ -43,6 +43,7 @@ export function CartDrawer() {
                     </p>
                     <p className="mt-1 text-[0.6rem] font-light tracking-[0.24em] text-muted-foreground uppercase">
                       {product.subcategory.replace(/-/g, " ")}
+                      {colour ? ` · ${colour}` : ""}
                     </p>
 
                     <div className="mt-3 flex items-center gap-2">

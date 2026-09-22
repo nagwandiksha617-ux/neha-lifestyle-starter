@@ -8,6 +8,7 @@ import {
   bagSubcategories,
   clutchSubcategories,
   jewellerySubcategories,
+  travelBagSubcategories,
 } from "@/data/products";
 import { SearchOverlay } from "./shop/SearchOverlay";
 import monogramAsset from "../assets/neha-monogram.png.asset.json";
@@ -27,6 +28,11 @@ const shopGroups = [
     label: "Jewellery",
     to: "/jewellery" as const,
     links: jewellerySubcategories,
+  },
+  {
+    label: "Travel Bags",
+    to: "/travel-bags" as const,
+    links: travelBagSubcategories,
   },
 ];
 

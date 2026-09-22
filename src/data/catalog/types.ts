@@ -16,7 +16,7 @@ import type { LinkProps } from "@tanstack/react-router";
 
 export type RoutePath = NonNullable<LinkProps["to"]>;
 
-export type CategorySlug = "bags" | "clutches" | "jewellery";
+export type CategorySlug = "bags" | "clutches" | "jewellery" | "travel-bags";
 
 export type StockStatus = "in-stock" | "out-of-stock" | "pre-order" | "made-to-order";
 
@@ -84,6 +84,11 @@ export interface Product {
   material?: string;
   /** British spelling accepted on import as `colour`. */
   color?: string;
+  /**
+   * Colour choices for one single product (same design, several colourways).
+   * Never used to split a design into duplicate product records.
+   */
+  colourOptions?: string[];
   size?: string;
   dimensions?: string;
   weight?: string;
@@ -155,6 +160,7 @@ export interface ProductInput {
   material?: string;
   color?: string;
   colour?: string;
+  colourOptions?: string[] | string;
   size?: string;
   dimensions?: string;
   weight?: string;

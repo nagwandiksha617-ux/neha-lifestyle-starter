@@ -4,7 +4,6 @@ import type { CollectionLink } from "@/components/CollectionPlaceholderPage";
 export const bagCategoryLinks: CollectionLink[] = [
   { name: "Hand Bags", to: "/bags/handbags", blurb: "Hand bags" },
   { name: "Gym Bags", to: "/bags/gym-bags", blurb: "Gym bags" },
-  { name: "Travel Bags", to: "/bags/travel-bags", blurb: "Travel bags" },
   { name: "Shoulder Bags", to: "/bags/shoulder-bags", blurb: "Shoulder bags" },
   { name: "Party Bags", to: "/bags/party-bags", blurb: "Party bags" },
   { name: "Potli Bags", to: "/bags/potli-bags", blurb: "Potli bags" },
@@ -27,10 +26,21 @@ export const clutchCategoryLinks: CollectionLink[] = [
   { name: "Potli Clutches", to: "/clutches/potli", blurb: "Potli clutches" },
 ];
 
+export const travelBagCategoryLinks: CollectionLink[] = [
+  { name: "Travel Bags", to: "/travel-bags/travel-bags", blurb: "Travel bags" },
+  { name: "Large Travel Bags", to: "/travel-bags/large-travel-bags", blurb: "Large travel bags" },
+  { name: "Wheeled & Trolley Travel Bags", to: "/travel-bags/trolley-travel-bags", blurb: "Trolley travel bags" },
+  { name: "Travel Backpacks", to: "/travel-bags/travel-backpacks", blurb: "Travel backpacks" },
+  { name: "Gym Bags", to: "/travel-bags/gym-bags", blurb: "Gym bags" },
+  { name: "Duffel Bags", to: "/travel-bags/duffel-bags", blurb: "Duffel bags" },
+  { name: "Sling & Crossbody Travel Bags", to: "/travel-bags/sling-crossbody-bags", blurb: "Sling travel bags" },
+];
+
 export const topCollectionLinks: CollectionLink[] = [
   { name: "Bags", to: "/bags", blurb: "Bags collection" },
   { name: "Clutches", to: "/clutches", blurb: "Clutches collection" },
   { name: "Jewellery", to: "/jewellery", blurb: "Jewellery collection" },
+  { name: "Travel Bags", to: "/travel-bags", blurb: "Travel bags collection" },
   { name: "New Arrivals", to: "/new-arrivals", blurb: "New arrivals" },
   { name: "Best Sellers", to: "/best-sellers", blurb: "Best sellers" },
 ];

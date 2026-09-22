@@ -30,6 +30,7 @@ export {
   jewellerySubcategories,
   subcategoriesOf,
   subcategoryName,
+  travelBagSubcategories,
 } from "./catalog/taxonomy";
 
 export {
@@ -242,7 +243,7 @@ export function buildFacets(scope: Product[]): CatalogFacets {
   return {
     categories: Array.from(new Set(scope.map((p) => p.category))),
     subcategories: Array.from(new Set(scope.map((p) => p.subcategory))),
-    colors: unique(scope.map((p) => p.color)),
+    colors: unique(scope.flatMap((p) => [p.color, ...(p.colourOptions ?? [])])),
     materials: unique(scope.map((p) => p.material)),
     stockStatuses: Array.from(new Set(scope.map((p) => p.stockStatus))),
     hasPrices: prices.length > 0,

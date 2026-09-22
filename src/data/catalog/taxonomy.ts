@@ -15,6 +15,7 @@ export const categories: Array<{
   { slug: "bags", name: "Bags", path: "/bags" },
   { slug: "clutches", name: "Clutches", path: "/clutches" },
   { slug: "jewellery", name: "Jewellery", path: "/jewellery" },
+  { slug: "travel-bags", name: "Travel Bags", path: "/travel-bags" },
 ];
 
 export const bagSubcategories: Subcategory[] = [
@@ -33,14 +34,6 @@ export const bagSubcategories: Subcategory[] = [
     path: "/bags/shoulder-bags",
     productPattern: "/bags/shoulder-bags/$slug",
     shortDescription: "Easy, hands-free styles that move from day to evening.",
-  },
-  {
-    name: "Travel Bags",
-    slug: "travel-bags",
-    category: "bags",
-    path: "/bags/travel-bags",
-    productPattern: "/bags/travel-bags/$slug",
-    shortDescription: "Generous carryalls built for short trips and long journeys.",
   },
   {
     name: "Gym Bags",
@@ -164,10 +157,71 @@ export const jewellerySubcategories: Subcategory[] = [
   },
 ];
 
+/** Travel Bags is its own main category — never a shelf inside Bags. */
+export const travelBagSubcategories: Subcategory[] = [
+  {
+    name: "Travel Bags",
+    slug: "travel-bags",
+    category: "travel-bags",
+    path: "/travel-bags/travel-bags",
+    productPattern: "/travel-bags/travel-bags/$slug",
+    shortDescription: "Everyday travel shapes for short journeys and weekends.",
+  },
+  {
+    name: "Large Travel Bags",
+    slug: "large-travel-bags",
+    category: "travel-bags",
+    path: "/travel-bags/large-travel-bags",
+    productPattern: "/travel-bags/large-travel-bags/$slug",
+    shortDescription: "Generous carryalls for longer trips.",
+  },
+  {
+    name: "Wheeled & Trolley Travel Bags",
+    slug: "trolley-travel-bags",
+    category: "travel-bags",
+    path: "/travel-bags/trolley-travel-bags",
+    productPattern: "/travel-bags/trolley-travel-bags/$slug",
+    shortDescription: "Wheeled bags with trolley handles for easy transit.",
+  },
+  {
+    name: "Travel Backpacks",
+    slug: "travel-backpacks",
+    category: "travel-bags",
+    path: "/travel-bags/travel-backpacks",
+    productPattern: "/travel-bags/travel-backpacks/$slug",
+    shortDescription: "Hands-free backpacks built for travel and commuting.",
+  },
+  {
+    name: "Gym Bags",
+    slug: "travel-gym-bags",
+    category: "travel-bags",
+    path: "/travel-bags/gym-bags",
+    productPattern: "/travel-bags/gym-bags/$slug",
+    shortDescription: "Practical shapes for training and weekends.",
+  },
+  {
+    name: "Duffel Bags",
+    slug: "duffel-bags",
+    category: "travel-bags",
+    path: "/travel-bags/duffel-bags",
+    productPattern: "/travel-bags/duffel-bags/$slug",
+    shortDescription: "Soft, roomy duffels for the gym and short trips.",
+  },
+  {
+    name: "Sling & Crossbody Travel Bags",
+    slug: "sling-crossbody-bags",
+    category: "travel-bags",
+    path: "/travel-bags/sling-crossbody-bags",
+    productPattern: "/travel-bags/sling-crossbody-bags/$slug",
+    shortDescription: "Light, close-to-body bags for essentials on the move.",
+  },
+];
+
 export const allSubcategories: Subcategory[] = [
   ...bagSubcategories,
   ...clutchSubcategories,
   ...jewellerySubcategories,
+  ...travelBagSubcategories,
 ];
 
 export function subcategoriesOf(category: CategorySlug): Subcategory[] {

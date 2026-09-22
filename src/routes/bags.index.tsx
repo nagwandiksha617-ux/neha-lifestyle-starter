@@ -11,7 +11,7 @@ export const Route = createFileRoute("/bags/")({
     pageHead({
       title: "Bags | Neha Lifestyle",
       description:
-        "Explore the Neha Lifestyle bags collection: hand bags, gym bags, travel bags, shoulder bags, party bags and potli bags.",
+        "Explore the Neha Lifestyle bags collection: hand bags, gym bags, shoulder bags, party bags and potli bags.",
       path: "/bags",
       breadcrumbs: [{ name: "Bags", path: "/bags" }],
     }),
@@ -25,7 +25,7 @@ function Page() {
     <CategoryListingPage
       eyebrow="Collection"
       title="Bags Collection"
-      intro="Hand bags, gym bags, travel bags, shoulder bags, party bags and potli bags — shaped for the way you actually carry them."
+      intro="Hand bags, gym bags, shoulder bags, party bags and potli bags — shaped for the way you actually carry them."
       breadcrumbs={[{ label: "Bags", to: "/bags" }]}
       products={products}
     >

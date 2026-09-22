@@ -14,7 +14,7 @@
 import type { CategorySlug, Product, ProductInput, ProductStatus, StockStatus } from "./types";
 import { findSubcategory } from "./taxonomy";
 
-const CATEGORY_SLUGS: CategorySlug[] = ["bags", "clutches", "jewellery"];
+const CATEGORY_SLUGS: CategorySlug[] = ["bags", "clutches", "jewellery", "travel-bags"];
 const STOCK_STATUSES: StockStatus[] = [
   "in-stock",
   "out-of-stock",
@@ -177,6 +177,8 @@ export function normalizeProduct(
   if (thumbnailImage) product.thumbnailImage = thumbnailImage;
   if (material) product.material = material;
   if (color) product.color = color;
+  const colourOptions = list(raw.colourOptions);
+  if (colourOptions.length) product.colourOptions = colourOptions;
   if (size) product.size = size;
   if (dimensions) product.dimensions = dimensions;
   if (weight) product.weight = weight;

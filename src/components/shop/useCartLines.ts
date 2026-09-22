@@ -7,6 +7,7 @@ export interface ResolvedCartLine {
   product: Product;
   quantity: number;
   lineTotal: number;
+  colour?: string;
 }
 
 /** Joins persisted cart lines to catalog records and computes the subtotal. */
@@ -22,6 +23,7 @@ export function useCartLines() {
         product,
         quantity: line.quantity,
         lineTotal: priceValue(product) * line.quantity,
+        ...(line.colour ? { colour: line.colour } : {}),
       });
     }
     const subtotal = lines.reduce((sum, l) => sum + l.lineTotal, 0);

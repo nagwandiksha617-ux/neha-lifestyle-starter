@@ -32,6 +32,7 @@ import { Route as BagsIndexRouteImport } from './routes/bags.index'
 import { Route as ClutchesIndexRouteImport } from './routes/clutches.index'
 import { Route as JewelleryIndexRouteImport } from './routes/jewellery.index'
 import { Route as OrderReferenceRouteImport } from './routes/order.$reference'
+import { Route as TravelBagsIndexRouteImport } from './routes/travel-bags.index'
 import { Route as AdminProductsIdRouteImport } from './routes/admin.products.$id'
 import { Route as AdminProductsNewRouteImport } from './routes/admin.products.new'
 import { Route as BagsGymBagsIndexRouteImport } from './routes/bags.gym-bags.index'
@@ -68,6 +69,20 @@ import { Route as JewelleryRingsIndexRouteImport } from './routes/jewellery.ring
 import { Route as JewelleryRingsSlugRouteImport } from './routes/jewellery.rings.$slug'
 import { Route as JewelleryWatchesIndexRouteImport } from './routes/jewellery.watches.index'
 import { Route as JewelleryWatchesSlugRouteImport } from './routes/jewellery.watches.$slug'
+import { Route as TravelBagsDuffelBagsIndexRouteImport } from './routes/travel-bags.duffel-bags.index'
+import { Route as TravelBagsDuffelBagsSlugRouteImport } from './routes/travel-bags.duffel-bags.$slug'
+import { Route as TravelBagsGymBagsIndexRouteImport } from './routes/travel-bags.gym-bags.index'
+import { Route as TravelBagsGymBagsSlugRouteImport } from './routes/travel-bags.gym-bags.$slug'
+import { Route as TravelBagsLargeTravelBagsIndexRouteImport } from './routes/travel-bags.large-travel-bags.index'
+import { Route as TravelBagsLargeTravelBagsSlugRouteImport } from './routes/travel-bags.large-travel-bags.$slug'
+import { Route as TravelBagsSlingCrossbodyBagsIndexRouteImport } from './routes/travel-bags.sling-crossbody-bags.index'
+import { Route as TravelBagsSlingCrossbodyBagsSlugRouteImport } from './routes/travel-bags.sling-crossbody-bags.$slug'
+import { Route as TravelBagsTravelBackpacksIndexRouteImport } from './routes/travel-bags.travel-backpacks.index'
+import { Route as TravelBagsTravelBackpacksSlugRouteImport } from './routes/travel-bags.travel-backpacks.$slug'
+import { Route as TravelBagsTravelBagsIndexRouteImport } from './routes/travel-bags.travel-bags.index'
+import { Route as TravelBagsTravelBagsSlugRouteImport } from './routes/travel-bags.travel-bags.$slug'
+import { Route as TravelBagsTrolleyTravelBagsIndexRouteImport } from './routes/travel-bags.trolley-travel-bags.index'
+import { Route as TravelBagsTrolleyTravelBagsSlugRouteImport } from './routes/travel-bags.trolley-travel-bags.$slug'
 import { Route as ApiPublicProductImageSplatRouteImport } from './routes/api/public/product-image.$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -183,6 +198,11 @@ const JewelleryIndexRoute = JewelleryIndexRouteImport.update({
 const OrderReferenceRoute = OrderReferenceRouteImport.update({
   id: '/order/$reference',
   path: '/order/$reference',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TravelBagsIndexRoute = TravelBagsIndexRouteImport.update({
+  id: '/travel-bags/',
+  path: '/travel-bags/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminProductsIdRoute = AdminProductsIdRouteImport.update({
@@ -367,6 +387,88 @@ const JewelleryWatchesSlugRoute = JewelleryWatchesSlugRouteImport.update({
   path: '/jewellery/watches/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TravelBagsDuffelBagsIndexRoute =
+  TravelBagsDuffelBagsIndexRouteImport.update({
+    id: '/travel-bags/duffel-bags/',
+    path: '/travel-bags/duffel-bags/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TravelBagsDuffelBagsSlugRoute =
+  TravelBagsDuffelBagsSlugRouteImport.update({
+    id: '/travel-bags/duffel-bags/$slug',
+    path: '/travel-bags/duffel-bags/$slug',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TravelBagsGymBagsIndexRoute = TravelBagsGymBagsIndexRouteImport.update({
+  id: '/travel-bags/gym-bags/',
+  path: '/travel-bags/gym-bags/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TravelBagsGymBagsSlugRoute = TravelBagsGymBagsSlugRouteImport.update({
+  id: '/travel-bags/gym-bags/$slug',
+  path: '/travel-bags/gym-bags/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TravelBagsLargeTravelBagsIndexRoute =
+  TravelBagsLargeTravelBagsIndexRouteImport.update({
+    id: '/travel-bags/large-travel-bags/',
+    path: '/travel-bags/large-travel-bags/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TravelBagsLargeTravelBagsSlugRoute =
+  TravelBagsLargeTravelBagsSlugRouteImport.update({
+    id: '/travel-bags/large-travel-bags/$slug',
+    path: '/travel-bags/large-travel-bags/$slug',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TravelBagsSlingCrossbodyBagsIndexRoute =
+  TravelBagsSlingCrossbodyBagsIndexRouteImport.update({
+    id: '/travel-bags/sling-crossbody-bags/',
+    path: '/travel-bags/sling-crossbody-bags/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TravelBagsSlingCrossbodyBagsSlugRoute =
+  TravelBagsSlingCrossbodyBagsSlugRouteImport.update({
+    id: '/travel-bags/sling-crossbody-bags/$slug',
+    path: '/travel-bags/sling-crossbody-bags/$slug',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TravelBagsTravelBackpacksIndexRoute =
+  TravelBagsTravelBackpacksIndexRouteImport.update({
+    id: '/travel-bags/travel-backpacks/',
+    path: '/travel-bags/travel-backpacks/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TravelBagsTravelBackpacksSlugRoute =
+  TravelBagsTravelBackpacksSlugRouteImport.update({
+    id: '/travel-bags/travel-backpacks/$slug',
+    path: '/travel-bags/travel-backpacks/$slug',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TravelBagsTravelBagsIndexRoute =
+  TravelBagsTravelBagsIndexRouteImport.update({
+    id: '/travel-bags/travel-bags/',
+    path: '/travel-bags/travel-bags/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TravelBagsTravelBagsSlugRoute =
+  TravelBagsTravelBagsSlugRouteImport.update({
+    id: '/travel-bags/travel-bags/$slug',
+    path: '/travel-bags/travel-bags/$slug',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TravelBagsTrolleyTravelBagsIndexRoute =
+  TravelBagsTrolleyTravelBagsIndexRouteImport.update({
+    id: '/travel-bags/trolley-travel-bags/',
+    path: '/travel-bags/trolley-travel-bags/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const TravelBagsTrolleyTravelBagsSlugRoute =
+  TravelBagsTrolleyTravelBagsSlugRouteImport.update({
+    id: '/travel-bags/trolley-travel-bags/$slug',
+    path: '/travel-bags/trolley-travel-bags/$slug',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicProductImageSplatRoute =
   ApiPublicProductImageSplatRouteImport.update({
     id: '/api/public/product-image/$',
@@ -398,6 +500,7 @@ export interface FileRoutesByFullPath {
   '/bags/': typeof BagsIndexRoute
   '/clutches/': typeof ClutchesIndexRoute
   '/jewellery/': typeof JewelleryIndexRoute
+  '/travel-bags/': typeof TravelBagsIndexRoute
   '/admin/products/$id': typeof AdminProductsIdRoute
   '/admin/products/new': typeof AdminProductsNewRoute
   '/bags/gym-bags/$slug': typeof BagsGymBagsSlugRoute
@@ -417,6 +520,13 @@ export interface FileRoutesByFullPath {
   '/jewellery/pendants/$slug': typeof JewelleryPendantsSlugRoute
   '/jewellery/rings/$slug': typeof JewelleryRingsSlugRoute
   '/jewellery/watches/$slug': typeof JewelleryWatchesSlugRoute
+  '/travel-bags/duffel-bags/$slug': typeof TravelBagsDuffelBagsSlugRoute
+  '/travel-bags/gym-bags/$slug': typeof TravelBagsGymBagsSlugRoute
+  '/travel-bags/large-travel-bags/$slug': typeof TravelBagsLargeTravelBagsSlugRoute
+  '/travel-bags/sling-crossbody-bags/$slug': typeof TravelBagsSlingCrossbodyBagsSlugRoute
+  '/travel-bags/travel-backpacks/$slug': typeof TravelBagsTravelBackpacksSlugRoute
+  '/travel-bags/travel-bags/$slug': typeof TravelBagsTravelBagsSlugRoute
+  '/travel-bags/trolley-travel-bags/$slug': typeof TravelBagsTrolleyTravelBagsSlugRoute
   '/bags/gym-bags/': typeof BagsGymBagsIndexRoute
   '/bags/handbags/': typeof BagsHandbagsIndexRoute
   '/bags/party-bags/': typeof BagsPartyBagsIndexRoute
@@ -434,6 +544,13 @@ export interface FileRoutesByFullPath {
   '/jewellery/pendants/': typeof JewelleryPendantsIndexRoute
   '/jewellery/rings/': typeof JewelleryRingsIndexRoute
   '/jewellery/watches/': typeof JewelleryWatchesIndexRoute
+  '/travel-bags/duffel-bags/': typeof TravelBagsDuffelBagsIndexRoute
+  '/travel-bags/gym-bags/': typeof TravelBagsGymBagsIndexRoute
+  '/travel-bags/large-travel-bags/': typeof TravelBagsLargeTravelBagsIndexRoute
+  '/travel-bags/sling-crossbody-bags/': typeof TravelBagsSlingCrossbodyBagsIndexRoute
+  '/travel-bags/travel-backpacks/': typeof TravelBagsTravelBackpacksIndexRoute
+  '/travel-bags/travel-bags/': typeof TravelBagsTravelBagsIndexRoute
+  '/travel-bags/trolley-travel-bags/': typeof TravelBagsTrolleyTravelBagsIndexRoute
   '/api/public/product-image/$': typeof ApiPublicProductImageSplatRoute
 }
 export interface FileRoutesByTo {
@@ -459,6 +576,7 @@ export interface FileRoutesByTo {
   '/bags': typeof BagsIndexRoute
   '/clutches': typeof ClutchesIndexRoute
   '/jewellery': typeof JewelleryIndexRoute
+  '/travel-bags': typeof TravelBagsIndexRoute
   '/admin/products/$id': typeof AdminProductsIdRoute
   '/admin/products/new': typeof AdminProductsNewRoute
   '/bags/gym-bags/$slug': typeof BagsGymBagsSlugRoute
@@ -478,6 +596,13 @@ export interface FileRoutesByTo {
   '/jewellery/pendants/$slug': typeof JewelleryPendantsSlugRoute
   '/jewellery/rings/$slug': typeof JewelleryRingsSlugRoute
   '/jewellery/watches/$slug': typeof JewelleryWatchesSlugRoute
+  '/travel-bags/duffel-bags/$slug': typeof TravelBagsDuffelBagsSlugRoute
+  '/travel-bags/gym-bags/$slug': typeof TravelBagsGymBagsSlugRoute
+  '/travel-bags/large-travel-bags/$slug': typeof TravelBagsLargeTravelBagsSlugRoute
+  '/travel-bags/sling-crossbody-bags/$slug': typeof TravelBagsSlingCrossbodyBagsSlugRoute
+  '/travel-bags/travel-backpacks/$slug': typeof TravelBagsTravelBackpacksSlugRoute
+  '/travel-bags/travel-bags/$slug': typeof TravelBagsTravelBagsSlugRoute
+  '/travel-bags/trolley-travel-bags/$slug': typeof TravelBagsTrolleyTravelBagsSlugRoute
   '/bags/gym-bags': typeof BagsGymBagsIndexRoute
   '/bags/handbags': typeof BagsHandbagsIndexRoute
   '/bags/party-bags': typeof BagsPartyBagsIndexRoute
@@ -495,6 +620,13 @@ export interface FileRoutesByTo {
   '/jewellery/pendants': typeof JewelleryPendantsIndexRoute
   '/jewellery/rings': typeof JewelleryRingsIndexRoute
   '/jewellery/watches': typeof JewelleryWatchesIndexRoute
+  '/travel-bags/duffel-bags': typeof TravelBagsDuffelBagsIndexRoute
+  '/travel-bags/gym-bags': typeof TravelBagsGymBagsIndexRoute
+  '/travel-bags/large-travel-bags': typeof TravelBagsLargeTravelBagsIndexRoute
+  '/travel-bags/sling-crossbody-bags': typeof TravelBagsSlingCrossbodyBagsIndexRoute
+  '/travel-bags/travel-backpacks': typeof TravelBagsTravelBackpacksIndexRoute
+  '/travel-bags/travel-bags': typeof TravelBagsTravelBagsIndexRoute
+  '/travel-bags/trolley-travel-bags': typeof TravelBagsTrolleyTravelBagsIndexRoute
   '/api/public/product-image/$': typeof ApiPublicProductImageSplatRoute
 }
 export interface FileRoutesById {
@@ -522,6 +654,7 @@ export interface FileRoutesById {
   '/bags/': typeof BagsIndexRoute
   '/clutches/': typeof ClutchesIndexRoute
   '/jewellery/': typeof JewelleryIndexRoute
+  '/travel-bags/': typeof TravelBagsIndexRoute
   '/admin/products/$id': typeof AdminProductsIdRoute
   '/admin/products/new': typeof AdminProductsNewRoute
   '/bags/gym-bags/$slug': typeof BagsGymBagsSlugRoute
@@ -541,6 +674,13 @@ export interface FileRoutesById {
   '/jewellery/pendants/$slug': typeof JewelleryPendantsSlugRoute
   '/jewellery/rings/$slug': typeof JewelleryRingsSlugRoute
   '/jewellery/watches/$slug': typeof JewelleryWatchesSlugRoute
+  '/travel-bags/duffel-bags/$slug': typeof TravelBagsDuffelBagsSlugRoute
+  '/travel-bags/gym-bags/$slug': typeof TravelBagsGymBagsSlugRoute
+  '/travel-bags/large-travel-bags/$slug': typeof TravelBagsLargeTravelBagsSlugRoute
+  '/travel-bags/sling-crossbody-bags/$slug': typeof TravelBagsSlingCrossbodyBagsSlugRoute
+  '/travel-bags/travel-backpacks/$slug': typeof TravelBagsTravelBackpacksSlugRoute
+  '/travel-bags/travel-bags/$slug': typeof TravelBagsTravelBagsSlugRoute
+  '/travel-bags/trolley-travel-bags/$slug': typeof TravelBagsTrolleyTravelBagsSlugRoute
   '/bags/gym-bags/': typeof BagsGymBagsIndexRoute
   '/bags/handbags/': typeof BagsHandbagsIndexRoute
   '/bags/party-bags/': typeof BagsPartyBagsIndexRoute
@@ -558,6 +698,13 @@ export interface FileRoutesById {
   '/jewellery/pendants/': typeof JewelleryPendantsIndexRoute
   '/jewellery/rings/': typeof JewelleryRingsIndexRoute
   '/jewellery/watches/': typeof JewelleryWatchesIndexRoute
+  '/travel-bags/duffel-bags/': typeof TravelBagsDuffelBagsIndexRoute
+  '/travel-bags/gym-bags/': typeof TravelBagsGymBagsIndexRoute
+  '/travel-bags/large-travel-bags/': typeof TravelBagsLargeTravelBagsIndexRoute
+  '/travel-bags/sling-crossbody-bags/': typeof TravelBagsSlingCrossbodyBagsIndexRoute
+  '/travel-bags/travel-backpacks/': typeof TravelBagsTravelBackpacksIndexRoute
+  '/travel-bags/travel-bags/': typeof TravelBagsTravelBagsIndexRoute
+  '/travel-bags/trolley-travel-bags/': typeof TravelBagsTrolleyTravelBagsIndexRoute
   '/api/public/product-image/$': typeof ApiPublicProductImageSplatRoute
 }
 export interface FileRouteTypes {
@@ -586,6 +733,7 @@ export interface FileRouteTypes {
     | '/bags/'
     | '/clutches/'
     | '/jewellery/'
+    | '/travel-bags/'
     | '/admin/products/$id'
     | '/admin/products/new'
     | '/bags/gym-bags/$slug'
@@ -605,6 +753,13 @@ export interface FileRouteTypes {
     | '/jewellery/pendants/$slug'
     | '/jewellery/rings/$slug'
     | '/jewellery/watches/$slug'
+    | '/travel-bags/duffel-bags/$slug'
+    | '/travel-bags/gym-bags/$slug'
+    | '/travel-bags/large-travel-bags/$slug'
+    | '/travel-bags/sling-crossbody-bags/$slug'
+    | '/travel-bags/travel-backpacks/$slug'
+    | '/travel-bags/travel-bags/$slug'
+    | '/travel-bags/trolley-travel-bags/$slug'
     | '/bags/gym-bags/'
     | '/bags/handbags/'
     | '/bags/party-bags/'
@@ -622,6 +777,13 @@ export interface FileRouteTypes {
     | '/jewellery/pendants/'
     | '/jewellery/rings/'
     | '/jewellery/watches/'
+    | '/travel-bags/duffel-bags/'
+    | '/travel-bags/gym-bags/'
+    | '/travel-bags/large-travel-bags/'
+    | '/travel-bags/sling-crossbody-bags/'
+    | '/travel-bags/travel-backpacks/'
+    | '/travel-bags/travel-bags/'
+    | '/travel-bags/trolley-travel-bags/'
     | '/api/public/product-image/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -647,6 +809,7 @@ export interface FileRouteTypes {
     | '/bags'
     | '/clutches'
     | '/jewellery'
+    | '/travel-bags'
     | '/admin/products/$id'
     | '/admin/products/new'
     | '/bags/gym-bags/$slug'
@@ -666,6 +829,13 @@ export interface FileRouteTypes {
     | '/jewellery/pendants/$slug'
     | '/jewellery/rings/$slug'
     | '/jewellery/watches/$slug'
+    | '/travel-bags/duffel-bags/$slug'
+    | '/travel-bags/gym-bags/$slug'
+    | '/travel-bags/large-travel-bags/$slug'
+    | '/travel-bags/sling-crossbody-bags/$slug'
+    | '/travel-bags/travel-backpacks/$slug'
+    | '/travel-bags/travel-bags/$slug'
+    | '/travel-bags/trolley-travel-bags/$slug'
     | '/bags/gym-bags'
     | '/bags/handbags'
     | '/bags/party-bags'
@@ -683,6 +853,13 @@ export interface FileRouteTypes {
     | '/jewellery/pendants'
     | '/jewellery/rings'
     | '/jewellery/watches'
+    | '/travel-bags/duffel-bags'
+    | '/travel-bags/gym-bags'
+    | '/travel-bags/large-travel-bags'
+    | '/travel-bags/sling-crossbody-bags'
+    | '/travel-bags/travel-backpacks'
+    | '/travel-bags/travel-bags'
+    | '/travel-bags/trolley-travel-bags'
     | '/api/public/product-image/$'
   id:
     | '__root__'
@@ -709,6 +886,7 @@ export interface FileRouteTypes {
     | '/bags/'
     | '/clutches/'
     | '/jewellery/'
+    | '/travel-bags/'
     | '/admin/products/$id'
     | '/admin/products/new'
     | '/bags/gym-bags/$slug'
@@ -728,6 +906,13 @@ export interface FileRouteTypes {
     | '/jewellery/pendants/$slug'
     | '/jewellery/rings/$slug'
     | '/jewellery/watches/$slug'
+    | '/travel-bags/duffel-bags/$slug'
+    | '/travel-bags/gym-bags/$slug'
+    | '/travel-bags/large-travel-bags/$slug'
+    | '/travel-bags/sling-crossbody-bags/$slug'
+    | '/travel-bags/travel-backpacks/$slug'
+    | '/travel-bags/travel-bags/$slug'
+    | '/travel-bags/trolley-travel-bags/$slug'
     | '/bags/gym-bags/'
     | '/bags/handbags/'
     | '/bags/party-bags/'
@@ -745,6 +930,13 @@ export interface FileRouteTypes {
     | '/jewellery/pendants/'
     | '/jewellery/rings/'
     | '/jewellery/watches/'
+    | '/travel-bags/duffel-bags/'
+    | '/travel-bags/gym-bags/'
+    | '/travel-bags/large-travel-bags/'
+    | '/travel-bags/sling-crossbody-bags/'
+    | '/travel-bags/travel-backpacks/'
+    | '/travel-bags/travel-bags/'
+    | '/travel-bags/trolley-travel-bags/'
     | '/api/public/product-image/$'
   fileRoutesById: FileRoutesById
 }
@@ -771,6 +963,7 @@ export interface RootRouteChildren {
   BagsIndexRoute: typeof BagsIndexRoute
   ClutchesIndexRoute: typeof ClutchesIndexRoute
   JewelleryIndexRoute: typeof JewelleryIndexRoute
+  TravelBagsIndexRoute: typeof TravelBagsIndexRoute
   BagsGymBagsSlugRoute: typeof BagsGymBagsSlugRoute
   BagsHandbagsSlugRoute: typeof BagsHandbagsSlugRoute
   BagsPartyBagsSlugRoute: typeof BagsPartyBagsSlugRoute
@@ -788,6 +981,13 @@ export interface RootRouteChildren {
   JewelleryPendantsSlugRoute: typeof JewelleryPendantsSlugRoute
   JewelleryRingsSlugRoute: typeof JewelleryRingsSlugRoute
   JewelleryWatchesSlugRoute: typeof JewelleryWatchesSlugRoute
+  TravelBagsDuffelBagsSlugRoute: typeof TravelBagsDuffelBagsSlugRoute
+  TravelBagsGymBagsSlugRoute: typeof TravelBagsGymBagsSlugRoute
+  TravelBagsLargeTravelBagsSlugRoute: typeof TravelBagsLargeTravelBagsSlugRoute
+  TravelBagsSlingCrossbodyBagsSlugRoute: typeof TravelBagsSlingCrossbodyBagsSlugRoute
+  TravelBagsTravelBackpacksSlugRoute: typeof TravelBagsTravelBackpacksSlugRoute
+  TravelBagsTravelBagsSlugRoute: typeof TravelBagsTravelBagsSlugRoute
+  TravelBagsTrolleyTravelBagsSlugRoute: typeof TravelBagsTrolleyTravelBagsSlugRoute
   BagsGymBagsIndexRoute: typeof BagsGymBagsIndexRoute
   BagsHandbagsIndexRoute: typeof BagsHandbagsIndexRoute
   BagsPartyBagsIndexRoute: typeof BagsPartyBagsIndexRoute
@@ -805,6 +1005,13 @@ export interface RootRouteChildren {
   JewelleryPendantsIndexRoute: typeof JewelleryPendantsIndexRoute
   JewelleryRingsIndexRoute: typeof JewelleryRingsIndexRoute
   JewelleryWatchesIndexRoute: typeof JewelleryWatchesIndexRoute
+  TravelBagsDuffelBagsIndexRoute: typeof TravelBagsDuffelBagsIndexRoute
+  TravelBagsGymBagsIndexRoute: typeof TravelBagsGymBagsIndexRoute
+  TravelBagsLargeTravelBagsIndexRoute: typeof TravelBagsLargeTravelBagsIndexRoute
+  TravelBagsSlingCrossbodyBagsIndexRoute: typeof TravelBagsSlingCrossbodyBagsIndexRoute
+  TravelBagsTravelBackpacksIndexRoute: typeof TravelBagsTravelBackpacksIndexRoute
+  TravelBagsTravelBagsIndexRoute: typeof TravelBagsTravelBagsIndexRoute
+  TravelBagsTrolleyTravelBagsIndexRoute: typeof TravelBagsTrolleyTravelBagsIndexRoute
   ApiPublicProductImageSplatRoute: typeof ApiPublicProductImageSplatRoute
 }
 
@@ -969,6 +1176,13 @@ declare module '@tanstack/react-router' {
       path: '/order/$reference'
       fullPath: '/order/$reference'
       preLoaderRoute: typeof OrderReferenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-bags/': {
+      id: '/travel-bags/'
+      path: '/travel-bags'
+      fullPath: '/travel-bags/'
+      preLoaderRoute: typeof TravelBagsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/products/$id': {
@@ -1223,6 +1437,104 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JewelleryWatchesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/travel-bags/duffel-bags/': {
+      id: '/travel-bags/duffel-bags/'
+      path: '/travel-bags/duffel-bags'
+      fullPath: '/travel-bags/duffel-bags/'
+      preLoaderRoute: typeof TravelBagsDuffelBagsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-bags/duffel-bags/$slug': {
+      id: '/travel-bags/duffel-bags/$slug'
+      path: '/travel-bags/duffel-bags/$slug'
+      fullPath: '/travel-bags/duffel-bags/$slug'
+      preLoaderRoute: typeof TravelBagsDuffelBagsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-bags/gym-bags/': {
+      id: '/travel-bags/gym-bags/'
+      path: '/travel-bags/gym-bags'
+      fullPath: '/travel-bags/gym-bags/'
+      preLoaderRoute: typeof TravelBagsGymBagsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-bags/gym-bags/$slug': {
+      id: '/travel-bags/gym-bags/$slug'
+      path: '/travel-bags/gym-bags/$slug'
+      fullPath: '/travel-bags/gym-bags/$slug'
+      preLoaderRoute: typeof TravelBagsGymBagsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-bags/large-travel-bags/': {
+      id: '/travel-bags/large-travel-bags/'
+      path: '/travel-bags/large-travel-bags'
+      fullPath: '/travel-bags/large-travel-bags/'
+      preLoaderRoute: typeof TravelBagsLargeTravelBagsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-bags/large-travel-bags/$slug': {
+      id: '/travel-bags/large-travel-bags/$slug'
+      path: '/travel-bags/large-travel-bags/$slug'
+      fullPath: '/travel-bags/large-travel-bags/$slug'
+      preLoaderRoute: typeof TravelBagsLargeTravelBagsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-bags/sling-crossbody-bags/': {
+      id: '/travel-bags/sling-crossbody-bags/'
+      path: '/travel-bags/sling-crossbody-bags'
+      fullPath: '/travel-bags/sling-crossbody-bags/'
+      preLoaderRoute: typeof TravelBagsSlingCrossbodyBagsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-bags/sling-crossbody-bags/$slug': {
+      id: '/travel-bags/sling-crossbody-bags/$slug'
+      path: '/travel-bags/sling-crossbody-bags/$slug'
+      fullPath: '/travel-bags/sling-crossbody-bags/$slug'
+      preLoaderRoute: typeof TravelBagsSlingCrossbodyBagsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-bags/travel-backpacks/': {
+      id: '/travel-bags/travel-backpacks/'
+      path: '/travel-bags/travel-backpacks'
+      fullPath: '/travel-bags/travel-backpacks/'
+      preLoaderRoute: typeof TravelBagsTravelBackpacksIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-bags/travel-backpacks/$slug': {
+      id: '/travel-bags/travel-backpacks/$slug'
+      path: '/travel-bags/travel-backpacks/$slug'
+      fullPath: '/travel-bags/travel-backpacks/$slug'
+      preLoaderRoute: typeof TravelBagsTravelBackpacksSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-bags/travel-bags/': {
+      id: '/travel-bags/travel-bags/'
+      path: '/travel-bags/travel-bags'
+      fullPath: '/travel-bags/travel-bags/'
+      preLoaderRoute: typeof TravelBagsTravelBagsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-bags/travel-bags/$slug': {
+      id: '/travel-bags/travel-bags/$slug'
+      path: '/travel-bags/travel-bags/$slug'
+      fullPath: '/travel-bags/travel-bags/$slug'
+      preLoaderRoute: typeof TravelBagsTravelBagsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-bags/trolley-travel-bags/': {
+      id: '/travel-bags/trolley-travel-bags/'
+      path: '/travel-bags/trolley-travel-bags'
+      fullPath: '/travel-bags/trolley-travel-bags/'
+      preLoaderRoute: typeof TravelBagsTrolleyTravelBagsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/travel-bags/trolley-travel-bags/$slug': {
+      id: '/travel-bags/trolley-travel-bags/$slug'
+      path: '/travel-bags/trolley-travel-bags/$slug'
+      fullPath: '/travel-bags/trolley-travel-bags/$slug'
+      preLoaderRoute: typeof TravelBagsTrolleyTravelBagsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/product-image/$': {
       id: '/api/public/product-image/$'
       path: '/api/public/product-image/$'
@@ -1270,6 +1582,7 @@ const rootRouteChildren: RootRouteChildren = {
   BagsIndexRoute: BagsIndexRoute,
   ClutchesIndexRoute: ClutchesIndexRoute,
   JewelleryIndexRoute: JewelleryIndexRoute,
+  TravelBagsIndexRoute: TravelBagsIndexRoute,
   BagsGymBagsSlugRoute: BagsGymBagsSlugRoute,
   BagsHandbagsSlugRoute: BagsHandbagsSlugRoute,
   BagsPartyBagsSlugRoute: BagsPartyBagsSlugRoute,
@@ -1287,6 +1600,13 @@ const rootRouteChildren: RootRouteChildren = {
   JewelleryPendantsSlugRoute: JewelleryPendantsSlugRoute,
   JewelleryRingsSlugRoute: JewelleryRingsSlugRoute,
   JewelleryWatchesSlugRoute: JewelleryWatchesSlugRoute,
+  TravelBagsDuffelBagsSlugRoute: TravelBagsDuffelBagsSlugRoute,
+  TravelBagsGymBagsSlugRoute: TravelBagsGymBagsSlugRoute,
+  TravelBagsLargeTravelBagsSlugRoute: TravelBagsLargeTravelBagsSlugRoute,
+  TravelBagsSlingCrossbodyBagsSlugRoute: TravelBagsSlingCrossbodyBagsSlugRoute,
+  TravelBagsTravelBackpacksSlugRoute: TravelBagsTravelBackpacksSlugRoute,
+  TravelBagsTravelBagsSlugRoute: TravelBagsTravelBagsSlugRoute,
+  TravelBagsTrolleyTravelBagsSlugRoute: TravelBagsTrolleyTravelBagsSlugRoute,
   BagsGymBagsIndexRoute: BagsGymBagsIndexRoute,
   BagsHandbagsIndexRoute: BagsHandbagsIndexRoute,
   BagsPartyBagsIndexRoute: BagsPartyBagsIndexRoute,
@@ -1304,6 +1624,14 @@ const rootRouteChildren: RootRouteChildren = {
   JewelleryPendantsIndexRoute: JewelleryPendantsIndexRoute,
   JewelleryRingsIndexRoute: JewelleryRingsIndexRoute,
   JewelleryWatchesIndexRoute: JewelleryWatchesIndexRoute,
+  TravelBagsDuffelBagsIndexRoute: TravelBagsDuffelBagsIndexRoute,
+  TravelBagsGymBagsIndexRoute: TravelBagsGymBagsIndexRoute,
+  TravelBagsLargeTravelBagsIndexRoute: TravelBagsLargeTravelBagsIndexRoute,
+  TravelBagsSlingCrossbodyBagsIndexRoute:
+    TravelBagsSlingCrossbodyBagsIndexRoute,
+  TravelBagsTravelBackpacksIndexRoute: TravelBagsTravelBackpacksIndexRoute,
+  TravelBagsTravelBagsIndexRoute: TravelBagsTravelBagsIndexRoute,
+  TravelBagsTrolleyTravelBagsIndexRoute: TravelBagsTrolleyTravelBagsIndexRoute,
   ApiPublicProductImageSplatRoute: ApiPublicProductImageSplatRoute,
 }
 export const routeTree = rootRouteImport
