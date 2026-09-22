@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { ArrowDown, ArrowUp, ImageOff, Plus, Trash2, Upload } from "lucide-react";
+import { ArrowDown, ArrowUp, ImageOff, Plus, Star, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 
 import { TextField } from "./AdminField";
@@ -43,6 +43,15 @@ export function ImageFields({ images, onChange }: ImageFieldsProps) {
 
   const update = (index: number, patch: Partial<ImageDraft>) =>
     onChange(images.map((image, i) => (i === index ? { ...image, ...patch } : image)));
+
+  const makePrimary = (index: number) => {
+    if (index === 0) return;
+    const next = [...images];
+    const [moved] = next.splice(index, 1);
+    next.unshift(moved!);
+    onChange(next);
+    toast.success("Main product image updated.");
+  };
 
   const move = (index: number, direction: -1 | 1) => {
     const target = index + direction;
