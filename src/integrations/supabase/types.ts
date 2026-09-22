@@ -59,6 +59,7 @@ export type Database = {
           care_instructions: string | null
           category: string
           colour: string | null
+          colour_options: string[]
           compare_at_price: number | null
           created_at: string
           currency: string
@@ -95,6 +96,7 @@ export type Database = {
           care_instructions?: string | null
           category: string
           colour?: string | null
+          colour_options?: string[]
           compare_at_price?: number | null
           created_at?: string
           currency?: string
@@ -131,6 +133,7 @@ export type Database = {
           care_instructions?: string | null
           category?: string
           colour?: string | null
+          colour_options?: string[]
           compare_at_price?: number | null
           created_at?: string
           currency?: string
