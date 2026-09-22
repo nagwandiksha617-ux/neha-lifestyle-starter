@@ -65,8 +65,10 @@ export function ImageFields({ images, onChange }: ImageFieldsProps) {
   return (
     <div className="flex flex-col gap-5">
       <p className="text-[0.7rem] leading-relaxed font-light text-muted-foreground">
-        The first image is the main product image. Upload your own photographs, or paste an image
-        URL. Add alt text for each photograph so the shop stays readable with a screen reader.
+        Upload as many photographs of this product as you like — they all stay in this one
+        product&rsquo;s gallery. The first image is the main product image; use &ldquo;Set as
+        main&rdquo; on any photograph to make it the main one. Add alt text for each photograph so
+        the shop stays readable with a screen reader.
         Products with no image show a labelled placeholder — no stock imagery is ever added for you.
       </p>
 
