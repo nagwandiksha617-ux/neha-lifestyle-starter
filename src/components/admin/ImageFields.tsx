@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { ArrowDown, ArrowUp, ImageOff, Plus, Trash2, Upload } from "lucide-react";
+import { ArrowDown, ArrowUp, ImageOff, Plus, Star, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 
 import { TextField } from "./AdminField";
@@ -44,6 +44,15 @@ export function ImageFields({ images, onChange }: ImageFieldsProps) {
   const update = (index: number, patch: Partial<ImageDraft>) =>
     onChange(images.map((image, i) => (i === index ? { ...image, ...patch } : image)));
 
+  const makePrimary = (index: number) => {
+    if (index === 0) return;
+    const next = [...images];
+    const [moved] = next.splice(index, 1);
+    next.unshift(moved!);
+    onChange(next);
+    toast.success("Main product image updated.");
+  };
+
   const move = (index: number, direction: -1 | 1) => {
     const target = index + direction;
     if (target < 0 || target >= images.length) return;
@@ -56,8 +65,10 @@ export function ImageFields({ images, onChange }: ImageFieldsProps) {
   return (
     <div className="flex flex-col gap-5">
       <p className="text-[0.7rem] leading-relaxed font-light text-muted-foreground">
-        The first image is the main product image. Upload your own photographs, or paste an image
-        URL. Add alt text for each photograph so the shop stays readable with a screen reader.
+        Upload as many photographs of this product as you like — they all stay in this one
+        product&rsquo;s gallery. The first image is the main product image; use &ldquo;Set as
+        main&rdquo; on any photograph to make it the main one. Add alt text for each photograph so
+        the shop stays readable with a screen reader.
         Products with no image show a labelled placeholder — no stock imagery is ever added for you.
       </p>
 
@@ -72,6 +83,16 @@ export function ImageFields({ images, onChange }: ImageFieldsProps) {
       <ul className="flex flex-col gap-5">
         {images.map((image, index) => (
           <li key={index} className="border border-gold/15 p-4">
+            <p className="mb-3 text-[0.55rem] font-light tracking-[0.22em] uppercase">
+              {index === 0 ? (
+                <span className="inline-flex items-center gap-1.5 text-gold">
+                  <Star className="h-3 w-3 fill-current" strokeWidth={1.25} aria-hidden="true" />
+                  Main product image
+                </span>
+              ) : (
+                <span className="text-muted-foreground">Image {index + 1}</span>
+              )}
+            </p>
             <div className="flex flex-col gap-4 sm:flex-row">
               <div className="grid h-24 w-24 shrink-0 place-items-center overflow-hidden border border-gold/15 bg-onyx/40">
                 {image.url ? (
@@ -107,6 +128,16 @@ export function ImageFields({ images, onChange }: ImageFieldsProps) {
             </div>
 
             <div className="mt-4 flex flex-wrap gap-2">
+              <button
+                type="button"
+                className={buttonClass}
+                onClick={() => makePrimary(index)}
+                disabled={index === 0}
+                aria-label={`Set image ${index + 1} as the main product image`}
+              >
+                <Star className="h-3.5 w-3.5" strokeWidth={1.25} aria-hidden="true" />
+                {index === 0 ? "Main image" : "Set as main"}
+              </button>
               <button
                 type="button"
                 className={buttonClass}
