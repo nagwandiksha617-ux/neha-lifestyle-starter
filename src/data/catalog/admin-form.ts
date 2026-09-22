@@ -40,6 +40,7 @@ export interface ProductForm {
 
   material: string;
   colour: string;
+  colourOptions: string;
   size: string;
   dimensions: string;
   weight: string;
@@ -83,6 +84,7 @@ export function emptyProductForm(): ProductForm {
     lowStockThreshold: "",
     material: "",
     colour: "",
+    colourOptions: "",
     size: "",
     dimensions: "",
     weight: "",
@@ -122,6 +124,7 @@ export function formFromProduct(product: Product): ProductForm {
     lowStockThreshold: product.lowStockThreshold != null ? String(product.lowStockThreshold) : "",
     material: product.material ?? "",
     colour: product.color ?? "",
+    colourOptions: (product.colourOptions ?? []).join(", "),
     size: product.size ?? "",
     dimensions: product.dimensions ?? "",
     weight: product.weight ?? "",
@@ -287,6 +290,9 @@ export function validateProductForm(form: ProductForm, existing: Product[]): Val
   put("seoTitle", form.seoTitle.trim() || undefined);
   put("seoDescription", form.seoDescription.trim() || undefined);
   put("canonicalUrl", form.canonicalUrl.trim() || undefined);
+
+  const colourOptions = listValues(form.colourOptions);
+  if (colourOptions.length) row.colourOptions = colourOptions;
 
   const tags = listValues(form.tags);
   if (tags.length) row.tags = tags;

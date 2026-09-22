@@ -259,6 +259,12 @@ export function ProductForm({ initial, existing, heading }: ProductFormProps) {
         <div className={gridClass}>
           <TextField label="Material" value={form.material} onChange={(v) => set("material", v)} required={false} />
           <TextField label="Colour" value={form.colour} onChange={(v) => set("colour", v)} required={false} />
+          <TextField
+            label="Colour options (comma separated)"
+            value={form.colourOptions}
+            onChange={(v) => set("colourOptions", v)}
+            required={false}
+          />
           <TextField label="Size" value={form.size} onChange={(v) => set("size", v)} required={false} />
           <TextField label="Dimensions" value={form.dimensions} onChange={(v) => set("dimensions", v)} required={false} />
           <TextField label="Weight" value={form.weight} onChange={(v) => set("weight", v)} required={false} />
