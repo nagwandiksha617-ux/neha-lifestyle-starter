@@ -19,7 +19,9 @@ export const Route = createFileRoute("/bags/gym-bags/")({
 });
 
 function Page() {
-  const products = useProductsBySubcategory("gym-bags");
+  const gymBags = useProductsBySubcategory("gym-bags");
+  const duffelBags = useProductsBySubcategory("duffel-bags");
+  const products = [...gymBags, ...duffelBags];
 
   return (
     <CategoryListingPage
