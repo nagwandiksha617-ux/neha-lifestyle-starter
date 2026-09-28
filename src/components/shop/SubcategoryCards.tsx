@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 
 import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import type { Subcategory } from "@/data/products";
+import { useProducts } from "@/hooks/useCatalog";
 
 interface SubcategoryCardsProps {
   items: Subcategory[];
@@ -14,7 +15,24 @@ interface SubcategoryCardsProps {
 }
 
 /** Editorial category cards — cover-style imagery, one Explore action each. */
-export function SubcategoryCards({ items, headingId, heading, images, imageAlts }: SubcategoryCardsProps) {
+export function SubcategoryCards({ items, headingId, heading, images: explicitImages, imageAlts: explicitAlts }: SubcategoryCardsProps) {
+  // Fall back to a real stored photo of a published product in the same subcategory.
+  const products = useProducts();
+  const images: Partial<Record<string, string>> = {};
+  const imageAlts: Partial<Record<string, string>> = {};
+  for (const item of items) {
+    if (explicitImages?.[item.slug]) {
+      images[item.slug] = explicitImages[item.slug];
+      imageAlts[item.slug] = explicitAlts?.[item.slug];
+      continue;
+    }
+    const match = products.find((p) => p.subcategory === item.slug && (p.thumbnailImage || p.images.length > 0));
+    const src = match ? (match.thumbnailImage ?? match.images[0]) : undefined;
+    if (match && src) {
+      images[item.slug] = src;
+      imageAlts[item.slug] = match.imageAlts?.[match.images.indexOf(src)] || `${match.name} — ${item.name} category`;
+    }
+  }
   return (
     <section aria-labelledby={headingId} className="mt-16">
       <h2 id={headingId} className="text-[0.6rem] font-light tracking-[0.36em] text-gold-soft uppercase">
