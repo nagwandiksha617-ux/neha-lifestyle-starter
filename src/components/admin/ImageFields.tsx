@@ -124,6 +124,14 @@ export function ImageFields({ images, onChange }: ImageFieldsProps) {
                   placeholder="Describe the photograph for screen readers"
                   required={false}
                 />
+                <TextField
+                  label="Colour (optional)"
+                  value={image.colour ?? ""}
+                  onChange={(colour) => update(index, { colour })}
+                  placeholder="e.g. Black — must match a colour option"
+                  hint="Shown when a shopper picks this colour. Leave blank to show for every colour."
+                  required={false}
+                />
               </div>
             </div>
 
