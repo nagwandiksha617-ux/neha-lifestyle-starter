@@ -202,6 +202,8 @@ export function normalizeProduct(
   const lowStockThreshold = num(raw.lowStockThreshold);
   const updatedAt = text(raw.updatedAt);
   if (imageAlts.length) product.imageAlts = imageAlts;
+  const imageColours = Array.isArray(raw.imageColours) ? raw.imageColours.map((c) => String(c ?? "").trim()) : [];
+  if (imageColours.some(Boolean)) product.imageColours = imageColours;
   if (lowStockThreshold != null) product.lowStockThreshold = lowStockThreshold;
   if (raw.taxInclusive !== undefined && text(String(raw.taxInclusive ?? "")) !== undefined) {
     product.taxInclusive = bool(raw.taxInclusive);

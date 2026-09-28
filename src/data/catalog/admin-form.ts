@@ -17,6 +17,7 @@ import type { CategorySlug, Product, ProductInput, ProductStatus, StockStatus } 
 export interface ImageDraft {
   url: string;
   alt: string;
+  colour?: string;
 }
 
 export interface ProductForm {
@@ -135,7 +136,7 @@ export function formFromProduct(product: Product): ProductForm {
     featured: product.featured,
     newArrival: product.newArrival,
     bestSeller: product.bestSeller,
-    images: product.images.map((url, i) => ({ url, alt: product.imageAlts?.[i] ?? "" })),
+    images: product.images.map((url, i) => ({ url, alt: product.imageAlts?.[i] ?? "", colour: product.imageColours?.[i] ?? "" })),
     tags: (product.tags ?? []).join(", "),
     seoTitle: product.seoTitle ?? "",
     seoDescription: product.seoDescription ?? "",
@@ -266,6 +267,7 @@ export function validateProductForm(form: ProductForm, existing: Product[]): Val
     taxInclusive: form.taxInclusive,
     images: form.images.map((i) => i.url.trim()).filter(Boolean),
     imageAlts: form.images.map((i) => i.alt.trim()),
+    imageColours: form.images.filter((i) => i.url.trim()).map((i) => (i.colour ?? "").trim()),
   };
 
   const put = <K extends keyof ProductInput>(key: K, value: ProductInput[K] | undefined) => {

@@ -76,6 +76,8 @@ export interface Product {
   images: string[];
   /** Alt text per gallery image, positionally aligned with `images`. */
   imageAlts?: string[];
+  /** Colour option per gallery image, positionally aligned with `images`; blank = all colours. */
+  imageColours?: string[];
   /** ISO timestamp of the last catalog edit. */
   updatedAt?: string;
   /** Optional card/thumbnail override; defaults to the first gallery image. */
@@ -148,6 +150,7 @@ export interface ProductInput {
   taxInclusive?: boolean | string;
   lowStockThreshold?: number | string;
   imageAlts?: string[] | string;
+  imageColours?: string[] | string;
   updatedAt?: string;
 
   featured?: boolean | string;

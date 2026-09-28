@@ -36,7 +36,7 @@ export async function readPublishedCatalog(): Promise<ProductInput[]> {
 
   const { data: imageData } = await client
     .from("product_images")
-    .select("id, product_id, image_url, alt_text, sort_order, is_primary")
+    .select("id, product_id, image_url, alt_text, sort_order, is_primary, colour")
     .in(
       "product_id",
       rows.map((r) => r.id),
