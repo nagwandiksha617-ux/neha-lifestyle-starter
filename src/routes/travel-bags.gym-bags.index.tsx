@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useMemo } from "react";
 
 import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
 import { SubcategoryCards } from "@/components/shop/SubcategoryCards";
@@ -22,7 +23,12 @@ export const Route = createFileRoute("/travel-bags/gym-bags/")({
 });
 
 function Page() {
-  const products = useProductsBySubcategory("travel-gym-bags");
+  const gymProducts = useProductsBySubcategory("travel-gym-bags");
+  const duffelProducts = useProductsBySubcategory("duffel-bags");
+  const products = useMemo(
+    () => [...gymProducts, ...duffelProducts],
+    [gymProducts, duffelProducts],
+  );
 
   return (
     <CategoryListingPage
