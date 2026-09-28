@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CategoryListingPage } from "@/components/shop/CategoryListingPage";
 import { SubcategoryCards } from "@/components/shop/SubcategoryCards";
 import { bagSubcategories } from "@/data/products";
-import { useProductsByCategory } from "@/hooks/useCatalog";
+import { useProductsByCategory, useProductsBySubcategory } from "@/hooks/useCatalog";
 import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/bags/")({
