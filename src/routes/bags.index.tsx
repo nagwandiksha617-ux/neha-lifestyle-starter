@@ -33,7 +33,7 @@ function Page() {
       categoryImages["gym-bags"] = src;
       categoryImageAlts["gym-bags"] =
         gymCardProduct.imageAlts?.[gymCardProduct.images.indexOf(src)] ||
-        `${gymCardProduct.productName} — gym bags category`;
+        `${gymCardProduct.name} — gym bags category`;
     }
   }
 
