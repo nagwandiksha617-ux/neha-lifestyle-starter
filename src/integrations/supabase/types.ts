@@ -17,6 +17,7 @@ export type Database = {
       product_images: {
         Row: {
           alt_text: string | null
+          colour: string | null
           created_at: string
           id: string
           image_url: string
@@ -26,6 +27,7 @@ export type Database = {
         }
         Insert: {
           alt_text?: string | null
+          colour?: string | null
           created_at?: string
           id?: string
           image_url: string
@@ -35,6 +37,7 @@ export type Database = {
         }
         Update: {
           alt_text?: string | null
+          colour?: string | null
           created_at?: string
           id?: string
           image_url?: string
