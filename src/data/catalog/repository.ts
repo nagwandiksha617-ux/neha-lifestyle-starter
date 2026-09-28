@@ -55,7 +55,7 @@ export class SupabaseCatalogRepository implements CatalogRepository {
 
     const { data: imageData, error: imageError } = await supabase
       .from("product_images")
-      .select("id, product_id, image_url, alt_text, sort_order, is_primary")
+      .select("id, product_id, image_url, alt_text, sort_order, is_primary, colour")
       .in(
         "product_id",
         rows.map((r) => r.id),
@@ -90,7 +90,7 @@ export class SupabaseCatalogRepository implements CatalogRepository {
 
     const { data: imageData } = await supabase
       .from("product_images")
-      .select("id, product_id, image_url, alt_text, sort_order, is_primary")
+      .select("id, product_id, image_url, alt_text, sort_order, is_primary, colour")
       .eq("product_id", saved.id)
       .order("sort_order", { ascending: true });
 

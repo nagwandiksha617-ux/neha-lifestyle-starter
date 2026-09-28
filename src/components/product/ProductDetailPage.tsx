@@ -73,7 +73,7 @@ export function ProductDetailPage({ product, breadcrumbs }: ProductDetailPagePro
       <Breadcrumbs items={breadcrumbs} />
 
       <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-        <ProductGallery product={product} />
+        <ProductGallery product={product} colour={colour || undefined} />
 
         <div className="flex flex-col">
           <p className="text-[0.55rem] font-light tracking-[0.32em] text-gold-soft/80 uppercase">

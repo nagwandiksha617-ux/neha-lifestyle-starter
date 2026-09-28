@@ -51,6 +51,7 @@ export interface ProductImageDbRow {
   product_id: string;
   image_url: string;
   alt_text: string | null;
+  colour?: string | null;
   sort_order: number | null;
   is_primary: boolean | null;
 }
@@ -125,6 +126,7 @@ export function rowFromDb(row: ProductDbRow, images: ProductImageDbRow[] = []): 
     taxInclusive: row.tax_inclusive ?? true,
     images: ordered.map((i) => i.image_url),
     imageAlts: ordered.map((i) => i.alt_text ?? ""),
+    imageColours: ordered.map((i) => i.colour ?? ""),
   };
 
   const put = <K extends keyof ProductInput>(key: K, value: ProductInput[K] | undefined) => {
@@ -200,12 +202,14 @@ export function dbFromRow(row: ProductInput): Record<string, unknown> {
 export function imageRowsFromRow(row: ProductInput, productId: string): ProductImageDbRow[] {
   const urls = Array.isArray(row.images) ? row.images.map((u) => String(u).trim()) : [];
   const alts = Array.isArray(row.imageAlts) ? row.imageAlts : [];
+  const colours = Array.isArray(row.imageColours) ? row.imageColours : [];
   return urls
     .filter(Boolean)
     .map((url, index) => ({
       product_id: productId,
       image_url: url,
       alt_text: str(alts[index]),
+      colour: str(colours[index]),
       sort_order: index,
       is_primary: index === 0,
     }));

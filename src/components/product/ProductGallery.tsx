@@ -8,6 +8,8 @@ import { subcategoryName, type Product } from "@/data/products";
 
 interface ProductGalleryProps {
   product: Product;
+  /** Selected colour option; photos tagged with another colour are hidden. */
+  colour?: string | undefined;
 }
 
 const THUMB_COUNT = 5;
@@ -17,13 +19,18 @@ const THUMB_COUNT = 5;
  * `product.images` is populated; until then every slot is a fixed-ratio
  * placeholder, so there is no layout shift and never a broken image.
  */
-export function ProductGallery({ product }: ProductGalleryProps) {
+export function ProductGallery({ product, colour }: ProductGalleryProps) {
   const [active, setActive] = useState(0);
+  const [shownColour, setShownColour] = useState(colour);
+  if (shownColour !== colour) {
+    setShownColour(colour);
+    setActive(0);
+  }
   const [zoomOpen, setZoomOpen] = useState(false);
 
   const images =
     product.images.length > 0
-      ? product.images
+      ? filterByColour(product.images, product.imageColours, colour)
       : product.thumbnailImage
         ? [product.thumbnailImage]
         : [];
@@ -121,4 +128,14 @@ export function ProductGallery({ product }: ProductGalleryProps) {
       </Dialog>
     </section>
   );
+}
+
+function filterByColour(images: string[], colours: string[] | undefined, colour?: string): string[] {
+  if (!colour || !colours?.some(Boolean)) return images;
+  const want = colour.trim().toLowerCase();
+  const matched = images.filter((_, i) => {
+    const c = (colours[i] ?? "").trim().toLowerCase();
+    return !c || c === want;
+  });
+  return matched.length > 0 ? matched : images;
 }
