@@ -9,7 +9,7 @@ import { subcategoryName, type Product } from "@/data/products";
 interface ProductGalleryProps {
   product: Product;
   /** Selected colour option; photos tagged with another colour are hidden. */
-  colour?: string;
+  colour?: string | undefined;
 }
 
 const THUMB_COUNT = 5;
