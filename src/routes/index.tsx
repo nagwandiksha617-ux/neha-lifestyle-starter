@@ -118,23 +118,23 @@ function Index() {
           className="absolute inset-0 h-full w-full object-cover object-center"
         />
         <div aria-hidden="true" className="homepage-hero-veil absolute inset-0" />
-        <div className="relative mx-auto grid min-h-[680px] max-w-[84rem] items-center gap-4 px-5 pb-6 pt-8 sm:px-8 lg:min-h-[700px] lg:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] lg:gap-10 lg:px-12 lg:py-12">
+        <div className="relative mx-auto grid max-w-[84rem] items-center gap-3 px-5 pb-3 pt-5 sm:px-8 lg:min-h-[700px] lg:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] lg:gap-10 lg:px-12 lg:py-12">
           <div className="fade-up z-10 flex min-w-0 flex-col items-start lg:pb-10">
             <img
               src={heroLogo.url}
               alt="NEHA LIFESTYLE — Bags, Jewellery, Accessories"
               width={1536}
               height={1024}
-              className="mb-6 w-44 max-w-full object-contain shadow-lg shadow-onyx/30 sm:w-56 lg:mb-12 lg:w-64"
+              className="mb-4 w-36 max-w-full object-contain shadow-lg shadow-onyx/30 sm:w-56 lg:mb-12 lg:w-64"
             />
-            <span aria-hidden="true" className="mb-5 h-px w-14 bg-gold" />
-            <h1 id="hero-heading" className="max-w-[13ch] font-display text-[2.7rem] leading-[1.04] font-medium text-ivory sm:text-6xl lg:text-[4.5rem]">
+            <span aria-hidden="true" className="mb-4 h-px w-14 bg-gold lg:mb-5" />
+            <h1 id="hero-heading" className="max-w-[13ch] font-display text-[2.4rem] leading-[1.04] font-medium text-ivory sm:text-6xl lg:text-[4.5rem]">
               Where Elegance Meets Everyday Luxury
             </h1>
-            <p className="mt-5 max-w-md text-sm leading-relaxed font-normal text-ivory sm:text-base lg:mt-7">
+            <p className="mt-4 max-w-md text-sm leading-relaxed font-normal text-ivory sm:text-base lg:mt-7">
               Discover Bags &amp; Jewellery Made to Make You Shine
             </p>
-            <div className="mt-7 flex flex-wrap gap-3 lg:mt-9">
+            <div className="mt-5 flex flex-wrap gap-3 lg:mt-9">
               <Button asChild className="h-12 rounded-none bg-gold px-7 text-xs font-semibold uppercase text-primary-foreground transition-all duration-300 hover:bg-gold-soft hover:shadow-lg hover:shadow-onyx/30">
                 <Link to="/bags">Shop Bags</Link>
               </Button>
@@ -149,7 +149,7 @@ function Index() {
               alt="Ornate gold clutch with pearl chains and green and ruby-toned details"
               width={1085}
               height={1450}
-              className="h-[275px] w-full object-contain object-center drop-shadow-2xl sm:h-[370px] lg:h-[590px]"
+              className="h-[225px] w-full object-contain object-center drop-shadow-2xl sm:h-[370px] lg:h-[590px]"
             />
           </div>
         </div>
