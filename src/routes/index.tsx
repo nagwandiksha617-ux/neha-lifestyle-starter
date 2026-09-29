@@ -12,7 +12,11 @@ import { ImagePlaceholder } from "@/components/ImagePlaceholder";
 import { ProductCardPlaceholder } from "@/components/ProductCardPlaceholder";
 import { Section } from "@/components/Section";
 import { SectionHeading } from "@/components/SectionHeading";
+import { Button } from "@/components/ui/button";
 import { organizationSchema, pageHead, websiteSchema } from "@/lib/seo";
+import jalMahal from "@/assets/jal-mahal-evening.jpg";
+import heroLogo from "@/assets/neha-hero-logo.jpeg.asset.json";
+import heroClutch from "@/assets/ornate-gold-pearl-clutch.jpeg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () =>
@@ -103,63 +107,50 @@ function Index() {
   return (
     <main className="bg-background">
       {/* 1 — Hero */}
-      <section aria-labelledby="hero-heading" className="relative w-full surface-luxe">
-        <div
+      <section aria-labelledby="hero-heading" className="homepage-hero relative isolate overflow-hidden bg-onyx">
+        <img
+          src={jalMahal}
+          alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-5 top-0 bottom-0 border-x border-gold/8 sm:inset-x-8 lg:inset-x-12"
+          width={1920}
+          height={1024}
+          fetchPriority="high"
+          className="absolute inset-0 h-full w-full object-cover object-center"
         />
-        <div className="relative mx-auto grid w-full max-w-[84rem] items-center gap-14 px-5 py-20 sm:px-8 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 lg:px-12 lg:py-32">
-          <div className="fade-up flex flex-col items-start">
-            <span className="text-[0.6rem] font-light tracking-[0.46em] text-gold-soft uppercase">
-              Elevate Your Everyday
-            </span>
-
-            <p className="mt-8 font-display text-[2.75rem] leading-[1.02] font-light tracking-[0.16em] text-ivory uppercase sm:text-6xl lg:text-[4.25rem]">
-              Neha Lifestyle
-            </p>
-
-            <span aria-hidden="true" className="mt-8 h-px w-20 bg-gold/60" />
-
-            <h1
-              id="hero-heading"
-              className="mt-8 font-display text-[1.6rem] leading-[1.35] font-light tracking-[0.02em] text-gold sm:text-[2rem]"
-            >
-              Where Elegance Becomes Your Signature
+        <div aria-hidden="true" className="homepage-hero-veil absolute inset-0" />
+        <div className="relative mx-auto grid max-w-[84rem] items-center gap-3 px-5 pb-3 pt-5 sm:px-8 lg:min-h-[700px] lg:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] lg:gap-10 lg:px-12 lg:py-12">
+          <div className="fade-up z-10 flex min-w-0 flex-col items-start lg:pb-10">
+            <img
+              src={heroLogo.url}
+              alt="NEHA LIFESTYLE — Bags, Jewellery, Accessories"
+              width={1536}
+              height={1024}
+              className="mb-4 w-36 max-w-full object-contain shadow-lg shadow-onyx/30 sm:w-56 lg:mb-12 lg:w-64"
+            />
+            <span aria-hidden="true" className="mb-4 h-px w-14 bg-gold lg:mb-5" />
+            <h1 id="hero-heading" className="max-w-[13ch] font-display text-[2.4rem] leading-[1.04] font-medium text-ivory sm:text-6xl lg:text-[4.5rem]">
+              Where Elegance Meets Everyday Luxury
             </h1>
-
-            <p className="mt-6 max-w-md text-[0.9rem] leading-[2] font-light text-muted-foreground">
-              Discover statement bags and timeless jewellery designed to elevate
-              your everyday style.
+            <p className="mt-4 max-w-md text-sm leading-relaxed font-normal text-ivory sm:text-base lg:mt-7">
+              Discover Bags &amp; Jewellery Made to Make You Shine
             </p>
-
-            <div className="mt-12 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
-              <Link to="/new-arrivals" className={goldButton}>
-                Shop New Collection
-              </Link>
-              <Link to="/shop" className={outlineButton}>
-                Explore Collections
-              </Link>
+            <div className="mt-5 flex flex-wrap gap-3 lg:mt-9">
+              <Button asChild className="h-12 rounded-none bg-gold px-7 text-xs font-semibold uppercase text-primary-foreground transition-all duration-300 hover:bg-gold-soft hover:shadow-lg hover:shadow-onyx/30">
+                <Link to="/bags">Shop Bags</Link>
+              </Button>
+              <Button asChild variant="outline" className="h-12 rounded-none border-gold bg-onyx/45 px-7 text-xs font-semibold uppercase text-ivory transition-all duration-300 hover:bg-gold hover:text-primary-foreground">
+                <Link to="/jewellery">Shop Jewellery</Link>
+              </Button>
             </div>
           </div>
-
-          <div className="fade-up relative">
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute -top-4 -left-4 hidden h-16 w-16 border-t border-l border-gold/35 sm:block"
+          <div className="homepage-hero-product fade-up relative mx-auto w-full max-w-[390px] self-end lg:max-w-[490px] lg:self-center">
+            <img
+              src={heroClutch.url}
+              alt="Ornate gold clutch with pearl chains and green and ruby-toned details"
+              width={1085}
+              height={1450}
+              className="h-[225px] w-full object-contain object-center drop-shadow-2xl sm:h-[370px] lg:h-[590px]"
             />
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute -right-4 -bottom-4 hidden h-16 w-16 border-r border-b border-gold/35 sm:block"
-            />
-            <ImagePlaceholder
-              label="Campaign Image"
-              hint="Full-width NEHA LIFESTYLE editorial campaign"
-              ratio="hero"
-              editorial
-            />
-            <p className="mt-5 text-center text-[0.55rem] font-light tracking-[0.4em] text-muted-foreground/70 uppercase">
-              Bags · Jewellery · You
-            </p>
           </div>
         </div>
       </section>

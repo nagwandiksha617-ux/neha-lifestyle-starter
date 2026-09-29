@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+Homepage hero imagery is isolated to the index route and its hero-scoped CSS; this preserves the existing global luxury theme and all other pages.
